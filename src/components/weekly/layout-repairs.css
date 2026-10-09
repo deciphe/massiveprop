@@ -57,3 +57,20 @@
  box-decoration-break:clone;
  -webkit-box-decoration-break:clone;
 }
+
+/* Open corners: a whisper of metal, not a complete frame. */
+.massive-scene .wk .wk-shell>.wk-podium>.wk-podium-card{
+ position:relative;
+ border:1px solid transparent!important;
+ background-image:linear-gradient(140deg,#19191c66,#09090ba8)!important;
+}
+.massive-scene .wk .wk-shell>.wk-podium>.wk-podium-card:after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:5;border-radius:inherit;
+ background:
+ linear-gradient(90deg,#e8e5dc30,transparent) top left/85px 1px no-repeat,
+ linear-gradient(180deg,#e8e5dc30,transparent) top left/1px 130px no-repeat,
+ linear-gradient(270deg,#e8e5dc18,transparent) bottom right/65px 1px no-repeat,
+ linear-gradient(0deg,#e8e5dc18,transparent) bottom right/1px 95px no-repeat;
+}
+.massive-scene .wk .wk-shell>.wk-podium>.wk-place-1:after{opacity:1}
+.massive-scene .wk .wk-shell>.wk-podium>.wk-podium-card:not(.wk-place-1):after{opacity:.7}
