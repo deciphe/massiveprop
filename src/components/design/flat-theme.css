@@ -97,3 +97,46 @@
 .massive-scene.massive-scene .wk .wk-issue-number{top:50%!important;transform:translateY(-50%)!important;line-height:1.1!important}
 
 .massive-scene.massive-scene :is(.wk,.vf,.fh,.gp-home-theme) :is(p,small,span,em,label){font-weight:700!important}
+/* Flat Massive: individual surfaces, compact vault and a composed edition mark. */
+.massive-scene.massive-scene .wk .wk-hero-line{display:grid!important;grid-template-columns:1.25fr 1fr!important;align-items:center!important}
+.massive-scene.massive-scene .wk .wk-vest-edition{position:relative!important;width:100%!important;height:310px!important;min-height:0!important;display:block!important;isolation:isolate}
+.massive-scene.massive-scene .wk .wk-issue-number{inset:0 0 auto auto!important;top:0!important;transform:none!important;font-size:280px!important;line-height:1!important;letter-spacing:-.1em!important;font-style:normal!important;white-space:nowrap;opacity:.13!important;padding-right:.1em!important}
+.massive-scene.massive-scene .wk .wk-vest-hero-mark{width:130px!important;height:130px!important;left:auto!important;right:65px!important;top:75px!important;transform:rotate(-8deg)!important;opacity:.34!important}
+.massive-scene.massive-scene .wk .wk-league-seal{position:absolute!important;bottom:0!important;right:0!important;top:auto!important;max-width:100%;background:none!important;backdrop-filter:none!important;padding:0!important}
+.massive-scene.massive-scene .wk :is(.wk-overview,.wk-utility-bar){border:0!important;border-bottom:1px solid #e4dfd419!important}
+.massive-scene.massive-scene .wk .wk-vest-offer{border:0!important;border-radius:0!important;padding:10px 0!important;background:none!important;box-shadow:none!important;gap:12px!important;color:#dcd8ce!important}
+.massive-scene.massive-scene .wk .wk-vest-offer:before,.massive-scene.massive-scene .wk .wk-vest-offer:after{display:none!important}
+.massive-scene.massive-scene .wk .wk-vest-offer b{background:none!important;border:0!important;padding:0!important;color:#c8c3b7!important;font:800 14px Manrope,sans-serif!important;letter-spacing:-.025em!important}
+.massive-scene.massive-scene .wk .wk-vest-offer img{width:25px!important;filter:grayscale(1)!important;opacity:.7}
+.massive-scene.massive-scene .wk :is(.wk-frequent,.wk-claim-banner){background:linear-gradient(105deg,#242421b0,#10100fd9)!important;border:0!important;border-radius:10px!important;box-shadow:inset 0 1px #e4dfd423!important;color:#e5e1d7!important}
+.massive-scene.massive-scene .wk :is(.wk-frequent-kicker,.wk-frequent-person,.wk-frequent-person span,.wk-frequent-count span,.wk-method summary,.wk-footer,.wk-footer a,.wk-claim-banner span){color:#b7b3a9!important}
+.massive-scene.massive-scene .wk .wk-frequent-count{border-color:#ddd8cd20!important}
+.massive-scene.massive-scene .wk .wk-frequent-kicker{letter-spacing:.04em!important;font-size:11px!important}
+.flat-podium-card{background:linear-gradient(155deg,#292925e8,#141413ef 48%,#10100ff2)!important;border-radius:14px;box-shadow:0 18px 40px -28px #000b;overflow:hidden}
+.flat-podium-card:before{inset:8px;border-radius:8px;background:linear-gradient(#dcd6c27a,#dcd6c27a) top left/30px 1px no-repeat,linear-gradient(#dcd6c258,#dcd6c258) top left/1px 35px no-repeat,linear-gradient(#dcd6c24a,#dcd6c24a) bottom right/45px 1px no-repeat,linear-gradient(#dcd6c23a,#dcd6c23a) bottom right/1px 60px no-repeat;z-index:3}
+.flat-place-1{background:radial-gradient(ellipse at 80% 0,#b9b29b22,transparent 60%),linear-gradient(145deg,#30302be8,#151513f5 70%)!important}
+.flat-place-2{background:linear-gradient(120deg,#282824f0,#141413f5 70%)!important}
+.flat-place-3{background:linear-gradient(225deg,#2b2b26e8,#121211f5 65%)!important}
+.flat-place-2:before{transform:scaleX(-1)}.flat-place-3:before{transform:scaleY(-1)}
+.flat-place-1 .flat-podium-face{object-position:center 19%;width:98%}.flat-place-2 .flat-podium-face{object-position:center 40%;width:86%}.flat-place-3 .flat-podium-face{object-position:center 28%;width:94%}
+.flat-podium-card:hover{box-shadow:0 0 45px -12px #dad3bd30,0 24px 45px -28px #000c}
+.massive-scene.massive-scene .fh .fh-grid{align-items:start!important;gap:18px!important}
+.massive-scene.massive-scene .fh .fh-card{padding:22px!important;min-height:0!important;height:auto!important;background:linear-gradient(140deg,#252521a8,#10100fe8)!important;border-radius:12px!important}
+.massive-scene.massive-scene .fh .fh-card-top{padding:0 0 18px!important;margin:0!important}
+.massive-scene.massive-scene .fh .fh-card-main{padding:0!important;margin:0!important}
+.massive-scene.massive-scene .fh .fh-card h2{font-size:clamp(32px,3.5vw,48px)!important;margin:0!important}
+.massive-scene.massive-scene .fh .fh-daily{padding:22px 0 16px!important;margin:0!important}
+.massive-scene.massive-scene .fh .fh-daily strong{font-size:clamp(30px,3.1vw,42px)!important}
+.massive-scene.massive-scene .fh .fh-glance{padding:0!important;margin:0!important;gap:8px 16px!important}
+.massive-scene.massive-scene .fh .fh-glance strong{font-size:20px!important}
+.massive-scene.massive-scene .fh .fh-card-foot{padding:14px 0 0!important;margin-top:14px!important;border-color:#d5d0c21c!important}
+.massive-scene.massive-scene .fh .fh-card-serial{font-size:110px!important;top:28px!important;right:18px!important}
+@media(max-width:700px){
+.massive-scene.massive-scene .wk .wk-hero-line{grid-template-columns:1fr!important;display:block!important;padding-bottom:50px!important}
+.massive-scene.massive-scene .wk .wk-vest-edition{position:absolute!important;right:0!important;top:30px!important;width:44%!important;height:210px!important;z-index:0!important;pointer-events:none}
+.massive-scene.massive-scene .wk .wk-hero-copy{position:relative;z-index:1}
+.massive-scene.massive-scene .wk .wk-issue-number{font-size:clamp(130px,33vw,220px)!important}
+.massive-scene.massive-scene .wk .wk-vest-hero-mark{width:75px!important;height:75px!important;right:12px!important;top:50px!important}
+.massive-scene.massive-scene .wk .wk-league-seal{width:250px!important;max-width:none!important;bottom:-25px!important}
+.massive-scene.massive-scene .fh .fh-card{padding:20px!important}
+}
