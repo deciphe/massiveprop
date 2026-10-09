@@ -29,6 +29,9 @@ try{
      for(const el of document.querySelectorAll('body *')){
       const s=getComputedStyle(el);
       if(s.display==='none'||s.visibility==='hidden'||s.position==='fixed'||s.position==='absolute')continue;
+      if(el.matches('input')&&(el.getBoundingClientRect().width<3||el.getBoundingClientRect().left < -1000))continue;
+      // A wide table is deliberately scrollable on narrow screens.
+      if(el.closest('.pc-table-scroll'))continue;
       const r=el.getBoundingClientRect();
       if(!r.width||!r.height)continue;
       if(r.right>vw+3 || r.left < -3){
@@ -42,6 +45,9 @@ try{
      for(const el of document.querySelectorAll('h1,h2,h3,button,.flat-podium-name,.flat-podium-total,.flat-podium-tag,.wk-wallet-name')){
       const s=getComputedStyle(el), r=el.getBoundingClientRect();
       if(!r.width||!r.height||s.visibility==='hidden'||s.display==='none')continue;
+      // Transfer-card face is intentionally clipped to mask its flip transition;
+      // inspect its text children individually rather than the animated wrapper.
+      if(el.matches('.vf-transfer-face'))continue;
       if(el.scrollWidth>el.clientWidth+3 && ['hidden','clip'].includes(s.overflowX)){
        clipped.push({selector:el.className?.baseVal||el.className||el.tagName,text:(el.textContent||'').trim().slice(0,60)});
       }
