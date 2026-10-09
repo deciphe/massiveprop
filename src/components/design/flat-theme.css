@@ -887,3 +887,10 @@
   align-self:flex-start!important;
  }
 }
+
+/* GigaXtrader — Top 20 row only: raise the portrait by 10% to reveal the eyes.
+   Does not affect podiums, exported cards, or profile previews. */
+.massive-scene.massive-scene .wk .wk-row[data-trader="gigaxtrader"] > img.wk-row-portrait,
+.massive-scene.massive-scene .wk .wk-row[data-trader="gigaxtrader"]:is(:hover,:focus-visible) > img.wk-row-portrait{
+ object-position:center 38%!important;
+}
