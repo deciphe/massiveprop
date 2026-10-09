@@ -747,3 +747,16 @@
   transform:none!important;pointer-events:none!important;z-index:0!important;
  }
 }
+
+/* Mobile-only: fit the complete third-place handle; never abbreviate the name. */
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .flat-podium-card.flat-place-3 .flat-podium-name{
+  font-family:Manrope,sans-serif!important;
+  font-size:clamp(9px,2.1vw,12px)!important;
+  font-weight:800!important;letter-spacing:-.07em!important;
+  line-height:1.2!important;
+  display:block!important;width:max-content!important;max-width:100%!important;
+  white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;
+  overflow-wrap:normal!important;word-break:normal!important;
+ }
+}
