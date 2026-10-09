@@ -36,7 +36,7 @@ for(const config of Object.values(FLOW_CONFIGS)){
  const html=renderToString(React.createElement(mod.exports.default||mod.exports,{firm:config.id}));
  assert.ok(html.includes(config.referral.replaceAll('&','&amp;')));
  assert.ok(html.includes(config.explorer+'/address/'+config.wallet));
- assert.ok(html.includes(config.eyebrow));
+ assert.match(html, new RegExp('<h1>'+config.id+'<span>flow</span>'));
  assert.ok(!html.includes('Top recipients'));
  assert.ok(!html.includes('Sort transfers'));
  assert.ok(!html.includes('vf-table'));

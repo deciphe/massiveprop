@@ -1,5 +1,5 @@
 /* One scene persists across routes; exported artwork keeps its own backgrounds. */
-.massive-scene{position:relative;isolation:isolate;min-height:100vh;background:#080809;color:#e8e5dc;overflow-x:clip}
+.massive-scene{position:relative;isolation:isolate;min-height:100vh;background:#0a0906;color:#e8e5dc;overflow-x:clip}
 .massive-scene>.home-atmosphere{bottom:-540px}
 .massive-scene> :is(.gp-site,.wk,.vf,.fh,.atm,.af-page,.pc-page,.learnperps,.gp-email-test){background:transparent!important;border:0!important;box-shadow:none!important;isolation:auto}
 .massive-scene :is(.wk-shell,.vf-shell,.fh-shell,.af-shell,.pc-wrap,.atm-shell,.learn-shell){background:transparent!important;border-inline:0!important;box-shadow:none!important}
@@ -9,7 +9,7 @@
 .massive-scene .vf :is(.vf-network,.vf-funding-story,.vf-stats article,.vf-chart-panel,.vf-feed,.vf-wallet),
 .massive-scene .af-page :is(.af-card,.af-day,.af-record),
 .massive-scene .pc-page :is(.pc-console,.pc-beta),
-.massive-scene .atm :is(.atm-workspace,.atm-hero-receipt,.atm-terminal){background:linear-gradient(140deg,#19191c66,#09090ba8)!important;border-color:transparent!important;box-shadow:inset 0 1px #e8e5dc09,0 16px 40px -30px #0009!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.massive-scene .atm :is(.atm-workspace,.atm-hero-receipt,.atm-terminal){background:linear-gradient(140deg,#1c1b1866,#0c0b08a8)!important;border-color:transparent!important;box-shadow:inset 0 1px #e8e5dc09,0 16px 40px -30px #0009!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .massive-scene .wk .wk-vest-edition,.massive-scene .wk .wk-vest-edition .wk-league-seal{background:transparent!important;border:0!important}
 .massive-scene .wk .wk-vest-smoke{opacity:.3}
 .massive-scene :is(.wk-nav,.vf-nav,.fh-nav,.pc-nav,.af-nav,.atm-nav){border-color:#e8e5dc0a!important}
@@ -21,68 +21,68 @@
 .massive-scene,
 .massive-scene>main{
  --massive-gold:#bcb5a6!important;
- --massive-purple:#9c96b0!important;
- --massive-line-strong:rgba(156,150,176,.18)!important;
+ --massive-purple:#a3a29f!important;
+ --massive-line-strong:rgba(190,187,180,.18)!important;
  --home-gold:188 181 166!important;
- --gp-accent:#9c96b0!important;
- --gp-purple:#9c96b0!important;
+ --gp-accent:#a3a29f!important;
+ --gp-purple:#a3a29f!important;
  --gold:#bcb5a6!important;
 }
 .massive-scene .home-vignette{
- background:radial-gradient(ellipse at 88% 60%,rgba(86,77,115,.075),transparent 48%),
- radial-gradient(ellipse at 12% 12%,rgba(86,77,115,.035),transparent 40%),
- linear-gradient(90deg,#080809a6,transparent 66%),
- linear-gradient(180deg,#08080940,transparent 35%,#08080918);
+ background:radial-gradient(ellipse at 88% 60%,rgba(190,187,180,.035),transparent 48%),
+ radial-gradient(ellipse at 12% 12%,rgba(190,187,180,.018),transparent 40%),
+ linear-gradient(90deg,#0a0906a6,transparent 66%),
+ linear-gradient(180deg,#0a090640,transparent 35%,#0a090618);
 }
 .massive-scene :is(.gp-primary-link,.review-actions>a,.gp-drops-entry button,.wk-profile-actions>button,.wk-tabs button.active,.pc-primary):hover{
- border-color:#9c96b045!important;box-shadow:0 0 24px #9d83be0b!important;
+ border-color:#a3a29f45!important;box-shadow:0 0 24px #a1a09d0b!important;
 }
 .massive-scene .wk .wk-modal{
- --gold:#9c96b0;
- background:radial-gradient(ellipse at 96% 4%,#9b7cbd13,transparent 52%),linear-gradient(145deg,#151417f7,#09090bfA)!important;
- border:1px solid #c7c1d022!important;
- box-shadow:0 30px 110px #0009,inset 0 1px #ded8e709!important;
+ --gold:#a3a29f;
+ background:radial-gradient(ellipse at 96% 4%,#9e9d9a13,transparent 52%),linear-gradient(145deg,#171613f7,#0c0b08fA)!important;
+ border:1px solid #cac9c622!important;
+ box-shadow:0 30px 110px #0009,inset 0 1px #e1e0dd09!important;
  color:#e8e5dc;
- scrollbar-color:#77707e #111013;
+ scrollbar-color:#797875 #13120f;
 }
-.massive-scene .wk .wk-modal::backdrop{background:#050507c9;backdrop-filter:blur(12px)}
+.massive-scene .wk .wk-modal::backdrop{background:#080704c9;backdrop-filter:blur(12px)}
 .massive-scene .wk .wk-modal .wk-profile-portrait{filter:grayscale(.85);opacity:.45}
 .massive-scene .wk .wk-modal :is(.wk-profile-rank,.wk-profile-total){font-weight:750;letter-spacing:-.045em;line-height:1.1}
-.massive-scene .wk .wk-modal .wk-profile-rank{color:#d2ccd9!important}
+.massive-scene .wk .wk-modal .wk-profile-rank{color:#d4d3d0!important}
 .massive-scene .wk .wk-modal .wk-profile-total{color:#e8e5dc!important}
 .massive-scene .wk .wk-modal :is(.wk-trader-tag,.wk-tag-link){
- background:linear-gradient(120deg,#a58eb816,transparent)!important;
- border-color:#b3a4c329!important;color:#c7bdcf!important;font-weight:650;
+ background:linear-gradient(120deg,#a6a5a216,transparent)!important;
+ border-color:#b5b4b129!important;color:#c8c7c4!important;font-weight:650;
 }
-.massive-scene .wk .wk-modal :is(.wk-profile-label,.wk-social){color:#ada3b8!important}
-.massive-scene .wk .wk-modal :is(.wk-profile-address,.wk-verification,.wk-identity){color:#918d96!important}
+.massive-scene .wk .wk-modal :is(.wk-profile-label,.wk-social){color:#afaeab!important}
+.massive-scene .wk .wk-modal :is(.wk-profile-address,.wk-verification,.wk-identity){color:#93928f!important}
 .massive-scene .wk :is(.wk-daily-cash,.wk-daily-up,.wk-daily-heading){color:#c4c2bc!important}
-.massive-scene .wk .wk-daily-down{color:#baa5b2!important}
-.massive-scene .wk :is(.wk-podium-card>.wk-daily,.wk-row>.wk-daily){border-color:#b1a4be24!important;background:linear-gradient(100deg,#a58eb809,transparent)!important}
+.massive-scene .wk .wk-daily-down{color:#b2b1ae!important}
+.massive-scene .wk :is(.wk-podium-card>.wk-daily,.wk-row>.wk-daily){border-color:#b3b2af24!important;background:linear-gradient(100deg,#a6a5a209,transparent)!important}
 .massive-scene .wk .wk-modal .wk-profile-actions>button{
- background:linear-gradient(135deg,#c6bdd10b,#ffffff03)!important;border:1px solid #c7c1d025!important;color:#d9d5dc!important;
+ background:linear-gradient(135deg,#c9c8c50b,#ffffff03)!important;border:1px solid #cac9c625!important;color:#dbdad7!important;
 }
-.massive-scene .wk .wk-modal :is(.wk-evidence b,.wk-history b){color:#d6d2d9!important}
-.massive-scene .wk .wk-modal :is(.wk-history button,.wk-evidence>a,.wk-evidence-title){border-color:#c7c1d016!important}
-.massive-scene .wk .wk-modal .wk-close{background:#19171ce8;border-color:#b2a4bf30;color:#d4cddd}
-.massive-scene .wk .wk-modal .wk-badges>span{background:#c7c1d006;border-color:#c7c1d01c;color:#bdb8c3}
+.massive-scene .wk .wk-modal :is(.wk-evidence b,.wk-history b){color:#d8d7d4!important}
+.massive-scene .wk .wk-modal :is(.wk-history button,.wk-evidence>a,.wk-evidence-title){border-color:#cac9c616!important}
+.massive-scene .wk .wk-modal .wk-close{background:#1b1a17e8;border-color:#b4b3b030;color:#d7d6d3}
+.massive-scene .wk .wk-modal .wk-badges>span{background:#cac9c606;border-color:#cac9c61c;color:#bfbebb}
 
 /* Compact, substantial controls; purple stays in the shadow, text stays platinum. */
 .massive-scene .wk :is(.wk-view-switch button,.wk-tabs button,.wk-week label,.wk-week select,.wk-export,.wk-archive-toggle,.wk-week-archive button,.wk-table-head,.wk-podium-top>span,.wk-card-edition,.wk-identity){
  font-family:Manrope,sans-serif!important;font-weight:750!important;letter-spacing:.02em!important;
 }
 .massive-scene .wk .wk-utility-bar .wk-view-switch button{font-size:12px!important;line-height:1.25;text-transform:none!important;padding:9px 13px}
-.massive-scene .wk .wk-view-switch button span{font-family:Manrope,sans-serif!important;font-size:9px!important;font-weight:800!important;letter-spacing:0!important;border-color:#bcb8c321!important}
-.massive-scene .wk .wk-view-switch{background:#111014!important;border-color:#b9b5c01a!important;box-shadow:none!important}
-.massive-scene .wk .wk-view-switch button{color:#c9c6ce!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
-.massive-scene .wk .wk-view-switch button.active{background:linear-gradient(135deg,#393540,#201e26)!important;color:#ece8ef!important;border-color:#a6a0b12c!important;box-shadow:inset 0 1px #ded9e513,0 0 16px #6357790b!important}
-.massive-scene .wk .wk-view-switch button:hover:not(.active){background:#8372930d!important;color:#e5e1e9!important}
-.massive-scene .wk .wk-export{font-size:11px;color:#c9c6ce!important}
+.massive-scene .wk .wk-view-switch button span{font-family:Manrope,sans-serif!important;font-size:9px!important;font-weight:800!important;letter-spacing:0!important;border-color:#bfbebb21!important}
+.massive-scene .wk .wk-view-switch{background:#141310!important;border-color:#bcbbb81a!important;box-shadow:none!important}
+.massive-scene .wk .wk-view-switch button{color:#cccbc8!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+.massive-scene .wk .wk-view-switch button.active{background:linear-gradient(135deg,#3c3b38,#23221f)!important;color:#eeedea!important;border-color:#aaa9a62c!important;box-shadow:inset 0 1px #e1e0dd13,0 0 16px #6867640b!important}
+.massive-scene .wk .wk-view-switch button:hover:not(.active){background:#8584810d!important;color:#e7e6e3!important}
+.massive-scene .wk .wk-export{font-size:11px;color:#cccbc8!important}
 
 /* Retain useful context without editorial micro-labels or hairline type. */
 .massive-scene :is(p,small,label,button,select,summary){font-family:Manrope,sans-serif;font-weight:600}
 .massive-scene :is(.wk-league-seal b,.wk-week-current,.wk-weekly-tools,.wk-overview span,.vf-status,.fh-share,.af-intro-foot,.atm-hero-receipt small,.gp-next-note){font-family:Manrope,sans-serif!important;font-weight:700!important;letter-spacing:.01em!important;line-height:1.5}
-.massive-scene .wk .wk-league-seal b{font-size:13px!important;color:#bcb8c3!important;white-space:normal}
+.massive-scene .wk .wk-league-seal b{font-size:13px!important;color:#bfbebb!important;white-space:normal}
 .massive-scene .wk .wk-hero-line{padding-top:32px}
 .massive-scene .wk .wk-vest-hero-mark{opacity:.2!important;filter:grayscale(1)!important;mask-image:linear-gradient(145deg,#000 20%,transparent 94%);-webkit-mask-image:linear-gradient(145deg,#000 20%,transparent 94%)}
 .massive-scene .wk .wk-vest-edition{min-height:220px}
@@ -92,3 +92,14 @@
 @media(max-width:600px){.massive-scene .wk .wk-vest-edition{min-height:130px}.massive-scene .wk .wk-league-seal b{font-size:12px!important}}
 
 .massive-scene :is(.wk-primary,.wk-profile-label,.wk-profile-address,.wk-evidence small,.wk-nav-title,.vf-core-copy>span,.vf-core-copy small,.vf-stats span,.vf-feed-head,.fh-card-foot,.fh-glance em,.pc-section-label,.pc-example,.pc-mini,.af-kicker,.atm-receipt-top,.atm-receipt-line,.gp-eyebrow,.gp-edition-label,.gp-vault-head,.gp-drops-copy){font-family:Manrope,sans-serif!important;font-weight:700!important;letter-spacing:.01em!important}
+
+/* Cream-grey accents throughout the shared live interface. */
+.massive-scene .wk :is(.wk-overview,.wk-utility-bar,.wk-week select){background:#121212!important;border-color:#e8e5dc16!important;color:#d7d4cb!important}
+.massive-scene .wk .wk-view-switch button.active{background:#d8d4c71a!important;color:#eeeae2!important;border-color:#d8d4c72b!important;box-shadow:inset 0 1px #eeeae20d!important}
+.massive-scene .wk .wk-overview strong{font-weight:800!important}
+
+.massive-scene .wk .wk-vest-edition{position:relative;isolation:isolate;min-height:280px;display:flex;align-items:flex-end;justify-content:flex-end}
+.massive-scene .wk .wk-issue-number{position:absolute;right:0;top:50%;transform:translateY(-58%);font-family:Manrope,sans-serif!important;font-size:clamp(150px,21vw,285px)!important;font-weight:800!important;letter-spacing:-.095em!important;line-height:1.1;padding-right:.1em;color:#d6d2c7!important;opacity:.1;-webkit-text-stroke:1px #d6d2c752;text-shadow:none;z-index:0;pointer-events:none}
+.massive-scene .wk .wk-vest-hero-mark{z-index:1;opacity:.32!important;mask-image:linear-gradient(150deg,#000 15%,#0009 55%,transparent 94%);-webkit-mask-image:linear-gradient(150deg,#000 15%,#0009 55%,transparent 94%)}
+.massive-scene .wk .wk-league-seal{z-index:2}
+@media(max-width:600px){.massive-scene .wk .wk-vest-edition{min-height:185px}.massive-scene .wk .wk-issue-number{font-size:190px!important}}
