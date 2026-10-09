@@ -723,8 +723,8 @@
 @media(min-width:701px){
  .massive-scene.massive-scene .wk .wk-row > img.wk-row-portrait,
  .massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible) > img.wk-row-portrait{
-  position:absolute!important;left:17%!important;right:auto!important;top:-42%!important;
-  width:39%!important;height:210%!important;max-width:none!important;
+  position:absolute!important;left:17%!important;right:auto!important;top:-37%!important;
+  width:39%!important;height:200%!important;max-width:none!important;
   object-fit:cover!important;object-position:center 28%!important;
   opacity:.25!important;filter:grayscale(.68) saturate(.78) contrast(1.10)!important;
   mask-image:linear-gradient(90deg,transparent 0%,#000 30%,#000 65%,transparent 100%)!important;
@@ -737,8 +737,8 @@
 @media(max-width:700px){
  .massive-scene.massive-scene .wk .wk-row > img.wk-row-portrait,
  .massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible) > img.wk-row-portrait{
-  position:absolute!important;left:24%!important;right:auto!important;top:-28%!important;
-  width:52%!important;height:156%!important;max-width:none!important;
+  position:absolute!important;left:24%!important;right:auto!important;top:-24%!important;
+  width:52%!important;height:148%!important;max-width:none!important;
   object-fit:cover!important;object-position:center 28%!important;
   opacity:.28!important;filter:grayscale(.68) saturate(.78) contrast(1.10)!important;
   mask-image:linear-gradient(90deg,transparent 0%,#000 30%,#000 65%,transparent 100%)!important;
