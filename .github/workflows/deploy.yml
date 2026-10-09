@@ -28,7 +28,7 @@ jobs:
           node-version: 24
 
       - name: Install MASSIVE dependencies
-        run: npm install
+        run: npm ci
 
 
       - name: Bundle complete payout archive fallback
@@ -53,6 +53,37 @@ jobs:
           node scripts/test-assets.mjs
 
 
+
+      # A failed Flat MASSIVE contract or responsive browser test blocks deployment.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start production preview
+        run: |
+          (npx vite preview --host 127.0.0.1 > /tmp/massive-preview.log 2>&1 &)
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/massive-preview.log
+          exit 1
+
+      - name: Responsive QA / 66 viewport checks
+        run: node scripts/audit-responsive.mjs
+
+      - name: Flat MASSIVE design / visual and interaction QA
+        run: node scripts/audit-design.mjs
+
+      - name: Preserve QA reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: massive-release-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/responsive/
+            artifacts/design/
+          if-no-files-found: ignore
+          retention-days: 21
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
