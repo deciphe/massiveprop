@@ -1,3 +1,4 @@
+import HomeAtmosphere from './HomeAtmosphere';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -274,6 +275,7 @@ export default function Web3Hub(){
   }
 
   return <main className="gp-site gp-home-theme" id="top">
+    <HomeAtmosphere />
     <header className="gp-nav">
       <a className="gp-wordmark" href="#top">MASSIVE<span>.</span></a>
       <nav className="gp-nav-links">

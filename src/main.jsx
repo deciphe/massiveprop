@@ -6,6 +6,7 @@ import "./massive-black-card.css";
 import "./components/web3/home-palette.css";
 import "./components/vestflow/flow-palette.css";
 import "./components/weekly/layout-repairs.css";
+import "./components/web3/home-atmosphere.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

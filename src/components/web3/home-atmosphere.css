@@ -1,0 +1,14 @@
+/* Full viewport atmosphere; content retains its readable alignment. Homepage only. */
+.gp-site.gp-home-theme{position:relative;isolation:isolate;width:100%;max-width:none;margin:0;border:0!important;background:#080809!important;overflow-x:clip}
+.home-atmosphere{position:fixed;inset:0;bottom:-320px;z-index:-1;pointer-events:none;overflow:hidden;contain:strict}
+.home-atmosphere canvas{position:absolute;inset:0;width:100%;height:100%;will-change:transform}
+.home-vignette{position:absolute;inset:0;background:linear-gradient(90deg,#080809a6,transparent 66%),linear-gradient(180deg,#08080940,transparent 35%,#08080918);pointer-events:none}
+.gp-site.gp-home-theme :is(.gp-hero-console,.review-hero,.firm-deck-section,.gp-degen-section,.gp-drops,.gp-footer){background:transparent!important;box-shadow:none!important;border-inline:0!important}
+.gp-site.gp-home-theme :is(.gp-vault-shell,.gp-leaderboard-stage,.review-row,.fn-bonus,.gp-outcome-story,.gp-fee-board,.raw-matrix,.gp-model-note){background:linear-gradient(140deg,#19191c66,#09090ba8)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:transparent!important;box-shadow:inset 0 1px #e8e5dc09,0 16px 40px -30px #0009!important}
+.gp-site.gp-home-theme .gp-edition{background:linear-gradient(135deg,#24242745,#0b0b0d66)!important;border-color:transparent!important;box-shadow:inset 0 1px #e8e5dc0b!important}
+.gp-site.gp-home-theme :is(.gp-edition,.review-row,.gp-leaderboard-stage):hover{background-color:#e8e5dc04!important;box-shadow:inset 0 1px #e8e5dc20,0 16px 40px -30px #0009!important}
+.gp-site.gp-home-theme :is(.gp-nav,.gp-footer){border-color:#e8e5dc0a!important}
+.gp-site.gp-home-theme .gp-leaderboard-glow{opacity:.25}
+.gp-site.gp-home-theme .gp-ghost-type{opacity:.35}
+@media(max-width:600px){.home-atmosphere{bottom:-220px}.home-moon{opacity:.8}.gp-site.gp-home-theme :is(.gp-vault-shell,.gp-leaderboard-stage,.review-row,.fn-bonus,.gp-outcome-story,.gp-fee-board){backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}}
+@media(prefers-reduced-motion:reduce){.home-atmosphere canvas{transform:none!important;will-change:auto}}
