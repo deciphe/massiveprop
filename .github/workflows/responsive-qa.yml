@@ -1,0 +1,31 @@
+name: Responsive QA (manual)
+on:
+  workflow_dispatch:
+jobs:
+  mobile-and-desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Start preview and audit all active routes
+        run: |
+          (npx vite preview --host 127.0.0.1 > /tmp/massive-preview.log 2>&1 & echo $! > /tmp/massive-preview.pid)
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/audit-responsive.mjs
+      - name: Upload issue screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: massive-responsive-qa
+          path: artifacts/responsive/
+          if-no-files-found: warn
