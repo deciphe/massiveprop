@@ -29,7 +29,7 @@ function RankArtwork({person,profiles}){
    <mask id={id+'-mask'} maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill={ref('portrait')}/></mask>
    <mask id={id+'-foot'} maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill={ref('bottom')}/></mask>
    <linearGradient id={id+'-mark-metal'} x2=".8" y2="1"><stop stopColor="#efede5"/><stop offset=".48" stopColor="#9d9c95"/><stop offset="1" stopColor="#44443f"/></linearGradient>
-   <filter id={id+'-portrait-color'} colorInterpolationFilters="sRGB"><feColorMatrix type="saturate" values=".6"/></filter><filter id={id+'-mono'} colorInterpolationFilters="sRGB"><feColorMatrix type="saturate" values="0"/></filter>
+   <filter id={id+'-portrait-color'} colorInterpolationFilters="sRGB"><feColorMatrix type="saturate" values=".42"/></filter><filter id={id+'-mono'} colorInterpolationFilters="sRGB"><feColorMatrix type="saturate" values="0"/></filter>
   </defs>
   <rect width="1200" height="800" fill="#080809"/><rect x="18" y="18" width="1164" height="764" rx="14" fill="none" stroke="#d4d0da" strokeOpacity=".16" strokeWidth="1" strokeDasharray="1 7" strokeLinecap="round"/><rect width="1200" height="800" fill={ref('glow')}/>
   <g fill="#c6c6bf">{moonPaths.map((d,i)=><path key={i} d={d} opacity={.20+i*.065}/>)}</g>
