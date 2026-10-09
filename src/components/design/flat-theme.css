@@ -165,3 +165,30 @@
 .flat-podium-face,.flat-podium-card:hover .flat-podium-face,.flat-list-avatar{filter:saturate(1) contrast(1.03)!important}
 .massive-scene.massive-scene .wk .wk-row-portrait,.massive-scene.massive-scene .wk .wk-profile-portrait{filter:saturate(1) contrast(1.03)!important}
 @media(max-width:600px){.massive-scene.massive-scene :is(.vf,.fh) .fhm-legend{gap:10px!important;flex-wrap:wrap!important}.massive-scene.massive-scene :is(.vf,.fh) .fhm-legend span{font-size:11px!important}}
+
+/* The expanded shortlist belongs to the same Flat Massive surface. */
+.massive-scene.massive-scene .gp-home-theme .firm-deck-header h2{font:800 clamp(36px,4.5vw,62px)/1.05 Manrope,sans-serif!important;letter-spacing:-.065em!important;color:#eeeae2!important}
+.massive-scene.massive-scene .gp-home-theme .firm-deck-header p{display:none}
+.massive-scene.massive-scene .gp-home-theme .review-list{display:grid;gap:16px!important}
+.massive-scene.massive-scene .gp-home-theme .review-row{background:transparent!important;border:0!important;border-top:1px solid #ddd7c82d!important;border-radius:0!important;box-shadow:none!important;padding:26px 0!important;gap:24px!important;grid-template-columns:minmax(170px,.9fr) minmax(220px,1.8fr) minmax(155px,.75fr) minmax(145px,.7fr)!important}
+.massive-scene.massive-scene .gp-home-theme .review-row:before,.massive-scene.massive-scene .gp-home-theme .review-row:after{display:none!important}
+.massive-scene.massive-scene .gp-home-theme .review-identity{min-width:0;gap:12px!important}
+.massive-scene.massive-scene .gp-home-theme .review-identity h3{font:800 30px/1.1 Manrope,sans-serif!important;letter-spacing:-.06em!important;color:#eeeae2!important}
+.massive-scene.massive-scene .gp-home-theme :is(.review-identity>div>span,.review-verdict p,.review-facts dt,.review-offer,.firm-sort-select,.review-disclosure){font:700 13px/1.5 Manrope,sans-serif!important;letter-spacing:-.02em!important;color:#aaa69b!important}
+.massive-scene.massive-scene .gp-home-theme .review-verdict h4{font:800 19px/1.35 Manrope,sans-serif!important;letter-spacing:-.04em!important;color:#e5e1d7!important}
+.massive-scene.massive-scene .gp-home-theme .review-rank{font:800 20px/1 Manrope,sans-serif!important;letter-spacing:-.055em!important;color:#b5afa2!important}
+.massive-scene.massive-scene .gp-home-theme .review-facts dd{font:800 17px/1.4 Manrope,sans-serif!important;letter-spacing:-.035em!important;color:#ddd8cc!important}
+.massive-scene.massive-scene .gp-home-theme .review-facts>div:first-child dd{font-size:27px!important}
+.massive-scene.massive-scene .gp-home-theme :is(.pick-label,.review-actions button,.review-actions a){font:800 13px/1.4 Manrope,sans-serif!important;letter-spacing:-.02em!important;color:#d7d2c5!important}
+.massive-scene.massive-scene .gp-home-theme .review-actions>a{border:0!important;background:none!important;padding:10px 0!important;box-shadow:none!important;justify-content:space-between!important;font-size:17px!important}
+.massive-scene.massive-scene .gp-home-theme .review-actions button{background:none!important;border:0!important;padding:10px 0!important}
+.massive-scene.massive-scene .gp-home-theme .review-identity .gp-logo{border:0!important;background:none!important;box-shadow:none!important}
+.massive-scene.massive-scene .gp-home-theme .firm-sort-select select{font:800 13px Manrope,sans-serif!important;color:#ded9cd!important;background:#161614!important;border:1px solid #ded8c526!important;border-radius:5px!important}
+.massive-scene.massive-scene .gp-home-theme .fn-bonus{background:none!important;border:0!important;border-block:1px solid #ddd7c822!important;border-radius:0!important;box-shadow:none!important}
+.massive-scene.massive-scene .gp-home-theme .fn-bonus h3{font:800 27px Manrope,sans-serif!important;letter-spacing:-.05em!important}
+.massive-scene.massive-scene .gp-home-theme .fn-bonus :is(p,span,a,button){font-family:Manrope,sans-serif!important;font-weight:800!important;color:#c6c1b5!important;letter-spacing:-.02em!important}
+/* Slightly clearer edges, without adding another fill over the scene. */
+.massive-scene.massive-scene .vf :is(.vf-referral,.vf-network,.vf-stats article,.vf-chart-panel,.vf-feed,.vf-wallet,.vf-gallery-card,.vf-top-transfers){box-shadow:inset 0 1px #e3ddcb30,inset 1px 0 #e3ddcb12,inset 0 -1px #e3ddcb19!important}
+.massive-scene.massive-scene .vf .vf-node{border-color:#e3ddcb30!important;box-shadow:inset 0 1px #e3ddcb10!important}
+@media(max-width:1100px){.massive-scene.massive-scene .gp-home-theme .review-row{grid-template-columns:minmax(160px,1fr) minmax(220px,2fr)!important}.massive-scene.massive-scene .gp-home-theme .review-actions{align-self:end}}
+@media(max-width:600px){.massive-scene.massive-scene .gp-home-theme .review-row{grid-template-columns:1fr!important;gap:18px!important;padding:24px 0!important}.massive-scene.massive-scene .gp-home-theme .review-identity h3{font-size:32px!important}.massive-scene.massive-scene .gp-home-theme .review-actions{display:flex!important;flex-wrap:wrap!important;gap:10px 22px!important}}
