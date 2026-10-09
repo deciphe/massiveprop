@@ -106,3 +106,25 @@
   padding-top:18px;
   min-height:46px;
 }
+
+/* Weekly rank-card edition signature — restrained, flat, and part of the JPG. */
+.wk-award-canvas .wk-award-place{position:relative;min-width:0}
+.wk-award-canvas .wk-award-place .flat-podium-card{
+ padding-bottom:75px!important;
+}
+.wk-award-canvas .wk-award-edition{
+ position:absolute;left:16px;right:16px;bottom:17px;z-index:5;
+ display:flex;flex-direction:column;gap:5px;pointer-events:none;
+ border-top:1px solid #d8d0bd36;padding-top:11px;
+ color:#ded8cb;font-family:Manrope,sans-serif;
+}
+.wk-award-canvas .wk-award-edition span{
+ font-size:8px;font-weight:800;letter-spacing:.19em;color:#aaa49a;
+}
+.wk-award-canvas .wk-award-edition strong{
+ font-size:11px;font-weight:700;line-height:1.25;letter-spacing:-.015em;
+ white-space:nowrap;color:#ddd5c6;
+}
+.wk-award-canvas .wk-award-place-1 .wk-award-edition strong{color:#e4d9bf}
+.wk-award-canvas .wk-award-place-2 .wk-award-edition strong{color:#d8dddb}
+.wk-award-canvas .wk-award-place-3 .wk-award-edition strong{color:#cdbeb3}
