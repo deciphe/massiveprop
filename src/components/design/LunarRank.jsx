@@ -15,11 +15,12 @@ const terrain=(()=>{
 export default function LunarRank({rank}){
  const id='lunar-rank-'+useId().replace(/:/g,'');
  const numeral=String(rank).padStart(2,'0');
+ const metal=rank===1?['#f1e7cc','#caba96','#e4d6b5','#9d8a64']:rank===2?['#f0f1ee','#c1c6c7','#e2e5e2','#929b9d']:['#decabb','#b79b85','#d0b49e','#8d7160'];
  const text=<text x="12" y="249" fontFamily="Manrope, sans-serif" fontWeight="800" fontSize="266" letterSpacing="-24">{numeral}</text>;
  return <svg className="flat-lunar-rank" viewBox="0 0 350 280" role="img" aria-label={'Rank '+rank}>
- <defs><clipPath id={id}>{text}</clipPath><linearGradient id={id+'-base'} x2=".7" y2="1"><stop stopColor="currentColor" stopOpacity=".38"/><stop offset="1" stopColor="currentColor" stopOpacity=".07"/></linearGradient></defs>
+ <defs><clipPath id={id}>{text}</clipPath><linearGradient id={id+'-base'} x1="0" y1="0" x2=".8" y2="1"><stop stopColor={metal[0]}/><stop offset=".4" stopColor={metal[1]}/><stop offset=".65" stopColor={metal[2]}/><stop offset="1" stopColor={metal[3]}/></linearGradient></defs>
  <g fill={'url(#'+id+'-base)'}>{text}</g>
- <g clipPath={'url(#'+id+')'} fill="currentColor">{terrain.map((d,i)=><path key={i} d={d} opacity={.27+i*.14}/>)}</g>
+ <g clipPath={'url(#'+id+')'} fill="#080809" opacity=".2">{terrain.map((d,i)=><path key={i} d={d} opacity={.27+i*.14}/>)}</g>
  <g fill="none" stroke="currentColor" strokeWidth=".55" opacity=".3">{text}</g>
  </svg>;
 }

@@ -287,3 +287,20 @@
 @media(prefers-reduced-motion:reduce){.massive-scene.massive-scene .vf .vf-travelling-star{animation:none!important;offset-distance:50%;opacity:.35}.massive-scene.massive-scene .vf .vf-moon-orbit{animation:none!important}}
 
 .vf-flow-moon,.vf-flow-moon .flat-moon-avatar{display:block!important;width:14px!important;height:14px!important;overflow:visible;pointer-events:none}
+
+/* Visible medal edges and opaque ranks: texture is detail, never lost contrast. */
+.flat-podium-card.flat-place-1{--rank-metal:#d5c49f}
+.flat-podium-card.flat-place-2{--rank-metal:#cdd1ce}
+.flat-podium-card.flat-place-3{--rank-metal:#bea48f}
+.flat-podium-card:before{opacity:.62}
+.flat-podium-card.flat-place-1:before{opacity:.9}
+.flat-podium-card .flat-lunar-rank{filter:drop-shadow(0 2px 2px #08080980);width:69%;left:12px;bottom:2px}
+.flat-podium-card.flat-place-1 .flat-lunar-rank{width:77%;left:10px}
+.flat-podium-card .flat-podium-face{mask-image:linear-gradient(90deg,transparent,#000 42%,#000 82%,transparent),linear-gradient(transparent,#000 12%,#000 70%,transparent 99%);mask-composite:intersect}
+.flat-podium-card .flat-podium-name{font-weight:800;font-size:26px;letter-spacing:-.045em}
+.flat-podium-card.flat-place-1 .flat-podium-name{font-size:29px}
+.flat-podium-card .flat-podium-tag{color:#cdc6b7}
+.flat-podium-card a.flat-podium-tag{display:table;width:auto;max-width:100%;padding:3px 0 6px;border-bottom:1px solid #d7cbb745}
+.flat-podium-card a.flat-podium-tag:hover{border-color:#e8dfc9;color:#eeeae2}
+.flat-podium-card .flat-podium-metrics{padding-top:16px;border-top:1px solid #e1d7c31c}
+@media(max-width:700px){.flat-podium-card .flat-podium-name{font-size:20px}.flat-podium-card.flat-place-1 .flat-podium-name{font-size:24px}}
