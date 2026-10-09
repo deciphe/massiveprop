@@ -254,3 +254,12 @@
 .massive-scene.massive-scene :is(.vf,.fh) .fhm-head{gap:12px;flex-wrap:wrap}
 .massive-scene.massive-scene :is(.wk,.vf,.fh,.gp-home-theme) :is(input,select,button){max-width:100%}
 @media(max-width:700px){.massive-scene.massive-scene .vf :is(.vf-top-transfers,.vf-chart-panel,.vf-feed){padding:18px!important;margin-block:20px!important}.massive-scene.massive-scene .vf .vf-stats{gap:16px!important;margin-block:20px!important}.massive-scene.massive-scene .vf .vf-panel-head{gap:10px!important;margin-bottom:18px!important}}
+
+/* Restrained celestial flow; pause and reduced-motion apply to every particle. */
+.massive-scene.massive-scene .vf .vf-travelling-star{offset-distance:0%;offset-rotate:0deg;offset-anchor:0px 0px;animation:vf-star-travel 8s linear infinite;color:#d5d0c2;opacity:.65;pointer-events:none}
+.massive-scene.massive-scene .vf .vf-moon-orbit{transform-origin:150px 150px;animation:vf-lunar-orbit 24s linear infinite;color:#ddd7c7;opacity:.75}
+.massive-scene.massive-scene .vf .vf-wire .vf-signal{opacity:0!important}
+.massive-scene.massive-scene .vf .vf-network.is-paused :is(.vf-travelling-star,.vf-moon-orbit){animation-play-state:paused!important}
+@keyframes vf-star-travel{0%{offset-distance:0%;opacity:0}10%{opacity:.7}88%{opacity:.7}100%{offset-distance:100%;opacity:0}}
+@keyframes vf-lunar-orbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.massive-scene.massive-scene .vf .vf-travelling-star{animation:none!important;offset-distance:50%;opacity:.35}.massive-scene.massive-scene .vf .vf-moon-orbit{animation:none!important}}
