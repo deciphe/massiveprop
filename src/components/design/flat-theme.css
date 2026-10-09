@@ -238,3 +238,19 @@
 .flat-podium-card:before{background:linear-gradient(var(--rank-metal),var(--rank-metal)) top left/42px 1px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) top left/1px 45px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) bottom right/50px 1px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) bottom right/1px 50px no-repeat;opacity:.42}
 .flat-place-1:before{opacity:.64}
 @media(max-width:700px){.flat-lunar-rank{width:76%}.flat-place-1 .flat-lunar-rank{width:78%}}
+
+/* Keep panel outlines outside their content and separate adjacent surfaces. */
+.massive-scene.massive-scene .vf :is(.vf-top-transfers,.vf-chart-panel,.vf-feed){padding:26px!important;margin-block:24px!important;min-width:0;box-sizing:border-box}
+.massive-scene.massive-scene .vf .vf-stats{gap:18px!important;margin-block:24px!important}
+.massive-scene.massive-scene .vf .vf-stats+.vf-chart-panel{margin-top:24px!important}
+.massive-scene.massive-scene .vf .vf-panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px!important;flex-wrap:wrap;margin:0 0 22px!important;padding:0!important;min-width:0}
+.massive-scene.massive-scene .vf .vf-panel-head h2{margin:0!important;line-height:1.15!important;padding-block:2px!important}
+.massive-scene.massive-scene .vf .vf-top-caption{line-height:1.5!important;padding-block:3px!important}
+.massive-scene.massive-scene .vf .vf-gallery{gap:18px!important}
+.massive-scene.massive-scene .vf .vf-stats article{min-width:0;overflow:hidden}
+.massive-scene.massive-scene .vf .vf-stats strong{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 10px;overflow-wrap:anywhere}
+.massive-scene.massive-scene :is(.vf,.fh) .fhm{margin-top:20px!important;margin-bottom:24px!important;padding:18px!important}
+.massive-scene.massive-scene .fh .fhm-compact{margin-inline:0!important;margin-top:18px!important;margin-bottom:18px!important}
+.massive-scene.massive-scene :is(.vf,.fh) .fhm-head{gap:12px;flex-wrap:wrap}
+.massive-scene.massive-scene :is(.wk,.vf,.fh,.gp-home-theme) :is(input,select,button){max-width:100%}
+@media(max-width:700px){.massive-scene.massive-scene .vf :is(.vf-top-transfers,.vf-chart-panel,.vf-feed){padding:18px!important;margin-block:20px!important}.massive-scene.massive-scene .vf .vf-stats{gap:16px!important;margin-block:20px!important}.massive-scene.massive-scene .vf .vf-panel-head{gap:10px!important;margin-bottom:18px!important}}
