@@ -706,3 +706,14 @@
   left:30%!important;width:43%!important;top:-7%!important;height:114%!important;
  }
 }
+
+/* Mobile-only portrait placement: centre the face in the clear channel
+   between trader identity and payout, without touching desktop. */
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-row > img.wk-row-portrait,
+ .massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible) > img.wk-row-portrait{
+  left:43%!important;width:29%!important;right:auto!important;
+  top:-7%!important;height:114%!important;
+  object-fit:cover!important;object-position:center 30%!important;
+ }
+}
