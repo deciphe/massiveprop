@@ -217,3 +217,56 @@
   max-width:100%;box-sizing:border-box;
  }
 }
+
+/* Final narrow-screen geometry: consistent vertical rhythm and balanced columns. */
+@media(max-width:760px){
+ .vf .vf-network{padding-bottom:14px!important}
+ .vf .vf-network-top{padding:17px 15px 8px!important;min-height:0!important}
+ .vf .vf-flow-stage{
+  padding:4px 14px 15px!important;column-gap:14px!important;row-gap:18px!important;
+ }
+ .vf .vf-flow-stage .vf-core{
+  width:min(100%,276px)!important;max-width:276px!important;margin:0 auto 2px!important;
+ }
+ .vf .vf-core-copy{padding:28px 36px!important;gap:7px!important}
+ .vf .vf-core-copy strong{font-size:clamp(24px,7vw,34px)!important}
+ .vf .vf-core-copy small{font-size:clamp(9px,2.35vw,11px)!important;line-height:1.35!important}
+ .vf .vf-flow-stage .vf-node-column,
+ .vf .vf-flow-stage .vf-node-column.in,
+ .vf .vf-flow-stage .vf-node-column.out{gap:8px!important}
+ .vf .vf-node-column .vf-side-label{
+  min-height:43px!important;margin-bottom:0!important;letter-spacing:.015em!important;
+ }
+ .vf .vf-node-column .vf-node{
+  min-height:84px!important;padding:11px 9px!important;gap:5px!important;
+  align-items:flex-start!important;
+ }
+ .vf .vf-node-info{gap:8px!important}
+ .vf .vf-node-info>span{
+  line-height:1.35!important;font-size:clamp(9px,2.3vw,11px)!important;
+  overflow-wrap:anywhere!important;
+ }
+ .vf .vf-node-info strong{
+  line-height:1.15!important;font-size:clamp(19px,4.9vw,25px)!important;
+  align-items:baseline!important;
+ }
+ .vf .vf-network-bottom{padding:12px 14px 0!important;margin:0!important}
+ .vf .vf-stats{gap:13px!important}
+ .vf .vf-stats article{min-width:0!important;padding:18px 16px!important}
+ .vf .vf-stats strong{max-width:100%;font-size:clamp(23px,6.4vw,34px)!important;letter-spacing:-.045em}
+}
+@media(max-width:390px){
+ .vf .vf-flow-stage{padding-inline:10px!important;column-gap:10px!important}
+ .vf .vf-core-copy{padding-inline:26px!important}
+}
+/* Flow moon really travels around the balance ring.
+   Keep its SVG centre at the 150,150 origin for a circular path. */
+.vf .vf-moon-orbit{
+ transform-box:view-box;transform-origin:50% 50%;
+ animation:vf-lunar-revolution 28s linear infinite;
+}
+@keyframes vf-lunar-revolution{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.vf .is-paused .vf-moon-orbit{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){
+ .vf .vf-moon-orbit{animation:none!important}
+}
