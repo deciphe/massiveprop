@@ -1,3 +1,4 @@
+import MoonAvatar from '../design/MoonAvatar';
 import MoonLoader from '../design/MoonLoader';
 import FlowHeatmap from './FlowHeatmap';
 import PayoutLeaders from './PayoutLeaders';
@@ -16,8 +17,8 @@ import '../design/collector-surfaces.css';
 const money=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:2,minimumFractionDigits:2}).format(n);
 const compact=n=>new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n);
 const short=a=>a.slice(0,6)+'…'+a.slice(-4);
-function FlowParticle({moon=false}){
- return <g className="vf-celestial-glyph">{moon?<><path d="M-5-2L-2-5 3-4 5 0 3 4-1 5-5 2Z" fill="currentColor" opacity=".16"/>{[[-3,-1],[-1,-3],[1,-3],[-3,1],[-1,0],[1,-1],[-1,3],[1,2],[3,0]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r={i%3===0?.7:.45} fill="currentColor"/>)}</>:<><path d="M0-5L1.2-1.2 5 0 1.2 1.2 0 5-1.2 1.2-5 0-1.2-1.2Z" fill="currentColor" opacity=".7"/><circle r="1" fill="currentColor"/></>}</g>;
+function FlowParticle(){
+ return <foreignObject x="-7" y="-7" width="14" height="14"><div xmlns="http://www.w3.org/1999/xhtml" className="vf-flow-moon"><MoonAvatar seed="massive-lunar"/></div></foreignObject>;
 }
 function FlowScene({data,summary,onSelect,selected,paused,config,days}) {
  const {wallet:WALLET,explorer:EXPLORER}=config;

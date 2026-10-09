@@ -263,3 +263,5 @@
 @keyframes vf-star-travel{0%{offset-distance:0%;opacity:0}10%{opacity:.7}88%{opacity:.7}100%{offset-distance:100%;opacity:0}}
 @keyframes vf-lunar-orbit{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.massive-scene.massive-scene .vf .vf-travelling-star{animation:none!important;offset-distance:50%;opacity:.35}.massive-scene.massive-scene .vf .vf-moon-orbit{animation:none!important}}
+
+.vf-flow-moon,.vf-flow-moon .flat-moon-avatar{display:block!important;width:14px!important;height:14px!important;overflow:visible;pointer-events:none}
