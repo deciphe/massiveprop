@@ -1,3 +1,5 @@
+import HomeAtmosphere from './components/web3/HomeAtmosphere';
+import './components/design/site-atmosphere.css';
 import { lazy, Suspense, useEffect, useState } from "react";
 import Web3Hub from "./components/web3/Web3Hub";
 
@@ -10,7 +12,7 @@ const FlowHub = lazy(() => import("./components/vestflow/FlowHub"));
 const Vestflow = lazy(() => import("./components/vestflow/Vestflow"));
 const TheBook = lazy(() => import("./components/learn/LearnPerps"));
 
-export default function App() {
+function RoutedApp() {
   const [hash, setHash] = useState(() => typeof window === "undefined" ? "" : window.location.hash);
 
   useEffect(() => {
@@ -42,3 +44,5 @@ export default function App() {
   Components remain under src/components/payoutlab and the exact pre-pivot
   site is preserved on branch: archive/payout-site-2026-09-17
 */
+
+export default function App(){return <div className="massive-scene"><HomeAtmosphere/><RoutedApp/></div>}
