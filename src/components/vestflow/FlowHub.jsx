@@ -10,10 +10,10 @@ import {combineFlows} from '../../lib/flow-metrics.js';
 import {isPayoutRecipientTransfer} from '../../lib/flow-classification.js';
 import {BRAND_ASSETS} from '../../lib/brand-assets.js';
 const firms=[
- {id:'vest',name:'Vest',title:'vest',logo:BRAND_ASSETS.vest,route:'#vestflow',tag:'03 NETWORKS',description:'One view. Three chains.',detail:'Arbitrum · Base · Ethereum',color:'#b7c89d',points:'16,48 42,48 60,26 91,26 115,61 142,61 163,36 205,36 225,19 260,19'},
- {id:'breakout',name:'Breakout',title:'breakout',logo:BRAND_ASSETS.breakout,route:'#breakoutflow',tag:'ETHEREUM',description:'Follow the wallet activity.',detail:'USDC flow · recipient rankings',color:'#b6b7d0',points:'16,59 40,59 66,38 90,38 113,49 144,49 171,24 203,24 223,36 260,36'},
- {id:'nova',name:'Hypernova',title:'nova',logo:BRAND_ASSETS.hypernova,route:'#novaflow',tag:'RESERVE + SETTLEMENT',description:'Two wallets. A wider picture.',detail:'Reserve split · NovaPulse · pass rates',color:'#bda5d2',points:'16,55 43,55 68,31 99,31 119,47 148,47 175,17 211,17 234,29 260,29'},
- {id:'propr',name:'Propr',title:'propr',logo:BRAND_ASSETS.propr,route:'#proprflow',tag:'FLOW + PROGRAM STATS',description:'From assessment to payout.',detail:'Propr Pulse · outcomes · payout timing',color:'#9ebdb3',points:'16,60 45,60 66,43 96,43 122,24 153,24 175,38 210,38 236,15 260,15'},
+ {id:'vest',name:'Vest',title:'vest',logo:BRAND_ASSETS.vest,route:'#vestflow',tag:'03 NETWORKS',description:'One view. Three chains.',detail:'Arbitrum · Base · Ethereum',color:'rgb(var(--home-silver))',points:'16,48 42,48 60,26 91,26 115,61 142,61 163,36 205,36 225,19 260,19'},
+ {id:'breakout',name:'Breakout',title:'breakout',logo:BRAND_ASSETS.breakout,route:'#breakoutflow',tag:'ETHEREUM',description:'Follow the wallet activity.',detail:'USDC flow · recipient rankings',color:'rgb(var(--home-silver))',points:'16,59 40,59 66,38 90,38 113,49 144,49 171,24 203,24 223,36 260,36'},
+ {id:'nova',name:'Hypernova',title:'nova',logo:BRAND_ASSETS.hypernova,route:'#novaflow',tag:'RESERVE + SETTLEMENT',description:'Two wallets. A wider picture.',detail:'Reserve split · NovaPulse · pass rates',color:'rgb(var(--home-silver))',points:'16,55 43,55 68,31 99,31 119,47 148,47 175,17 211,17 234,29 260,29'},
+ {id:'propr',name:'Propr',title:'propr',logo:BRAND_ASSETS.propr,route:'#proprflow',tag:'FLOW + PROGRAM STATS',description:'From assessment to payout.',detail:'Propr Pulse · outcomes · payout timing',color:'rgb(var(--home-silver))',points:'16,60 45,60 66,43 96,43 122,24 153,24 175,38 210,38 236,15 260,15'},
 ];
 const sourcesFor=id=>id==='vest'?VEST_CHAINS:id==='nova'?NOVA_WALLETS:[FLOW_CONFIGS[id]];
 const dailyCash=n=>new Intl.NumberFormat('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
