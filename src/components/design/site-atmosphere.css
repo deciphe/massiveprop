@@ -78,3 +78,17 @@
 .massive-scene .wk .wk-view-switch button.active{background:linear-gradient(135deg,#393540,#201e26)!important;color:#ece8ef!important;border-color:#a6a0b12c!important;box-shadow:inset 0 1px #ded9e513,0 0 16px #6357790b!important}
 .massive-scene .wk .wk-view-switch button:hover:not(.active){background:#8372930d!important;color:#e5e1e9!important}
 .massive-scene .wk .wk-export{font-size:11px;color:#c9c6ce!important}
+
+/* Retain useful context without editorial micro-labels or hairline type. */
+.massive-scene :is(p,small,label,button,select,summary){font-family:Manrope,sans-serif;font-weight:600}
+.massive-scene :is(.wk-league-seal b,.wk-week-current,.wk-weekly-tools,.wk-overview span,.vf-status,.fh-share,.af-intro-foot,.atm-hero-receipt small,.gp-next-note){font-family:Manrope,sans-serif!important;font-weight:700!important;letter-spacing:.01em!important;line-height:1.5}
+.massive-scene .wk .wk-league-seal b{font-size:13px!important;color:#bcb8c3!important;white-space:normal}
+.massive-scene .wk .wk-hero-line{padding-top:32px}
+.massive-scene .wk .wk-vest-hero-mark{opacity:.2!important;filter:grayscale(1)!important;mask-image:linear-gradient(145deg,#000 20%,transparent 94%);-webkit-mask-image:linear-gradient(145deg,#000 20%,transparent 94%)}
+.massive-scene .wk .wk-vest-edition{min-height:220px}
+.massive-scene .wk .wk-league-seal{position:relative;z-index:2;margin-top:auto}
+.massive-scene .wk .wk-arena-title{justify-content:flex-start}
+.massive-scene .wk .wk-download{font-family:Manrope,sans-serif!important;font-weight:750!important;letter-spacing:0!important}
+@media(max-width:600px){.massive-scene .wk .wk-vest-edition{min-height:130px}.massive-scene .wk .wk-league-seal b{font-size:12px!important}}
+
+.massive-scene :is(.wk-primary,.wk-profile-label,.wk-profile-address,.wk-evidence small,.wk-nav-title,.vf-core-copy>span,.vf-core-copy small,.vf-stats span,.vf-feed-head,.fh-card-foot,.fh-glance em,.pc-section-label,.pc-example,.pc-mini,.af-kicker,.atm-receipt-top,.atm-receipt-line,.gp-eyebrow,.gp-edition-label,.gp-vault-head,.gp-drops-copy){font-family:Manrope,sans-serif!important;font-weight:700!important;letter-spacing:.01em!important}

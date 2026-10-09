@@ -216,23 +216,17 @@ function LeaderboardLanding(){
     <a className="gp-leaderboard-stage" href="#leaderboard" aria-label="Open the MASSIVE trader leaderboard">
       <div className="gp-leaderboard-glow" aria-hidden="true"/>
       <div className="gp-leaderboard-copy">
-        <span className="gp-leaderboard-kicker">MASSIVE / TRADER LEAGUE</span>
-        <h2 id="gp-leaderboard-title">Names worth <strong>knowing.</strong></h2>
-        <p>Public onchain payouts, ranked across Vest, Breakout, Hypernova and Propr. Quarterly seasons plus a live Weekly Top 20.</p>
+
+        <h2 id="gp-leaderboard-title">The <strong>leaderboard.</strong></h2>
+        <p>Season standings and the weekly Top 20.</p>
         <span className="gp-leaderboard-cta">Enter the leaderboard <ArrowUpRight size={17}/></span>
       </div>
       <div className="gp-leaderboard-podium" aria-hidden="true">
-        <div className="gp-home-rank gp-home-rank-2"><span>02</span><small>SECOND</small></div>
-        <div className="gp-home-rank gp-home-rank-1"><span>01</span><small>THE BOARD</small><b>MASSIVE.</b></div>
-        <div className="gp-home-rank gp-home-rank-3"><span>03</span><small>THIRD</small></div>
+        <div className="gp-home-rank gp-home-rank-2"><span>02</span></div>
+        <div className="gp-home-rank gp-home-rank-1"><span>01</span></div>
+        <div className="gp-home-rank gp-home-rank-3"><span>03</span></div>
       </div>
-      <div className="gp-leaderboard-meta">
-        <span><b>SEASON</b> Quarterly standings</span>
-        <i/>
-        <span><b>WEEKLY</b> Top 20</span>
-        <i/>
-        <span><b>EVIDENCE</b> Public payouts</span>
-      </div>
+
     </a>
   </section>;
 }

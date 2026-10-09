@@ -25,18 +25,18 @@ function RoutedApp() {
   }, []);
 
   const route = hash.split("?")[0];
-  if(["#vestpdf","#vestatm","#lesson1"].includes(route))return <Suspense fallback={<div style={{background:"#090a0e",minHeight:"100vh"}}/>}><VestPdf/></Suspense>;
-  if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#0a0b0d",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
-  if(route === "#thebook")return <Suspense fallback={<div style={{background:"#f7f3fb",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
+  if(["#vestpdf","#vestatm","#lesson1"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><VestPdf/></Suspense>;
+  if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
+  if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
 
-  if(route === "#perpcopier")return <Suspense fallback={<div style={{background:"#070708",minHeight:"100vh"}}/>}><PerpCopier/></Suspense>;
+  if(route === "#perpcopier")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><PerpCopier/></Suspense>;
 
-  if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#070708",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
+  if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
 
   const flow=route === "#vestflow" ? "vest" : null;
-  if(route === "#leaderboard")return <Suspense fallback={<div style={{background:"#0a0e0c",minHeight:"100vh"}}/>}><Weekly/></Suspense>;
-  if(["#flow","#breakoutflow","#novaflow","#proprflow"].includes(route))return <Suspense fallback={<div style={{background:"#090b0a",minHeight:"100vh"}}/>}><FlowHub/></Suspense>;
-  return flow ? <Suspense fallback={<div style={{background:'#090b0a',color:'#b6ff4a',minHeight:'100vh',padding:40}}>Loading flow…</div>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
+  if(route === "#leaderboard")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Weekly/></Suspense>;
+  if(["#flow","#breakoutflow","#novaflow","#proprflow"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><FlowHub/></Suspense>;
+  return flow ? <Suspense fallback={<div style={{background:'#080809',color:'#e8e5dc',minHeight:'100vh',padding:40}}>Loading flow…</div>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
 }
 
 /*

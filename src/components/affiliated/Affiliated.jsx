@@ -17,7 +17,7 @@ export default function Affiliated(){
  return <main className="af-page">
   <header className="af-nav"><a href="#" className="af-brand">MASSIVE<span>.</span></a><span className="af-nav-edition">THE BLACK CARD / AFFILIATED</span><a href="#leaderboard" className="af-back"><ArrowLeft size={14}/> Leaderboard</a></header>
   <div className="af-wrap">
-   <section className="af-intro"><div className="af-kicker"><i/> MASSIVE × VEST <span>01 / AFFILIATE STATEMENT</span></div><h1>Affiliated<span>.</span></h1><div className="af-intro-foot"><p>The numbers speak.</p><span>SEP 29 — OCT 08, 2026</span></div></section>
+   <section className="af-intro"><div className="af-kicker"><i/> MASSIVE × VEST <span>01 / AFFILIATE STATEMENT</span></div><h1>Affiliated<span>.</span></h1><div className="af-intro-foot"><span>SEP 29 — OCT 08, 2026</span></div></section>
    <section className="af-hero" aria-label="Affiliate earnings summary">
     <div className="af-card-grain" aria-hidden="true"/><EarningsTrend/><span className="af-ghost" aria-hidden="true">M.</span>
     <div className="af-card-top"><span className="af-card-wordmark">MASSIVE<span> / BLACK CARD</span></span><span className="af-pending"><i/> PENDING COMMISSIONS</span></div>
