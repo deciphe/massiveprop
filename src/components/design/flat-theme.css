@@ -199,10 +199,10 @@
 .massive-scene.massive-scene .wk .wk-row:hover,.massive-scene.massive-scene .wk .wk-row:focus-visible{box-shadow:inset 0 1px #eee4ce28,0 0 28px -16px #e5ddc517!important}
 /* Lunar medal numerals: strong flat type, restrained metal tones. */
 .flat-podium-card{--rank-metal:#c7c9c7}
-.flat-podium-card.flat-place-1{--rank-metal:#d1c29d}
-.flat-podium-card.flat-place-2{--rank-metal:#c7ccce}
-.flat-podium-card.flat-place-3{--rank-metal:#ba9f89}
-.flat-podium-card .flat-podium-rank{z-index:2;opacity:.88!important;color:var(--rank-metal)!important;font-weight:800!important;text-shadow:none!important;background:radial-gradient(circle,#08080988 .7px,transparent 1px) 0 0/3px 3px,linear-gradient(var(--rank-metal),var(--rank-metal));background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:none!important}
+.flat-podium-card.flat-place-1{--rank-metal:#cec5b0}
+.flat-podium-card.flat-place-2{--rank-metal:#c9cac6}
+.flat-podium-card.flat-place-3{--rank-metal:#b9aa9b}
+.flat-podium-card .flat-podium-rank{z-index:2;opacity:.88!important;color:var(--rank-metal)!important;font-weight:800!important;text-shadow:none!important;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22240%22%20height%3D%22240%22%3E%3Cfilter%20id%3D%22g%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.78%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%20seed%3D%2223%22%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200.04%200%200%200%200%200.04%200%200%200%200%200.035%200%200%200%20.27%200%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23g)%22%2F%3E%3C%2Fsvg%3E"),radial-gradient(ellipse at 85% 90%,#08080965,transparent 70%),linear-gradient(var(--rank-metal),var(--rank-metal));background-size:180px 180px,100% 100%,100% 100%;background-repeat:repeat,no-repeat,no-repeat;background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:none!important}
 .flat-podium-card.flat-place-1 .flat-podium-rank{opacity:.96!important}
 .flat-podium-card.flat-place-2 .flat-podium-rank{opacity:.85!important}
 .flat-podium-card.flat-place-3 .flat-podium-rank{opacity:.79!important}
