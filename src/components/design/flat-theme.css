@@ -892,5 +892,5 @@
    Does not affect podiums, exported cards, or profile previews. */
 .massive-scene.massive-scene .wk .wk-row[data-trader="gigaxtrader"] > img.wk-row-portrait,
 .massive-scene.massive-scene .wk .wk-row[data-trader="gigaxtrader"]:is(:hover,:focus-visible) > img.wk-row-portrait{
- object-position:center 38%!important;
+ object-position:center 48%!important;
 }
