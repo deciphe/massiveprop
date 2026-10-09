@@ -516,3 +516,44 @@
  .flat-podium-card.flat-place-2 .flat-podium-art .flat-podium-face{width:56%!important}
  .flat-podium-card.flat-place-3 .flat-podium-art .flat-podium-face{width:56%!important}
 }
+
+/* MASSIVE lunar ranks belong to every leaderboard viewport, not just mobile. */
+.massive-scene.massive-scene .wk .wk-row>.wk-rank{
+ position:relative;display:grid!important;place-items:center;isolation:isolate;
+ width:52px;min-width:0;height:58px;line-height:1!important;
+ font:800 25px/1 Manrope,sans-serif!important;letter-spacing:-.065em!important;
+ color:#eee8db!important;text-align:center;overflow:visible;
+}
+.massive-scene.massive-scene .wk .wk-row>.wk-rank>.flat-moon-avatar{
+ display:block!important;position:absolute;inset:0;width:100%!important;
+ height:100%!important;z-index:-1;opacity:.76;filter:grayscale(1);
+ pointer-events:none;
+}
+.massive-scene.massive-scene .wk .wk-row>.wk-rank>span:last-child{
+ position:relative;z-index:1;text-shadow:0 2px 9px #060606b3;
+}
+.massive-scene.massive-scene .wk .wk-row .flat-list-avatar,
+.massive-scene.massive-scene .wk .wk-row .wk-row-identity>.flat-moon-avatar{display:none!important}
+.massive-scene.massive-scene .wk .wk-row .wk-row-identity{min-width:0!important}
+.massive-scene.massive-scene .wk .wk-row .flat-list-name{min-width:0!important;max-width:100%}
+.massive-scene.massive-scene .wk .wk-row .flat-list-name strong{
+ max-width:100%;overflow:hidden!important;text-overflow:ellipsis!important;
+ white-space:nowrap!important;overflow-wrap:normal!important;
+}
+.massive-scene.massive-scene .wk .wk-row .wk-trader-tag{max-width:100%;min-width:0;overflow:hidden}
+.massive-scene.massive-scene .wk .wk-row .wk-trader-tag>span{
+ max-width:100%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+@media(min-width:701px){
+ .massive-scene.massive-scene .wk .wk-row>.wk-rank{align-self:center}
+ .massive-scene.massive-scene .wk .wk-row>.wk-row-portrait{
+  object-fit:contain!important;object-position:right center!important;
+  left:auto!important;right:0!important;top:0!important;width:55%!important;height:100%!important;
+  opacity:.34!important;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 28%,#000 73%,transparent 100%)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 28%,#000 73%,transparent 100%)!important;
+ }
+}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-row>.wk-rank{width:47px;height:52px;font-size:24px!important}
+}
