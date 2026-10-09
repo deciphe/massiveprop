@@ -206,3 +206,8 @@
 .flat-podium-card.flat-place-1 .flat-podium-rank{opacity:.96!important}
 .flat-podium-card.flat-place-2 .flat-podium-rank{opacity:.85!important}
 .flat-podium-card.flat-place-3 .flat-podium-rank{opacity:.79!important}
+
+/* Additional 30% desaturation only for the Top 20 list (0.6 × 0.7). */
+.massive-scene.massive-scene .wk .wk-row .flat-list-avatar,
+.massive-scene.massive-scene .wk .wk-row .wk-row-portrait,
+.massive-scene.massive-scene .wk .wk-row:hover .wk-row-portrait{filter:saturate(.42) contrast(1.03)!important}
