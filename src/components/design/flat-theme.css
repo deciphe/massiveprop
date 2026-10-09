@@ -211,3 +211,15 @@
 .massive-scene.massive-scene .wk .wk-row .flat-list-avatar,
 .massive-scene.massive-scene .wk .wk-row .wk-row-portrait,
 .massive-scene.massive-scene .wk .wk-row:hover .wk-row-portrait{filter:saturate(.42) contrast(1.03)!important}
+
+/* Standings headings sit between the rules, aligned with the cards below. */
+.massive-scene.massive-scene .wk .wk-table-head{padding:17px 14px!important;min-height:54px!important;line-height:1.4!important;color:#bcb8ad!important;border-bottom:1px solid #e4ddd318!important}
+.massive-scene.massive-scene .wk .wk-table-head>span{align-self:center;line-height:1.4!important}
+/* Neutral secondary chrome across the four Flat Massive routes. */
+.massive-scene.massive-scene :is(.wk,.vf,.fh,.gp-home-theme){--muted:#aaa499;--home-purple:194 190 179;--home-accent:194 190 179}
+.massive-scene.massive-scene .wk :is(.wk-search,.wk-search input,.wk-social,.wk-profile-label,.wk-profile-address,.wk-verification,.wk-refresh-note,.wk-weekly-tools,.wk-week-current,.wk-week-archive,.wk-inline-tag,.wk-evidence span,.wk-history h3,.wk-history b){color:#bcb7aa!important;border-color:#ded8ca26!important}
+.massive-scene.massive-scene .wk :is(.wk-search,.wk-week-archive,.wk-close){background:#11110f!important;box-shadow:none!important}
+.massive-scene.massive-scene .wk :is(.wk-profile-actions>button,.wk-claim input,.wk-claim textarea,.wk-claim select,.wk-wallet-entry-control,.wk-wallet-remove){background:#181815!important;border-color:#ded8ca29!important;color:#ddd8cc!important;box-shadow:none!important}
+.massive-scene.massive-scene :is(.vf,.fh) :is(.vf-status,.vf-chain-tabs button,.vf-range button,.fh-refresh,.fh-glance-controls button,.vf-panel-head button){color:#bdb8ab!important;border-color:#ded8ca26!important;background:#151513!important;box-shadow:none!important}
+.massive-scene.massive-scene .gp-home-theme :is(.gp-about-dialog,.gp-modal,.firm-modal){color:#eeeae2!important;background:#111110!important;border-color:#ded8ca26!important}
+@media(max-width:700px){.massive-scene.massive-scene .wk .wk-table-head{padding-inline:10px!important}}
