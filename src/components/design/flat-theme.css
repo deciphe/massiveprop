@@ -228,3 +228,13 @@
 .massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon{width:44px!important;height:44px!important;padding:0!important;display:grid!important;place-items:center!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;color:#c9c5ba!important;opacity:.4;transition:opacity .2s}
 .massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon:hover,.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon:focus-visible{opacity:.8;background:transparent!important;box-shadow:none!important}
 .massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{width:34px!important;height:34px!important}
+
+/* Cratered lunar numerals, drawn as actual halftone rather than a tiled texture. */
+.flat-lunar-rank{position:absolute;left:8px;bottom:0;width:72%;height:auto;z-index:2;color:var(--rank-metal);overflow:visible;pointer-events:none;transition:filter .3s}
+.flat-place-1 .flat-lunar-rank{width:78%;left:6px;color:#d7c49d}
+.flat-place-2 .flat-lunar-rank{color:#ced1ce}
+.flat-place-3 .flat-lunar-rank{color:#bda58c}
+.flat-podium-card:hover .flat-lunar-rank{filter:drop-shadow(0 0 10px #e2d5b522)}
+.flat-podium-card:before{background:linear-gradient(var(--rank-metal),var(--rank-metal)) top left/42px 1px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) top left/1px 45px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) bottom right/50px 1px no-repeat,linear-gradient(var(--rank-metal),var(--rank-metal)) bottom right/1px 50px no-repeat;opacity:.42}
+.flat-place-1:before{opacity:.64}
+@media(max-width:700px){.flat-lunar-rank{width:76%}.flat-place-1 .flat-lunar-rank{width:78%}}
