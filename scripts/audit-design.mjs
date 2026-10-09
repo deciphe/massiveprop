@@ -119,6 +119,7 @@ try{
  const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
  try{
   await page.goto(base+'#perpcopier',{waitUntil:'domcontentloaded'});
+  await page.locator('.pc-controls').waitFor({state:'visible',timeout:12000});
   const pause=page.getByRole('button',{name:/^pause$/i});
   if(await pause.count()){
    await pause.click();
@@ -135,6 +136,7 @@ try{
  }catch(e){add('perpcopier','interaction',String(e));}
  await page.goto(base+'#leaderboard',{waitUntil:'domcontentloaded'});
  try{
+  await page.locator('.wk-view-switch').waitFor({state:'visible',timeout:12000});
   const tabs=page.locator('.wk-view-switch');
   await tabs.getByRole('button',{name:/weekly/i}).click();
   if(!await tabs.getByRole('button',{name:/weekly/i}).evaluate(e=>e.classList.contains('active')))add('leaderboard','interaction','Weekly tab failed to activate');
