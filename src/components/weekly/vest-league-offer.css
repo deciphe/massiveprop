@@ -6,3 +6,26 @@
 .wk-vest-offer small{font-size:9px;color:#aaa3ac;letter-spacing:1px}
 .wk-vest-offer>b{white-space:nowrap;padding:7px 9px;border:1px solid #d4bc7d33;border-radius:4px;color:#e3cd98;font-size:10px;letter-spacing:1px;background:#d4bc7d0b}
 @media(max-width:480px){.wk .wk-vest-offer{width:100%;padding:12px;gap:10px}.wk-vest-offer>span{flex:1}.wk-vest-offer strong{font-size:11px}.wk-vest-offer>svg{width:13px;flex-shrink:0}}
+
+/* One compact black-card rail instead of four stacked control rows. */
+.wk .wk-utility-bar{display:flex;align-items:center;flex-wrap:wrap;gap:12px 18px;margin:16px 0 22px;padding:10px 14px;border:1px solid #d4bc7d24;border-radius:8px;background:radial-gradient(ellipse at 85% 0%,#9b87f50a,transparent 55%),linear-gradient(120deg,#17151a99,#0b0b0dcc);box-shadow:inset 0 1px #ffffff05}
+.wk .wk-utility-bar .massive-freshness{flex:1 1 270px;min-width:0;margin:0;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none;gap:9px}
+.wk .wk-utility-bar .massive-freshness strong{font-size:11px}
+.wk .wk-utility-bar .massive-freshness small{font-size:8px;margin-top:2px}
+.wk .wk-utility-bar .wk-view-switch{flex:none;width:auto;margin:0;padding:2px;border-radius:4px}
+.wk .wk-utility-bar .wk-view-switch button{min-height:36px;padding:8px 11px}
+.wk .wk-utility-bar .wk-vest-offer{flex:none;width:auto;margin:0;padding:8px 10px;gap:8px;min-height:40px;border-radius:5px;background:linear-gradient(115deg,#29262e,#17151b 65%,#292319)}
+.wk .wk-utility-bar .wk-vest-offer>img{width:20px;height:18px}
+.wk .wk-utility-bar .wk-vest-offer strong{font-size:11px}
+.wk .wk-utility-bar .wk-vest-offer>b{font-size:9px;padding:4px 6px}
+.wk .wk-utility-bar .wk-controls{flex:none;gap:10px;padding:0;margin:0}
+.wk .wk-utility-bar .wk-tabs{display:none}
+.wk .wk-utility-bar .wk-export{min-height:40px;font-size:10px;padding:6px 0}
+@media(max-width:700px){
+ .wk .wk-utility-bar{gap:10px;margin:12px 0 18px;padding:10px}
+ .wk .wk-utility-bar .massive-freshness{flex-basis:100%;padding-bottom:8px;border-bottom:1px solid #ffffff0a}
+ .wk .wk-utility-bar .wk-view-switch{flex:1}
+ .wk .wk-utility-bar .wk-view-switch button{flex:1;justify-content:center;padding:8px}
+ .wk .wk-utility-bar .wk-controls{margin-left:auto}
+}
+@media(max-width:380px){.wk .wk-utility-bar .wk-view-switch button span{display:none}}
