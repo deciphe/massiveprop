@@ -28,3 +28,32 @@
 @media(max-width:700px){.wk .wk-table-head,.wk .wk-row{grid-template-columns:24px minmax(0,1fr) minmax(95px,auto) 10px;gap:8px;padding-inline:8px}.wk .wk-row>.wk-badges,.wk .wk-table-head>span:nth-child(3),.wk .wk-table-head>.wk-daily-heading{display:none}.wk .wk-row>.wk-daily{grid-column:2/4;grid-row:2;flex-wrap:wrap}.wk .wk-row-amount{font-size:clamp(12px,3.4vw,17px)}.wk .wk-table-title{align-items:flex-start;gap:14px}.wk .wk-search{width:100%}.wk .wk-search input{width:100%}.wk .wk-nav{height:auto;min-height:80px;padding-block:15px;flex-wrap:wrap;gap:12px}.wk .wk-nav-title{order:4;flex-basis:100%}.wk .wk-hero-line{grid-template-columns:minmax(0,1fr)}.wk .wk-hero h1{font-size:clamp(56px,14vw,92px);letter-spacing:-.06em}}
 @media(max-width:600px){.wk .wk-shell>.wk-podium{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wk .wk-shell>.wk-podium>.wk-podium-card{display:flex;flex-direction:column;padding:18px 14px;min-height:0;height:auto}.wk .wk-shell>.wk-podium>.wk-place-1{grid-column:1/-1}.wk .wk-shell>.wk-podium>.wk-podium-card>*{grid-area:auto}.wk .wk-shell>.wk-podium .wk-card-art{width:auto;height:155px;margin:8px -14px 14px}.wk .wk-shell>.wk-podium .wk-place-1 .wk-card-art{height:240px}.wk .wk-shell>.wk-podium .wk-monument-rank{font-size:125px;left:14px;top:8px;line-height:1;letter-spacing:-.07em}.wk .wk-shell>.wk-podium .wk-place-1 .wk-monument-rank{font-size:200px}.wk .wk-shell>.wk-podium .wk-wallet-name{margin-top:0;font-size:16px}.wk .wk-shell>.wk-podium .wk-place-1 .wk-wallet-name{font-size:24px}.wk .wk-shell>.wk-podium .wk-identity{margin-top:6px}.wk .wk-shell>.wk-podium .wk-trader-tag{align-self:flex-start}.wk .wk-shell>.wk-podium .wk-podium-amount{margin:18px 0 14px}.wk .wk-shell>.wk-podium .wk-card-edition{left:14px;font-size:5px;letter-spacing:.5px}.wk .wk-claim-banner{flex-wrap:wrap;padding:22px;gap:18px}.wk .wk-claim-banner>button{margin-left:0}.wk .wk-modal{padding:22px}.wk .wk-weekly-tools{flex-wrap:wrap}.wk .wk-weekly-tools>span{max-width:100%}}
 @media(max-width:380px){.wk .wk-shell>.wk-podium{grid-template-columns:minmax(0,1fr)}.wk .wk-shell>.wk-podium>.wk-podium-card{grid-column:1;grid-row:auto}.wk .wk-shell>.wk-podium>.wk-place-1{order:-1}.wk .wk-shell>.wk-podium .wk-card-art{height:210px}.wk .wk-shell>.wk-podium .wk-monument-rank{font-size:180px}}
+
+/* Negative tracking must not crop the last glyph in gradient text.
+   Padding extends the paint box without changing the spacing between digits. */
+.wk .wk-podium-card .wk-monument-rank,
+.wk .wk-award-canvas .wk-podium-card .wk-monument-rank{
+ display:block;
+ width:max-content;
+ padding:0 .18em .08em .025em;
+ box-sizing:content-box;
+ line-height:1.08;
+ overflow:visible;
+}
+.wk .wk-shell>.wk-podium .wk-monument-rank{
+ padding-right:.18em;
+ padding-bottom:.08em;
+ line-height:1.08;
+}
+.gp-site .gp-home-rank>span{
+ display:inline-block;
+ padding-inline-end:.14em;
+ padding-block-end:.06em;
+ box-sizing:content-box;
+}
+.wk .wk-hero h1 em,
+.gp-site .gp-hero-console h1 em{
+ padding-inline-end:.1em;
+ box-decoration-break:clone;
+ -webkit-box-decoration-break:clone;
+}
