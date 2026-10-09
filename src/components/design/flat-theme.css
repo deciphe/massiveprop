@@ -685,3 +685,24 @@
   width:76%!important;height:min(360px,55%)!important;opacity:.48!important;
  }
 }
+
+/* Final leaderboard portrait treatment: moderately framed, never a rectangular tile.
+   Keep the image in the centre third and feather it to true transparency on all edges. */
+.massive-scene.massive-scene .wk .wk-row > img.wk-row-portrait,
+.massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible) > img.wk-row-portrait{
+ position:absolute!important;left:32%!important;right:auto!important;top:-7%!important;
+ width:38%!important;height:114%!important;max-width:none!important;
+ object-fit:cover!important;object-position:center 30%!important;
+ opacity:.52!important;filter:grayscale(.58) saturate(.86) contrast(1.02)!important;
+ mask-image:radial-gradient(ellipse 48% 76% at 50% 50%,#000 16%,rgba(0,0,0,.93) 39%,rgba(0,0,0,.4) 65%,transparent 99%)!important;
+ -webkit-mask-image:radial-gradient(ellipse 48% 76% at 50% 50%,#000 16%,rgba(0,0,0,.93) 39%,rgba(0,0,0,.4) 65%,transparent 99%)!important;
+ mask-composite:add!important;-webkit-mask-composite:source-over!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+ pointer-events:none!important;z-index:0!important;
+}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-row > img.wk-row-portrait,
+ .massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible) > img.wk-row-portrait{
+  left:30%!important;width:43%!important;top:-7%!important;height:114%!important;
+ }
+}
