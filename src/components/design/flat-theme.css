@@ -223,3 +223,8 @@
 .massive-scene.massive-scene :is(.vf,.fh) :is(.vf-status,.vf-chain-tabs button,.vf-range button,.fh-refresh,.fh-glance-controls button,.vf-panel-head button){color:#bdb8ab!important;border-color:#ded8ca26!important;background:#151513!important;box-shadow:none!important}
 .massive-scene.massive-scene .gp-home-theme :is(.gp-about-dialog,.gp-modal,.firm-modal){color:#eeeae2!important;background:#111110!important;border-color:#ded8ca26!important}
 @media(max-width:700px){.massive-scene.massive-scene .wk .wk-table-head{padding-inline:10px!important}}
+
+/* Quiet lunar entry to profile claiming. */
+.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon{width:44px!important;height:44px!important;padding:0!important;display:grid!important;place-items:center!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;color:#c9c5ba!important;opacity:.4;transition:opacity .2s}
+.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon:hover,.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon:focus-visible{opacity:.8;background:transparent!important;box-shadow:none!important}
+.massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{width:34px!important;height:34px!important}
