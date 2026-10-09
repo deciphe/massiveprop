@@ -557,3 +557,96 @@
 @media(max-width:700px){
  .massive-scene.massive-scene .wk .wk-row>.wk-rank{width:47px;height:52px;font-size:24px!important}
 }
+
+/* Leaderboard portraits: occupy the middle third and dissolve toward the
+   trader handle on the left and the payout on the right. No square edges. */
+.massive-scene.massive-scene .wk .wk-row{position:relative;isolation:isolate;overflow:hidden}
+.massive-scene.massive-scene .wk .wk-row>.wk-row-portrait,
+.massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible)>.wk-row-portrait{
+ position:absolute!important;left:33%!important;right:auto!important;top:0!important;
+ width:35%!important;height:100%!important;max-width:none!important;
+ object-fit:cover!important;object-position:center 30%!important;
+ opacity:.36!important;filter:grayscale(1) contrast(.92)!important;
+ mask-image:linear-gradient(90deg,transparent 0%,#000 35%,#000 60%,transparent 100%),
+            linear-gradient(180deg,transparent 0%,#000 16%,#000 81%,transparent 100%)!important;
+ -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 35%,#000 60%,transparent 100%),
+            linear-gradient(180deg,transparent 0%,#000 16%,#000 81%,transparent 100%)!important;
+ mask-composite:intersect!important;-webkit-mask-composite:source-in!important;
+ border:0!important;border-radius:0!important;pointer-events:none!important;z-index:0!important;
+}
+.massive-scene.massive-scene .wk .wk-row>:not(.wk-row-portrait){position:relative;z-index:1}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-row>.wk-row-portrait,
+ .massive-scene.massive-scene .wk .wk-row:is(:hover,:focus-visible)>.wk-row-portrait{
+  left:35%!important;width:35%!important;height:100%!important;
+  object-fit:cover!important;object-position:center 33%!important;
+  opacity:.34!important;
+ }
+}
+/* Prevent the first season total from splitting across lines. */
+.massive-scene.massive-scene .wk .wk-overview>div{min-width:0!important}
+.massive-scene.massive-scene .wk .wk-overview strong{
+ display:block!important;white-space:nowrap!important;overflow-wrap:normal!important;
+ word-break:normal!important;letter-spacing:-.05em!important;
+ font-size:clamp(17px,2vw,28px)!important;
+}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-overview{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:17px 12px!important;
+ }
+ .massive-scene.massive-scene .wk .wk-overview strong{
+  font-size:clamp(12px,3.6vw,21px)!important;letter-spacing:-.05em!important;
+ }
+ /* Keep both lower podium cards balanced, with the COMPLETE names. */
+ .massive-scene.massive-scene .wk .wk-shell>.flat-podium,
+ .massive-scene.massive-scene .wk .wk-shell>.wk-podium.flat-podium{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px 10px!important;align-items:start!important;
+ }
+ .massive-scene.massive-scene .wk .wk-shell>.flat-podium>.flat-place-1{
+  grid-column:1/-1!important;grid-row:1!important;width:100%!important;
+  max-width:100%!important;
+ }
+ .massive-scene.massive-scene .wk .wk-shell>.flat-podium>.flat-place-2{
+  grid-column:1!important;grid-row:2!important;margin-top:0!important;
+ }
+ .massive-scene.massive-scene .wk .wk-shell>.flat-podium>.flat-place-3{
+  grid-column:2!important;grid-row:2!important;margin-top:0!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card{
+  min-width:0!important;padding-left:10px!important;padding-right:10px!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-name{
+  display:block!important;white-space:nowrap!important;overflow:visible!important;
+  text-overflow:clip!important;overflow-wrap:normal!important;word-break:normal!important;
+  font-size:clamp(10px,2.7vw,16px)!important;line-height:1.2!important;
+  letter-spacing:-.065em!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card.flat-place-3 .flat-podium-name{
+  font-size:clamp(9px,2.3vw,14px)!important;letter-spacing:-.075em!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card.flat-place-1 .flat-podium-name{
+  font-size:clamp(19px,5vw,27px)!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-tag{
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;
+  font-size:clamp(9px,2.5vw,12px)!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-total{
+  white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important;
+  font-size:clamp(18px,4.7vw,29px)!important;letter-spacing:-.06em!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card.flat-place-1 .flat-podium-total{
+  font-size:clamp(32px,8vw,43px)!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-metrics{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,.85fr)!important;
+  gap:5px!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-metrics b{
+  font-size:clamp(9px,2.45vw,12px)!important;white-space:nowrap!important;
+ }
+ .massive-scene.massive-scene .wk .flat-podium-card .flat-podium-metrics small{
+  font-size:9px!important;white-space:nowrap!important;
+ }
+}
