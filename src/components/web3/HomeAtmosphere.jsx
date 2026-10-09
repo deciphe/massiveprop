@@ -8,7 +8,7 @@ export default function HomeAtmosphere(){
   const host=scene.current, lunar=moon.current, sky=stars.current;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
   let frame=0,resizeFrame=0,current=0,target=0;
-  function context(canvas,w,h){const d=Math.min(window.devicePixelRatio||1,1.5);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);const ctx=canvas.getContext('2d');if(ctx)ctx.setTransform(d,0,0,d,0,0);return ctx}
+  function context(canvas,w,h){const d=Math.min(window.devicePixelRatio||1,w>1200?1:1.5);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);const ctx=canvas.getContext('2d');if(ctx)ctx.setTransform(d,0,0,d,0,0);return ctx}
   function paint(){
    const w=host.clientWidth,h=host.clientHeight;const route=window.location.hash.split('?')[0];const flat=['','#top','#speed','#field','#drops','#degen','#leaderboard','#flow','#vestflow'].includes(route);
    const sc=context(sky,w,h),mc=context(lunar,w,h);if(!sc||!mc)return;
@@ -16,7 +16,7 @@ export default function HomeAtmosphere(){
    for(let i=0;i<Math.min(170,Math.round(w*h/11000));i++){const x=random()*w,y=random()*h,r=.45+random()*.65;sc.fillStyle=`rgba(213,213,207,${.08+random()*.2})`;sc.beginPath();sc.arc(x,y,r,0,Math.PI*2);sc.fill()}
    const radius=Math.max(w*.73,window.innerHeight*.95),cx=w*1.05,cy=window.innerHeight*.78+radius*.68;
    const craters=[[-.55,-.57,.13],[-.22,-.73,.075],[-.7,-.34,.055],[-.35,-.37,.09],[-.07,-.5,.12],[-.53,-.2,.045],[.19,-.68,.065],[-.8,-.14,.033],[-.12,-.87,.04],[-.43,-.76,.047],[.12,-.31,.08]];
-   const step=w<600?3.3:4.2;
+   const step=w<600?3.3:Math.max(6.5,Math.sqrt(w*h/45000));
    for(let y=0;y<h;y+=step){for(let x=(Math.round(y/step)%2)*step/2;x<w;x+=step){
     const nx=(x-cx)/radius,ny=(y-cy)/radius,q=nx*nx+ny*ny;if(q>=1)continue;
     const z=Math.sqrt(1-q),light=Math.max(0,-nx*.4-ny*.62+z*.12);
