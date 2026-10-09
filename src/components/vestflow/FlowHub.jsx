@@ -1,3 +1,4 @@
+import MoonLoader from '../design/MoonLoader';
 import DataFreshness from '../shared/DataFreshness';
 import FlowHeatmap from './FlowHeatmap';
 import {useEffect,useState,useRef} from 'react';
@@ -64,7 +65,7 @@ export default function FlowHub(){
  const [copied,setCopied]=useState(false),[copyError,setCopyError]=useState(false);
  useEffect(()=>{const old=document.title;document.title='Flow · MASSIVE';return()=>{document.title=old;};},[]);
  async function copy(){try{await navigator.clipboard.writeText('https://massiveprop.xyz/#flow');setCopied(true);setCopyError(false);}catch{setCopyError(true);}}
- return <main className="fh">{flowIntro&&<div className="flow-wisp" role="status" aria-live="polite"><div className="flow-wisp-aura" aria-hidden="true"/><div className="flow-wisp-art" aria-hidden="true"><span>◆</span><img src="/mascot/wisp.png" alt=""/></div><div className="flow-wisp-copy"><strong>Following the flow.</strong><div className="flow-wisp-progress" aria-hidden="true"><i/><i/><i/><i/><i/></div></div></div>}<div className="fh-shell"><header className="fh-nav"><a href="#" className="fh-brand">MASSIVE<span>.</span></a><a href="#leaderboard">Vest Top 20 <ArrowUpRight size={12}/></a></header>
+ return <main className="fh">{flowIntro&&<MoonLoader label="Opening the vault"/>}<div className="fh-shell"><header className="fh-nav"><a href="#" className="fh-brand">MASSIVE<span>.</span></a><a href="#leaderboard">Vest Top 20 <ArrowUpRight size={12}/></a></header>
  <section className="fh-intro"><h1>Follow the <em>flow.</em></h1><p>24-hour payout checks across four firms.</p><div className="fh-share"><button onClick={copy}>{copied?<Check size={13}/>:<Copy size={13}/>} {copied?'Link copied':'massiveprop.xyz/#flow'}</button><span aria-live="polite">{copyError?'Copy this link from your address bar.':'The payout-wallet view. Not total firm reserves.'}</span></div></section>
  <div className="fh-glance-controls"><em>at a glance</em><span>Vest history · USDC</span><button className="fh-refresh" onClick={()=>refreshRef.current()} disabled={busy} title="Read the shared five-minute snapshots" aria-label="Refresh all firm snapshots"><RefreshCw size={12} className={busy?'fh-spin':''}/>{busy?'Loading…':'Read latest'}</button><div role="group" aria-label="Outflow period">{[7,30].map(n=><button key={n} aria-pressed={days===n} onClick={()=>setDays(n)}>{n}D</button>)}</div></div>
 

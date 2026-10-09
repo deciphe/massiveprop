@@ -38,10 +38,11 @@ function RankArtwork({person,profiles}){
   <text x="68" y="88" fontSize="36" fontWeight="800" letterSpacing="-2.1" fill="#e8e5dc">MASSIVE.</text>
   {primary==='vest'&&<g transform="translate(888 633) scale(.38)" opacity=".48" fill={ref('mark-metal')}><path d="M546.559 104.307L418.198 1.642C415.785-.29 412.222 1.432 412.222 4.525V217.483L546.559 110.043C548.401 108.561 548.401 105.768 546.559 104.307Z"/><path d="M130.463 1.641L2.101 104.296C.259 105.778.259 108.571 2.101 110.032L136.429 217.472V4.524C136.429 1.431 132.865-.261 130.453 1.641Z"/><path d="M272.038 325.934L136.429 217.482V335.143C136.429 337.165 138.06 338.827 140.112 338.827H408.597C410.62 338.827 412.281 337.195 412.281 335.143V217.482L276.672 325.934C275.331 327.005 273.439 327.005 272.068 325.934Z"/></g>}
   {primary!=='vest'&&logo&&<g><image href={logo} x="985" y="57" width="38" height="27" preserveAspectRatio="xMidYMid meet" filter={ref('mono')} opacity=".8"/><text x="1040" y="80" fontSize="18" fontWeight="800" fill="#bab8b0">{firm?.name||'Vest'}</text></g>}
-  <text x="58" y="391" fontSize={person.rank>99?230:290} fontWeight="800" letterSpacing="-23" fill={ref('metal')}>{String(person.rank).padStart(2,'0')}</text>
+  <text x="58" y="391" fontSize={person.rank>99?230:290} fontWeight="800" letterSpacing="-23" fill="#ded9cb">{String(person.rank).padStart(2,'0')}</text>
   <FitText x="70" y="468" maxWidth={490} fontSize={35} fontWeight="800" letterSpacing="-1" fill="#c9c7bf">{name}</FitText>
-  {profile?.tag&&<FitText x="70" y="510" maxWidth={490} fontSize={22} fontWeight="700" fontStyle="italic" letterSpacing=".2" fill={champion?'#c7b891':'#b9b7af'}>{profile.tag}</FitText>}
+  {profile?.tag&&<FitText x="70" y="510" maxWidth={490} fontSize={22} fontWeight="700" fontStyle="italic" letterSpacing=".2" fill="#bdb6a7">{profile.tag}</FitText>}
   <FitText x="65" y="628" maxWidth={600} fontSize={88} fontWeight="800" letterSpacing="-4" fill="#eeece5">{usd(person.total)}</FitText>
+  {Number.isFinite(person.received24h)&&<g><text x="70" y="699" fontSize="23" fontWeight="800" fill="#cfc4ae">+{usd(person.received24h)}</text><text x="70" y="731" fontSize="16" fontWeight="700" fill="#969187">24h gain</text><text x="340" y="699" fontSize="23" fontWeight="800" fill="#cfc4ae">{!person.changeAvailable?'—':person.isNew?'NEW':person.rankChange>0?'↑'+person.rankChange:person.rankChange<0?'↓'+Math.abs(person.rankChange):'—'}</text><text x="340" y="731" fontSize="16" fontWeight="700" fill="#969187">24h rank</text></g>}
  </svg>;
 }
 export default function WeeklyPoster({board,rows,profiles,firm,person}){
@@ -53,7 +54,7 @@ export default function WeeklyPoster({board,rows,profiles,firm,person}){
  <text x="65" y="174" fontSize="62" fontWeight="800" letterSpacing="-3" fill="#e8e5dc">THE TOP {list.length}.</text>
  <text x="1135" y="170" textAnchor="end" fontSize="17" fontWeight="700" fill="#929089">{range(board.start)}</text>
  {list.map((r,i)=><g key={r.address} transform={`translate(0 ${225+i*76})`}>
- <text x="65" y="42" fontSize="29" fontWeight="800" fill={i===0?'#c7b485':'#929089'}>{String(r.rank).padStart(2,'0')}</text>
+ <text x="65" y="42" fontSize="29" fontWeight="800" fill="#bdb6a7">{String(r.rank).padStart(2,'0')}</text>
  {profiles[r.address]?.avatar&&<image href={profiles[r.address].avatar} x="145" y="0" width="54" height="54" preserveAspectRatio="xMidYMid slice"/>}
  <FitText x="222" y="38" maxWidth={540} fontSize={26} fontWeight="800" fill="#d5d3cc">{profiles[r.address]?.username?'@'+profiles[r.address].username:'Trader '+r.rank}</FitText>
  <FitText x="1135" y="38" textAnchor="end" maxWidth={320} fontSize={32} fontWeight="800" fill="#e8e5dc">{usd(r.total)}</FitText>

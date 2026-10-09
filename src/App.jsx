@@ -1,3 +1,4 @@
+import MoonLoader from './components/design/MoonLoader';
 import HomeAtmosphere from './components/web3/HomeAtmosphere';
 import './components/design/site-atmosphere.css';
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -34,9 +35,9 @@ function RoutedApp() {
   if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
 
   const flow=route === "#vestflow" ? "vest" : null;
-  if(route === "#leaderboard")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Weekly/></Suspense>;
-  if(["#flow","#breakoutflow","#novaflow","#proprflow"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><FlowHub/></Suspense>;
-  return flow ? <Suspense fallback={<div style={{background:'#080809',color:'#e8e5dc',minHeight:'100vh',padding:40}}>Loading flow…</div>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
+  if(route === "#leaderboard")return <Suspense fallback={<MoonLoader label="Loading standings"/>}><Weekly/></Suspense>;
+  if(["#flow","#breakoutflow","#novaflow","#proprflow"].includes(route))return <Suspense fallback={<MoonLoader label="Opening the vault"/>}><FlowHub/></Suspense>;
+  return flow ? <Suspense fallback={<MoonLoader label="Reading the flow"/>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
 }
 
 /*

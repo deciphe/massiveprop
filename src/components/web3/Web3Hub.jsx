@@ -8,6 +8,7 @@ import {
 import { firms, shortBalance } from "./firmCatalog";
 import { reviewNotes } from "./reviewNotes";
 import { certificates } from "../payoutlab/data";
+import HomeLeaders from "./HomeLeaders";
 import SpeedManifesto from "./SpeedManifesto";
 import FreeDrops from "./FreeDrops";
 import { executionMetrics } from "./executionMetrics";
@@ -271,13 +272,14 @@ export default function Web3Hub(){
     <header className="gp-nav">
       <a className="gp-wordmark" href="#top">MASSIVE<span>.</span></a>
       <nav className="gp-nav-links">
-        <a href="#leaderboard">Leaderboard</a><a href="#field">Reviews</a><a href="#drops">Free drops</a>
+        <a href="#leaderboard">Leaderboard</a><a href="#flow">Vault</a><a href="#drops">Free drops</a>
       </nav>
     </header>
 
-    <SpeedManifesto about={<AboutPopover />} firms={coreFirms} onOpen={openFirm}/>
+    <SpeedManifesto />
 
-    <LeaderboardLanding />
+    <HomeLeaders />
+<details className="flat-research"><summary>Firm comparisons & tools</summary>
 
 
     <section className="firm-deck-section" id="field">
@@ -336,8 +338,9 @@ export default function Web3Hub(){
       <details className="gp-model-note"><summary>Calculation & assumptions</summary><p>Illustrative full-equity position at each firm’s listed NQ leverage. Round-trip fee drag (% of equity) = 2 × taker fee (% of notional) × leverage. Win distance (% of NQ) = (10% net target + fee drag) ÷ leverage. Stop distance (% of NQ) = (3% net risk − fee drag) ÷ leverage. Multiply either distance by the NQ reference price for points. For Vest: 0.0025% taker per side × 2 × 50 = 0.25% equity in fees; (10 + 0.25) ÷ 50 = 0.205% of NQ. Vanta: 10 ÷ 2.5 = 4%. Their win-distance ratio is 4 ÷ 0.205 = 19.5×.</p><p>These are the site’s September 2026 scenario inputs, not live quotes. The fee drag is weighted by position size through leverage; the 19.5× compares NQ point distance, not time, win probability, or trading edge. It assumes constant notional and the same fee on entry and exit. Spreads, slippage, funding, profit split, and payout rules are excluded. If costs exceed the 3% risk budget, no valid stop remains.</p><p>Vanta uses base leverage without boosts or Pro. Account limits and notional caps may restrict full-equity positions. Check current contract prices and firm rules before purchasing.</p></details>
     </section>
 
-    <FreeDrops />
-    <footer className="gp-footer"><a className="gp-wordmark" href="#top">MASSIVE<span>.</span></a><p>Trader-led comparisons. October 2026 data snapshot.</p><a href="#top">Back to top ↑</a></footer>
+    </details>
+    <FreeDrops /><div className="flat-about"><AboutPopover /></div>
+    <footer className="gp-footer"><a className="gp-wordmark" href="#top">MASSIVE<span>.</span></a><a href="#top">Back to top ↑</a></footer>
 
     {detailFirm && <FirmDrawer key={detailFirm.id} firm={detailFirm} onClose={()=>setDetailId(null)}/>}
   </main>;
