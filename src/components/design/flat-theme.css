@@ -95,3 +95,5 @@
 .flat-home-hero>p{font-weight:700!important}
 .massive-scene.massive-scene .wk .wk-vest-edition{overflow:visible!important}
 .massive-scene.massive-scene .wk .wk-issue-number{top:50%!important;transform:translateY(-50%)!important;line-height:1.1!important}
+
+.massive-scene.massive-scene :is(.wk,.vf,.fh,.gp-home-theme) :is(p,small,span,em,label){font-weight:700!important}
