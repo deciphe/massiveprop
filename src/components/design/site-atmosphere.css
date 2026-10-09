@@ -21,24 +21,24 @@
 .massive-scene,
 .massive-scene>main{
  --massive-gold:#bcb5a6!important;
- --massive-purple:#aaa0bc!important;
- --massive-line-strong:rgba(170,160,188,.18)!important;
+ --massive-purple:#9c96b0!important;
+ --massive-line-strong:rgba(156,150,176,.18)!important;
  --home-gold:188 181 166!important;
- --gp-accent:#aaa0bc!important;
- --gp-purple:#aaa0bc!important;
+ --gp-accent:#9c96b0!important;
+ --gp-purple:#9c96b0!important;
  --gold:#bcb5a6!important;
 }
 .massive-scene .home-vignette{
- background:radial-gradient(ellipse at 88% 60%,rgba(116,91,151,.075),transparent 48%),
- radial-gradient(ellipse at 12% 12%,rgba(116,91,151,.035),transparent 40%),
+ background:radial-gradient(ellipse at 88% 60%,rgba(86,77,115,.075),transparent 48%),
+ radial-gradient(ellipse at 12% 12%,rgba(86,77,115,.035),transparent 40%),
  linear-gradient(90deg,#080809a6,transparent 66%),
  linear-gradient(180deg,#08080940,transparent 35%,#08080918);
 }
 .massive-scene :is(.gp-primary-link,.review-actions>a,.gp-drops-entry button,.wk-profile-actions>button,.wk-tabs button.active,.pc-primary):hover{
- border-color:#aaa0bc45!important;box-shadow:0 0 24px #9d83be0b!important;
+ border-color:#9c96b045!important;box-shadow:0 0 24px #9d83be0b!important;
 }
 .massive-scene .wk .wk-modal{
- --gold:#aaa0bc;
+ --gold:#9c96b0;
  background:radial-gradient(ellipse at 96% 4%,#9b7cbd13,transparent 52%),linear-gradient(145deg,#151417f7,#09090bfA)!important;
  border:1px solid #c7c1d022!important;
  box-shadow:0 30px 110px #0009,inset 0 1px #ded8e709!important;
@@ -66,3 +66,15 @@
 .massive-scene .wk .wk-modal :is(.wk-history button,.wk-evidence>a,.wk-evidence-title){border-color:#c7c1d016!important}
 .massive-scene .wk .wk-modal .wk-close{background:#19171ce8;border-color:#b2a4bf30;color:#d4cddd}
 .massive-scene .wk .wk-modal .wk-badges>span{background:#c7c1d006;border-color:#c7c1d01c;color:#bdb8c3}
+
+/* Compact, substantial controls; purple stays in the shadow, text stays platinum. */
+.massive-scene .wk :is(.wk-view-switch button,.wk-tabs button,.wk-week label,.wk-week select,.wk-export,.wk-archive-toggle,.wk-week-archive button,.wk-table-head,.wk-podium-top>span,.wk-card-edition,.wk-identity){
+ font-family:Manrope,sans-serif!important;font-weight:750!important;letter-spacing:.02em!important;
+}
+.massive-scene .wk .wk-utility-bar .wk-view-switch button{font-size:12px!important;line-height:1.25;text-transform:none!important;padding:9px 13px}
+.massive-scene .wk .wk-view-switch button span{font-family:Manrope,sans-serif!important;font-size:9px!important;font-weight:800!important;letter-spacing:0!important;border-color:#bcb8c321!important}
+.massive-scene .wk .wk-view-switch{background:#111014!important;border-color:#b9b5c01a!important;box-shadow:none!important}
+.massive-scene .wk .wk-view-switch button{color:#c9c6ce!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+.massive-scene .wk .wk-view-switch button.active{background:linear-gradient(135deg,#393540,#201e26)!important;color:#ece8ef!important;border-color:#a6a0b12c!important;box-shadow:inset 0 1px #ded9e513,0 0 16px #6357790b!important}
+.massive-scene .wk .wk-view-switch button:hover:not(.active){background:#8372930d!important;color:#e5e1e9!important}
+.massive-scene .wk .wk-export{font-size:11px;color:#c9c6ce!important}
