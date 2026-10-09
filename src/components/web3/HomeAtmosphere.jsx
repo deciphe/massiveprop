@@ -29,8 +29,8 @@ export default function HomeAtmosphere(){
   function move(){
    frame=0;current=reduced.matches?0:current+(target-current)*.16;
    if(Math.abs(target-current)<.1)current=target;
-   lunar.style.transform=`translate3d(0,${-current*.28}px,0)`;
-   sky.style.transform=`translate3d(0,${-current*.075}px,0)`;
+   lunar.style.transform=`translate3d(0,${-current*.14}px,0)`;
+   sky.style.transform=`translate3d(0,${-current*.0375}px,0)`;
    if(!reduced.matches&&Math.abs(target-current)>.1)frame=requestAnimationFrame(move);
   }
   function scroll(){target=reduced.matches?0:Math.min(window.scrollY||document.scrollingElement?.scrollTop||0,1800);if(!frame)frame=requestAnimationFrame(move)}
