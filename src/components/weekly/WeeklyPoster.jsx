@@ -1,41 +1,59 @@
-import {traderWallets} from '../../lib/trader-wallets.js';
+import {useId} from 'react';
 import {WEEKLY_FIRMS} from '../../lib/weekly-leaderboard.js';
 import {seasonEnd} from '../../lib/season-leaderboard.js';
+import {BRAND_ASSETS} from '../../lib/brand-assets.js';
 const usd=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
-const short=a=>a.slice(0,6)+'…'+a.slice(-4);
 export const range=s=>new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'UTC'})+' — '+new Date(seasonEnd(s)-1).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
-// SVG exports have no CSS wrapping; give each text field an explicit safe width.
-function FitText({children,maxWidth,fontSize=12,...props}){
- const text=String(children??'');
- const estimate=text.length*fontSize*(props.fontFamily?.includes('Mono') ? .64 : .62);
- const size=Math.min(fontSize,fontSize*maxWidth/Math.max(estimate,1));
+function FitText({children,maxWidth,fontSize,...props}){
+ const text=String(children??''),estimate=text.length*fontSize*.61,size=Math.min(fontSize,fontSize*maxWidth/Math.max(estimate,1));
  return <text {...props} fontSize={size} textLength={estimate>maxWidth?maxWidth:undefined} lengthAdjust="spacingAndGlyphs">{text}</text>;
 }
+// Six paths keep the cratered halftone moon compact in both SVG and JPG exports.
+const moonPaths=(()=>{
+ const paths=Array.from({length:6},()=>[]),r=710,cx=1100,cy=940;
+ const craters=[[-.5,-.55,.12],[-.2,-.7,.08],[-.65,-.3,.06],[-.3,-.35,.09],[.08,-.62,.1],[-.46,-.78,.04]];
+ for(let y=190;y<800;y+=6)for(let x=(Math.round(y/6)%2)*3;x<1200;x+=6){const nx=(x-cx)/r,ny=(y-cy)/r,q=nx*nx+ny*ny;if(q>=1)continue;let terrain=Math.sin(nx*29+Math.sin(ny*17))*Math.cos(ny*23)*.15;for(const [a,b,s] of craters){const d=Math.hypot(nx-a,ny-b)/s;if(d<1.5)terrain-=.44*Math.exp(-d*d*3)-.19*Math.exp(-Math.pow((d-1)*6,2))}const v=Math.max(0,Math.min(.99,(-nx*.35-ny*.6+Math.sqrt(1-q)*.12)*(.55+terrain))),bucket=Math.floor(v*6),size=(.7+v*1.7).toFixed(2);paths[bucket].push(`M${x},${y}h${size}v${size}h-${size}z`)}
+ return paths.map(p=>p.join(''));
+})();
+function RankArtwork({person,profiles}){
+ const id=useId().replace(/:/g,''),ref=n=>`url(#${id}-${n})`,profile=profiles[person.address],name=profile?.username?'@'+profile.username:profile?.displayName||'Trader';
+ const primary=Object.keys(person.firms||{}).sort((a,b)=>person.firms[b]-person.firms[a])[0];
+ const firm=WEEKLY_FIRMS.find(f=>f.id===primary),logo=primary==='vest'?BRAND_ASSETS.vestSymbol:firm?.logo;
+ const champion=person.rank===1;
+ return <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label={`${name}, rank ${person.rank}, ${usd(person.total)} in payouts`} style={{display:'block',width:'100%',height:'auto',fontFamily:'Manrope,sans-serif'}}>
+  <defs>
+   <radialGradient id={id+'-glow'} cx=".88" cy=".8" r=".85"><stop stopColor="#bcbab0" stopOpacity=".1"/><stop offset="1" stopColor="#080809" stopOpacity="0"/></radialGradient>
+   <linearGradient id={id+'-metal'} x2=".8" y2="1"><stop stopColor="#eeece5"/><stop offset=".55" stopColor={champion?'#cec5ad':'#bebdb8'}/><stop offset="1" stopColor="#686866"/></linearGradient>
+   <linearGradient id={id+'-portrait'}><stop stopColor="black"/><stop offset=".25" stopColor="white"/><stop offset=".9" stopColor="white"/><stop offset="1" stopColor="black"/></linearGradient>
+   <linearGradient id={id+'-bottom'} x2="0" y2="1"><stop stopColor="black"/><stop offset=".13" stopColor="white"/><stop offset=".63" stopColor="white"/><stop offset="1" stopColor="black"/></linearGradient>
+   <mask id={id+'-mask'} maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill={ref('portrait')}/></mask>
+   <mask id={id+'-foot'} maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill={ref('bottom')}/></mask>
+   <filter id={id+'-mono'} colorInterpolationFilters="sRGB"><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#080809"/><rect width="1200" height="800" fill={ref('glow')}/>
+  <g fill="#c6c6bf">{moonPaths.map((d,i)=><path key={i} d={d} opacity={.06+i*.028}/>)}</g>
+  {Array.from({length:28},(_,i)=><circle key={i} cx={(i*173+87)%1200} cy={(i*97+31)%650} r={i%4===0?1.2:.65} fill="#d6d5ce" opacity=".18"/>)}
+  {profile?.avatar&&<g mask={ref('foot')}><image href={profile.avatar} x="590" y="105" width="610" height="690" preserveAspectRatio="xMidYMid slice" opacity=".87" mask={ref('mask')} filter={ref('mono')}/></g>}
+  <text x="68" y="88" fontSize="36" fontWeight="800" letterSpacing="-2.1" fill="#e8e5dc">MASSIVE.</text>
+  {logo&&<g><image href={logo} x="985" y="57" width="38" height="27" preserveAspectRatio="xMidYMid meet" filter={ref('mono')} opacity=".8"/><text x="1040" y="80" fontSize="18" fontWeight="800" fill="#bab8b0">{firm?.name||'Vest'}</text></g>}
+  <text x="58" y="391" fontSize={person.rank>99?230:290} fontWeight="800" letterSpacing="-23" fill={ref('metal')}>{String(person.rank).padStart(2,'0')}</text>
+  <FitText x="70" y="468" maxWidth={490} fontSize={35} fontWeight="800" letterSpacing="-1" fill="#c9c7bf">{name}</FitText>
+  <FitText x="65" y="598" maxWidth={600} fontSize={88} fontWeight="800" letterSpacing="-4" fill="#eeece5">{usd(person.total)}</FitText>
+ </svg>;
+}
 export default function WeeklyPoster({board,rows,profiles,firm,person}){
- const list=person?[person]:rows.slice(0,firm==='vest'?100:15),extra=person?Math.max(0,traderWallets(person.address).length-2)*20:0,h=person?760+extra:395+list.length*66;
- const label=firm==='all'?'ALL FIRMS':WEEKLY_FIRMS.find(f=>f.id===firm)?.name.toUpperCase();
- const houses=person?WEEKLY_FIRMS.filter(f=>person.firms[f.id]):[];
- const champion=Boolean(person&&person.rank===1);
- return <svg xmlns="http://www.w3.org/2000/svg" width="1200" height={h} viewBox={`0 0 1200 ${h}`} role="img" aria-label="MASSIVE season payout rank card" style={{display:'block',width:'100%',height:'auto',margin:'0 auto',fontFamily:'Manrope,sans-serif'}}>
- <defs><linearGradient id="wk-bg" x2="1" y2="1"><stop stopColor="#353437"/><stop offset=".35" stopColor="#131316"/><stop offset=".75" stopColor="#09090c"/><stop offset="1" stopColor="#272429"/></linearGradient><linearGradient id="wk-metal" x2=".8" y2="1"><stop stopColor="#faf7ed"/><stop offset=".35" stopColor="#aaa5aa"/><stop offset=".55" stopColor="#e9e4dc"/><stop offset="1" stopColor="#625c66"/></linearGradient><linearGradient id="wk-champion-metal" x2=".85" y2="1"><stop stopColor="#faf8f1"/><stop offset=".28" stopColor="#c9c6c1"/><stop offset=".52" stopColor="#ddd6c2"/><stop offset=".7" stopColor="#a99a78"/><stop offset="1" stopColor="#68656a"/></linearGradient><linearGradient id="wk-champion-edge" x2="1"><stop stopColor="#7d6841"/><stop offset=".28" stopColor="#d9bd77"/><stop offset=".55" stopColor="#f1dfad"/><stop offset=".78" stopColor="#8f7750"/><stop offset="1" stopColor="#c5c0ba"/></linearGradient><radialGradient id="wk-champion-glow" cx=".18" cy=".35" r=".72"><stop stopColor="#d4bc7d" stopOpacity=".15"/><stop offset=".52" stopColor="#d4bc7d" stopOpacity=".035"/><stop offset="1" stopColor="#d4bc7d" stopOpacity="0"/></radialGradient><linearGradient id="wk-sheen"><stop stopColor="#ffffff00"/><stop offset=".47" stopColor="#ffffff00"/><stop offset=".5" stopColor="#ffffff09"/><stop offset=".6" stopColor="#ffffff00"/></linearGradient><linearGradient id="wk-portrait-fade"><stop stopColor="black"/><stop offset=".5" stopColor="white"/><stop offset=".8" stopColor="white"/><stop offset="1" stopColor="black"/></linearGradient><linearGradient id="wk-portrait-bottom" x2="0" y2="1"><stop stopColor="black"/><stop offset=".2" stopColor="white"/><stop offset=".55" stopColor="white"/><stop offset="1" stopColor="black"/></linearGradient><mask id="wk-portrait-mask" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#wk-portrait-fade)"/></mask><mask id="wk-portrait-foot" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#wk-portrait-bottom)"/></mask></defs>
- <rect width="1200" height={h} fill="url(#wk-bg)"/>{champion&&<rect width="1200" height={h} fill="url(#wk-champion-glow)" opacity=".45"/>}<rect x="24" y="24" width="1152" height={h-48} rx="2" fill="none" stroke={champion?'#c8b27466':'#c7bcc341'} strokeWidth="1"/>{champion&&<><path d="M24 72V24H72" fill="none" stroke="#d4bc7d99" strokeWidth="2"/><path d="M1128 24h48v48" fill="none" stroke="#d4bc7d44" strokeWidth="1"/></>}<rect width="1200" height={h} fill="url(#wk-sheen)"/>
- <text x="66" y="84" fontSize="42" fontWeight="800" letterSpacing="-3" fill={champion?'#d2bd82':'#e4dfd7'}>MASSIVE.</text><text x="330" y="76" fontFamily="DM Mono,monospace" fontSize="11" letterSpacing="3" fill="#afa5af">MASSIVE / SEASON SELECT</text><text x="1134" y="76" textAnchor="end" fontFamily="DM Mono,monospace" fontSize="10" letterSpacing="1" fill="#a095a0">{board.closed?'CLOSED EDITION':'LIVE EDITION'} / {label}</text>
- {person?<>
- {profiles[person.address]?.avatar&&<g mask="url(#wk-portrait-foot)"><image href={profiles[person.address].avatar} x="550" y="110" width="570" height="410" preserveAspectRatio="xMidYMid slice" opacity=".50" mask="url(#wk-portrait-mask)"/></g>}
- {houses.map((f,i)=><image key={f.id} href={f.logo} x={625+i*50} y={190+i*50} width="360" height="310" opacity=".065" preserveAspectRatio="xMidYMid meet"/>)}
- <text x="600" textAnchor="middle" y="153" fontFamily="DM Mono,monospace" fontSize="11" letterSpacing="3" fill="#a499a6">A PLACE ON THE RECORD.</text>
- <text x="265" textAnchor="middle" y="375" fontSize={person.rank>99?170:235} fontWeight="800" letterSpacing="-12" fill={champion?'url(#wk-champion-metal)':'url(#wk-metal)'}>{String(person.rank).padStart(2,'0')}</text>
- <text x="265" textAnchor="middle" y="420" fontFamily="DM Mono,monospace" fontSize="12" letterSpacing="4" fill={champion?'#bda970':'#988b9b'}>SEASON RANK</text>
- {profiles[person.address]?.tag&&<FitText maxWidth={450} x="805" textAnchor="middle" y="320" fontSize={champion?17:15} fontWeight={champion?600:400} letterSpacing={champion?2:3} fill={champion?'#dfc37c':'#d4c1a1'}>{profiles[person.address].tag}</FitText>}<FitText maxWidth={450} x="805" textAnchor="middle" y="250" fontSize={profiles[person.address]?.username?.length>14?26:34} fontWeight="500" letterSpacing="-1" fill="#ece5e8">{profiles[person.address]?'@'+profiles[person.address].username:short(person.address)}</FitText>
- <FitText maxWidth={450} x="805" textAnchor="middle" y="283" fontFamily="DM Mono,monospace" fontSize="10" letterSpacing="2" fill="#8e8194">{profiles[person.address]?.verifiedAt?'WALLET CONTROL VERIFIED':profiles[person.address]?.editorial?'FEATURED BY MASSIVE':'UNCLAIMED PAYOUT WALLET'}</FitText>
- <FitText maxWidth={450} x="805" textAnchor="middle" y="385" fontSize="65" letterSpacing="-3" fill="#e6ded5">{usd(person.total)}</FitText><FitText maxWidth={450} x="805" textAnchor="middle" y="418" fontFamily="DM Mono,monospace" fontSize="11" letterSpacing="1" fill="#8f8295">USDC RECEIVED / {person.count} {person.count===1?'PAYOUT':'PAYOUTS'}</FitText>
- <line x1="70" x2="1130" y1="479" y2="479" stroke={champion?'url(#wk-champion-edge)':'#c0a9c32a'} strokeWidth={champion?1.5:1}/>
- {houses.map((f,i)=><g key={f.id} transform={`translate(${600-houses.length*120+i*240+20} 515)`}><image href={f.logo} width="26" height="23" preserveAspectRatio="xMidYMid meet"/><text x="38" y="17" fontFamily="DM Mono,monospace" fontSize="12" letterSpacing="1" fill="#b2a2bc">{f.name.toUpperCase()}</text></g>)}
- {traderWallets(person.address).map((address,i)=><text key={address} x="600" textAnchor="middle" y={573+i*20} fontFamily="DM Mono,monospace" fontSize="11" fill="#8c7d95">{address}{traderWallets(person.address).length>1?' / WALLET '+(i+1):''}</text>)}<text x="600" y={631+extra} textAnchor="middle" fontFamily="DM Mono,monospace" fontSize="11" fill={champion?'#b9aa80':'#aa9bb2'}>{range(board.start)} · UTC</text>
- </>:<>
- <text x="66" y="161" fontSize="62" fontWeight="800" letterSpacing="-3" fill="url(#wk-metal)">{'THE TOP '+list.length+'.'}</text><text x="69" y="199" fontFamily="DM Mono,monospace" fontSize="13" fill="#a092ab">{range(board.start)} · UTC</text>
- {list.map((r,i)=><g key={r.address}><rect x="52" y={236+i*66} width="1096" height="60" rx="1" fill={i===0?'#bfb0c314':i%2?'#ffffff03':'transparent'}/><text x="72" y={277+i*66} fontSize="25" fontWeight="500" fill={i<3?'#d8cdd6':'#76677f'}>{String(r.rank).padStart(2,'0')}</text>{profiles[r.address]?.avatar&&<image href={profiles[r.address].avatar} x="130" y={236+i*66} width="360" height="60" preserveAspectRatio="xMidYMid slice" opacity=".27" mask="url(#wk-portrait-mask)"/>}<FitText maxWidth={400} x="147" y={276+i*66} fontSize={profiles[r.address]?.username?.length>14?18:24} fontWeight="500" fill="#d2c7d8">{profiles[r.address]?'@'+profiles[r.address].username:short(r.address)}</FitText><FitText maxWidth={265} x="580" y={276+i*66} fontFamily="DM Mono,monospace" fontSize="11" fill="#8e7b99">{Object.keys(r.firms).map(id=>WEEKLY_FIRMS.find(f=>f.id===id)?.name).join(' · ')}</FitText><FitText maxWidth={270} x="1125" y={276+i*66} textAnchor="end" fontSize="26" fill={i<3?'#e2d9d1':'#b8a9c0'}>{usd(r.total)}</FitText></g>)}
- </>}
- <line x1="66" x2="1134" y1={h-100} y2={h-100} stroke="#b8a5c02d"/><text x="66" y={h-70} fontFamily="DM Mono,monospace" fontSize="10" fill="#8f7a9b">ELIGIBLE USDC RECEIVED · RECIPIENT RANKING, NOT TRADING PNL</text><text x="66" y={h-48} fontFamily="DM Mono,monospace" fontSize="9" fill="#6d587b">As of {new Date(board.asOf).toISOString().replace('T',' ').slice(0,16)} UTC · known internal wallets, bridges and dust excluded.</text><text x="1134" y={h-56} textAnchor="end" fontFamily="DM Mono,monospace" fontSize="12" fill="#bca6c7">massiveprop.xyz/#leaderboard</text>
+ if(person)return <RankArtwork person={person} profiles={profiles}/>;
+ const list=rows.slice(0,firm==='vest'?100:15),h=300+list.length*76;
+ return <svg xmlns="http://www.w3.org/2000/svg" width="1200" height={h} viewBox={`0 0 1200 ${h}`} role="img" aria-label="MASSIVE payout standings" style={{display:'block',width:'100%',height:'auto',fontFamily:'Manrope,sans-serif'}}>
+ <rect width="1200" height={h} fill="#080809"/>
+ <text x="65" y="82" fontSize="36" fontWeight="800" letterSpacing="-2" fill="#e8e5dc">MASSIVE.</text>
+ <text x="65" y="174" fontSize="62" fontWeight="800" letterSpacing="-3" fill="#e8e5dc">THE TOP {list.length}.</text>
+ <text x="1135" y="170" textAnchor="end" fontSize="17" fontWeight="700" fill="#929089">{range(board.start)}</text>
+ {list.map((r,i)=><g key={r.address} transform={`translate(0 ${225+i*76})`}>
+ <text x="65" y="42" fontSize="29" fontWeight="800" fill={i===0?'#c7b485':'#929089'}>{String(r.rank).padStart(2,'0')}</text>
+ {profiles[r.address]?.avatar&&<image href={profiles[r.address].avatar} x="145" y="0" width="54" height="54" preserveAspectRatio="xMidYMid slice"/>}
+ <FitText x="222" y="38" maxWidth={540} fontSize={26} fontWeight="800" fill="#d5d3cc">{profiles[r.address]?.username?'@'+profiles[r.address].username:'Trader '+r.rank}</FitText>
+ <FitText x="1135" y="38" textAnchor="end" maxWidth={320} fontSize={32} fontWeight="800" fill="#e8e5dc">{usd(r.total)}</FitText>
+ </g>)}
  </svg>;
 }
