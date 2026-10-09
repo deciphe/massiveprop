@@ -16,3 +16,53 @@
 @media(max-width:600px){.massive-scene>.home-atmosphere{bottom:-540px}.massive-scene .wk .wk-shell>.wk-podium>.wk-podium-card,.massive-scene .fh .fh-card{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}}
 
 .massive-scene>main.gp-site.gp-home-theme{background:transparent!important}
+
+/* Platinum foundation, with a restrained amethyst fade across live routes. */
+.massive-scene,
+.massive-scene>main{
+ --massive-gold:#bcb5a6!important;
+ --massive-purple:#aaa0bc!important;
+ --massive-line-strong:rgba(170,160,188,.18)!important;
+ --home-gold:188 181 166!important;
+ --gp-accent:#aaa0bc!important;
+ --gp-purple:#aaa0bc!important;
+ --gold:#bcb5a6!important;
+}
+.massive-scene .home-vignette{
+ background:radial-gradient(ellipse at 88% 60%,rgba(116,91,151,.075),transparent 48%),
+ radial-gradient(ellipse at 12% 12%,rgba(116,91,151,.035),transparent 40%),
+ linear-gradient(90deg,#080809a6,transparent 66%),
+ linear-gradient(180deg,#08080940,transparent 35%,#08080918);
+}
+.massive-scene :is(.gp-primary-link,.review-actions>a,.gp-drops-entry button,.wk-profile-actions>button,.wk-tabs button.active,.pc-primary):hover{
+ border-color:#aaa0bc45!important;box-shadow:0 0 24px #9d83be0b!important;
+}
+.massive-scene .wk .wk-modal{
+ --gold:#aaa0bc;
+ background:radial-gradient(ellipse at 96% 4%,#9b7cbd13,transparent 52%),linear-gradient(145deg,#151417f7,#09090bfA)!important;
+ border:1px solid #c7c1d022!important;
+ box-shadow:0 30px 110px #0009,inset 0 1px #ded8e709!important;
+ color:#e8e5dc;
+ scrollbar-color:#77707e #111013;
+}
+.massive-scene .wk .wk-modal::backdrop{background:#050507c9;backdrop-filter:blur(12px)}
+.massive-scene .wk .wk-modal .wk-profile-portrait{filter:grayscale(.85);opacity:.45}
+.massive-scene .wk .wk-modal :is(.wk-profile-rank,.wk-profile-total){font-weight:750;letter-spacing:-.045em;line-height:1.1}
+.massive-scene .wk .wk-modal .wk-profile-rank{color:#d2ccd9!important}
+.massive-scene .wk .wk-modal .wk-profile-total{color:#e8e5dc!important}
+.massive-scene .wk .wk-modal :is(.wk-trader-tag,.wk-tag-link){
+ background:linear-gradient(120deg,#a58eb816,transparent)!important;
+ border-color:#b3a4c329!important;color:#c7bdcf!important;font-weight:650;
+}
+.massive-scene .wk .wk-modal :is(.wk-profile-label,.wk-social){color:#ada3b8!important}
+.massive-scene .wk .wk-modal :is(.wk-profile-address,.wk-verification,.wk-identity){color:#918d96!important}
+.massive-scene .wk :is(.wk-daily-cash,.wk-daily-up,.wk-daily-heading){color:#c4c2bc!important}
+.massive-scene .wk .wk-daily-down{color:#baa5b2!important}
+.massive-scene .wk :is(.wk-podium-card>.wk-daily,.wk-row>.wk-daily){border-color:#b1a4be24!important;background:linear-gradient(100deg,#a58eb809,transparent)!important}
+.massive-scene .wk .wk-modal .wk-profile-actions>button{
+ background:linear-gradient(135deg,#c6bdd10b,#ffffff03)!important;border:1px solid #c7c1d025!important;color:#d9d5dc!important;
+}
+.massive-scene .wk .wk-modal :is(.wk-evidence b,.wk-history b){color:#d6d2d9!important}
+.massive-scene .wk .wk-modal :is(.wk-history button,.wk-evidence>a,.wk-evidence-title){border-color:#c7c1d016!important}
+.massive-scene .wk .wk-modal .wk-close{background:#19171ce8;border-color:#b2a4bf30;color:#d4cddd}
+.massive-scene .wk .wk-modal .wk-badges>span{background:#c7c1d006;border-color:#c7c1d01c;color:#bdb8c3}
