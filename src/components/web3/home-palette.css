@@ -1,0 +1,126 @@
+/* Homepage palette: warm platinum, charcoal, restrained champagne. */
+.gp-site.gp-home-theme{
+  --home-black:8 8 9;
+  --home-ink:13 13 15;
+  --home-panel:18 18 21;
+  --home-raised:25 25 28;
+  --home-edge:46 46 49;
+  --home-dim:94 92 88;
+  --home-muted:145 142 135;
+  --home-silver:190 187 180;
+  --home-paper:232 229 220;
+  --home-gold:199 180 133;
+--massive-black:rgb(var(--home-black));--massive-ink:rgb(var(--home-ink));--massive-panel:rgb(var(--home-panel));--massive-panel-2:rgb(var(--home-panel));--massive-card:rgb(var(--home-raised));--massive-cream:rgb(var(--home-paper));--massive-soft:rgb(var(--home-silver));--massive-muted:rgb(var(--home-muted));--massive-faint:rgb(var(--home-dim));--massive-gold:rgb(var(--home-gold));--massive-platinum:rgb(var(--home-silver));--massive-purple:rgb(var(--home-silver));--massive-line:rgb(var(--home-paper) / .085);--massive-line-strong:rgb(var(--home-gold) / .2);--gp-accent:rgb(var(--home-gold));--gp-purple:rgb(var(--home-silver));color-scheme:dark;accent-color:rgb(var(--home-gold));
+}
+
+
+.gp-site.gp-home-theme:is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test)), .gp-site.gp-home-theme :is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test)){
+  --bg:var(--massive-black)!important;
+  --panel:var(--massive-panel)!important;
+  --panel2:var(--massive-panel-2)!important;
+  --ink:var(--massive-cream)!important;
+  --text:var(--massive-cream)!important;
+  --muted:var(--massive-muted)!important;
+  --line:var(--massive-line)!important;
+  color:var(--massive-cream)!important;
+  background:
+    radial-gradient(ellipse at 82% 4%,rgb(var(--home-gold) / 0.032),transparent 26%),
+    linear-gradient(180deg,rgb(var(--home-black)),rgb(var(--home-black)))!important;
+}
+
+.gp-site.gp-home-theme:is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test) a), .gp-site.gp-home-theme :is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test) a){
+  text-underline-offset:3px;
+}
+
+.gp-site.gp-home-theme:is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test)
+:is(nav,header)), .gp-site.gp-home-theme :is(:is(.gp-site,.wk,.vf,.fh,.mm,.tm,.atm,.profile-page,.gp-email-test)
+:is(nav,header)){
+  border-color:var(--massive-line)!important;
+}
+.gp-site.gp-home-theme:is(:is(.gp-wordmark,.vf-brand,.fh-brand,.mm-brand,.tm-brand,.atm-gp,.pf-brand,.gp-email-test>header>a:first-child)), .gp-site.gp-home-theme :is(:is(.gp-wordmark,.vf-brand,.fh-brand,.mm-brand,.tm-brand,.atm-gp,.pf-brand,.gp-email-test>header>a:first-child)){
+  color:var(--massive-cream)!important;
+  letter-spacing:-.055em!important;
+}
+.gp-site.gp-home-theme:is(:is(.gp-wordmark,.vf-brand,.fh-brand,.mm-brand,.tm-brand,.atm-gp,.pf-brand) span), .gp-site.gp-home-theme :is(:is(.gp-wordmark,.vf-brand,.fh-brand,.mm-brand,.tm-brand,.atm-gp,.pf-brand) span){
+  color:var(--massive-gold)!important;
+}
+.gp-site.gp-home-theme:is(.gp-site .review-row,
+.gp-site .firm-drawer,
+.gp-site .gp-leaderboard-stage,
+.gp-site .gp-outcome-story,
+.gp-site .gp-fee-board,
+.gp-site .fn-bonus,
+.gp-site .raw-matrix,
+.gp-site .gp-model-note,
+.gp-site .gp-about-content,
+.gp-site .gp-ripple-firm), .gp-site.gp-home-theme :is(.gp-site .review-row,
+.gp-site .firm-drawer,
+.gp-site .gp-leaderboard-stage,
+.gp-site .gp-outcome-story,
+.gp-site .gp-fee-board,
+.gp-site .fn-bonus,
+.gp-site .raw-matrix,
+.gp-site .gp-model-note,
+.gp-site .gp-about-content,
+.gp-site .gp-ripple-firm){
+  border-color:var(--massive-line)!important;
+  background:
+    radial-gradient(ellipse at 86% 0%,rgb(var(--home-gold) / 0.03),transparent 28%),
+    linear-gradient(145deg,rgb(var(--home-panel) / 0.92),rgb(var(--home-ink) / 0.94))!important;
+  box-shadow:
+    inset 0 1px rgb(var(--home-paper) / 0.025),
+    0 24px 70px rgb(0 0 0 / 0.22)!important;
+}
+.gp-site.gp-home-theme:is(.gp-site :is(h1,h2,h3,h4,strong)), .gp-site.gp-home-theme :is(.gp-site :is(h1,h2,h3,h4,strong)){color:var(--massive-cream)}
+.gp-site.gp-home-theme:is(.gp-site :is(p,small,dt,.review-source,.gp-section-note)), .gp-site.gp-home-theme :is(.gp-site :is(p,small,dt,.review-source,.gp-section-note)){color:var(--massive-muted)!important}
+.gp-site.gp-home-theme:is(.gp-site .gp-primary-link,
+.gp-site .firm-drawer-cta), .gp-site.gp-home-theme :is(.gp-site .gp-primary-link,
+.gp-site .firm-drawer-cta){
+  background:linear-gradient(145deg,rgb(var(--home-panel) / 0.96),rgb(var(--home-black) / 0.98))!important;
+  color:var(--massive-cream)!important;
+  border-color:rgb(var(--home-gold) / 0.16)!important;
+  box-shadow:inset 0 1px rgb(var(--home-paper) / 0.035),0 14px 38px rgb(0 0 0 / 0.22)!important;
+}
+.gp-site.gp-home-theme:is(.gp-site .gp-primary-link:hover,
+.gp-site .firm-drawer-cta:hover), .gp-site.gp-home-theme :is(.gp-site .gp-primary-link:hover,
+.gp-site .firm-drawer-cta:hover){
+  border-color:rgb(var(--home-gold) / 0.34)!important;
+  background:linear-gradient(145deg,rgb(var(--home-panel) / 0.98),rgb(var(--home-ink) / 0.98))!important;
+}
+.gp-site.gp-home-theme:is(.gp-site .review-row.is-top-pick), .gp-site.gp-home-theme :is(.gp-site .review-row.is-top-pick){
+  border-color:rgb(var(--home-gold) / 0.24)!important;
+  box-shadow:inset 2px 0 var(--massive-gold),inset 0 1px rgb(var(--home-paper) / 0.025)!important;
+}
+.gp-site.gp-home-theme:is(.gp-site :is(.pick-label,.gp-eyebrow,.gp-section-no,.review-offer)), .gp-site.gp-home-theme :is(.gp-site :is(.pick-label,.gp-eyebrow,.gp-section-no,.review-offer)){
+  color:var(--massive-gold)!important;
+}
+.gp-site.gp-home-theme:is(.gp-site .gp-rbar-fill), .gp-site.gp-home-theme :is(.gp-site .gp-rbar-fill){background:linear-gradient(90deg,rgb(var(--home-gold)),var(--massive-gold))!important}
+.gp-site.gp-home-theme:is(:is(.gp-site,.vf) :is(.gp-hero-vest-offer,.lp-vest-ref,.vf-referral)), .gp-site.gp-home-theme :is(:is(.gp-site,.vf) :is(.gp-hero-vest-offer,.lp-vest-ref,.vf-referral)){
+  border-color:rgb(var(--home-gold) / 0.28)!important;
+  background:linear-gradient(115deg,rgb(var(--home-edge)),rgb(var(--home-raised)) 60%,rgb(var(--home-edge)))!important;
+  color:var(--massive-cream)!important;
+  box-shadow:inset 0 1px rgb(var(--home-paper) / 0.06),0 18px 46px rgb(0 0 0 / 0.26)!important;
+}
+.gp-site.gp-home-theme:is(.atm,.mm,.tm,.gp-email-test), .gp-site.gp-home-theme :is(.atm,.mm,.tm,.gp-email-test){background:rgb(var(--home-black))!important}
+.gp-site.gp-home-theme:is(.atm :is(.atm-hero,.atm-playbook,.atm-workspace,.atm-step-panel,.atm-principles>div),
+.mm :is(.mm-certificate,.mm-live,.mm-actions),
+.tm :is(.tm-hero,.tm-panel,.tm-card),
+.gp-email-test :is(section,form,.gp-email-preview)), .gp-site.gp-home-theme :is(.atm :is(.atm-hero,.atm-playbook,.atm-workspace,.atm-step-panel,.atm-principles>div),
+.mm :is(.mm-certificate,.mm-live,.mm-actions),
+.tm :is(.tm-hero,.tm-panel,.tm-card),
+.gp-email-test :is(section,form,.gp-email-preview)){
+  border-color:var(--massive-line)!important;
+  background:
+    radial-gradient(ellipse at 82% 0%,rgb(var(--home-gold) / 0.025),transparent 28%),
+    linear-gradient(145deg,rgb(var(--home-panel)),rgb(var(--home-black)))!important;
+}
+/* Asset finish and interaction states share the same palette. */
+.gp-site.gp-home-theme img{filter:grayscale(1)!important}
+.gp-site.gp-home-theme :is(input,select,button,a):focus-visible{outline:2px solid rgb(var(--home-gold));outline-offset:4px}
+.gp-site.gp-home-theme ::selection{background:rgb(var(--home-gold) / .3);color:rgb(var(--home-paper))}
+.gp-site.gp-home-theme :is(.gp-rbar-fill){background:linear-gradient(90deg,rgb(var(--home-dim)),rgb(var(--home-silver)))!important;box-shadow:none!important}
+.gp-site.gp-home-theme .is-velocity-leader .gp-rbar-fill{background:linear-gradient(90deg,rgb(var(--home-muted)),rgb(var(--home-gold)))!important}
+.gp-site.gp-home-theme :is(.gp-primary-link,.review-actions>a,.fn-bonus>a,.firm-drawer-cta,.gp-drops-entry button){background:rgb(var(--home-raised))!important;color:rgb(var(--home-paper))!important;border-color:rgb(var(--home-gold) / .24)!important}
+.gp-site.gp-home-theme :is(.gp-primary-link,.review-actions>a,.fn-bonus>a,.firm-drawer-cta,.gp-drops-entry button):hover{background:rgb(var(--home-edge) / .65)!important;border-color:rgb(var(--home-gold) / .5)!important}
+.gp-site.gp-home-theme :is(.pick-label,.review-offer,.gp-hero-vest-offer b){color:rgb(var(--home-gold))!important}
+.gp-site.gp-home-theme :is(.firm-drawer-tabs,.firm-drawer-sizes) button.is-active{background:rgb(var(--home-gold) / .1)!important;border-color:rgb(var(--home-gold) / .4)!important;color:rgb(var(--home-paper))!important}

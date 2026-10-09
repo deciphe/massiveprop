@@ -238,28 +238,6 @@ function LeaderboardLanding(){
 }
 
 
-function TheBookLanding(){
-  return <section className="gp-book-landing" aria-labelledby="gp-book-title">
-    <a className="gp-book-card" href="#thebook" aria-label="Open The Book execution guide">
-      <div className="gp-book-smoke" aria-hidden="true"/>
-      <div className="gp-book-copy">
-        <span className="gp-book-kicker">MASSIVE / EXECUTION</span>
-        <h2 id="gp-book-title">THE BOOK</h2>
-        <p>Execution is part of the trade.</p>
-        <small>Order size, spread, slippage, fees, fills and true R — built around the numbers that actually hit your P&amp;L.</small>
-        <span className="gp-book-cta">Open The Book <ArrowUpRight size={16}/></span>
-      </div>
-      <div className="gp-book-visual" aria-hidden="true">
-        <div className="gp-book-level ask"><span>ASK</span><b>31,352.00</b><i/></div>
-        <div className="gp-book-level ask soft"><span>ASK</span><b>31,351.75</b><i/></div>
-        <div className="gp-book-mid"><small>SPREAD</small><strong>0.25</strong></div>
-        <div className="gp-book-level bid"><span>BID</span><b>31,351.50</b><i/></div>
-        <div className="gp-book-level bid soft"><span>BID</span><b>31,351.25</b><i/></div>
-      </div>
-    </a>
-  </section>;
-}
-
 export default function Web3Hub(){
   const [detailId,setDetailId]=useState(null);
 
@@ -295,11 +273,11 @@ export default function Web3Hub(){
     setDetailId(id);
   }
 
-  return <main className="gp-site" id="top">
+  return <main className="gp-site gp-home-theme" id="top">
     <header className="gp-nav">
       <a className="gp-wordmark" href="#top">MASSIVE<span>.</span></a>
       <nav className="gp-nav-links">
-        <a href="#leaderboard">Leaderboard</a><a href="#field">Reviews</a><a href="https://massiveprop.xyz/#thebook" aria-label="Open The Book">NQ costs</a><a href="#drops">Free drops</a>
+        <a href="#leaderboard">Leaderboard</a><a href="#field">Reviews</a><a href="#drops">Free drops</a>
       </nav>
     </header>
 
@@ -307,7 +285,6 @@ export default function Web3Hub(){
 
     <LeaderboardLanding />
 
-    <TheBookLanding />
 
     <section className="firm-deck-section" id="field">
       <div className="firm-deck-header">
