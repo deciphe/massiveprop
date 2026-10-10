@@ -1,20 +1,30 @@
 import {useEffect,useMemo,useState} from 'react';
-import {ArrowLeft,ArrowUpRight,Activity,RefreshCw,ChevronDown} from 'lucide-react';
+import {ArrowUpRight,ArrowLeft,ChevronDown,Radio} from 'lucide-react';
 import './updates.css';
-const filters=['All','Execution','Funding','Prop rules','Notices','Documentation'];
-const shortDate=d=>d?new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'UNDATED';
-const brief=x=>x.id==='inapp-stoploss-mid'?'A wider spread by itself is less likely to stop you out. Your stop can still fill worse than its trigger price.':x.id==='inapp-funding-index'?'Index perp funding adjusts to spot deviations over 48h instead of 120h. Check funding before holding; it can cost or pay you.':x.summary;
-const traderImpact=x=>x.id==='inapp-stoploss-mid'?'Fewer spread-only stop-outs. Not protection against slippage.':x.id==='inapp-funding-index'?'Funding can respond faster to index-price gaps. Long or short positions may pay or receive funding.':x.observed?'Check whether this changes your order behavior, position cost, or risk.':null;
-const fmt=d=>d?new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'DATE NOT DISCLOSED';
+
+const categories=['All','Execution','Funding','Prop rules','Notices','Documentation'];
+const stamp=d=>d?new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}):'UNDATED';
+const brief=x=>x.id==='inapp-stoploss-mid'?'Wider spreads alone are less likely to knock you out of a trade. Your actual exit can still slip.':x.id==='inapp-funding-index'?'Index-perp funding responds to price gaps over 48 hours, down from 120. Check funding before holding positions.':x.summary;
+const impact=x=>x.id==='inapp-stoploss-mid'?'Fewer spread-only stop-outs. Not guaranteed fills.':x.id==='inapp-funding-index'?'Funding can shift faster. Either side can pay or receive it.':x.observed?'Review how this affects your trade.':null;
+const headline=x=>x.id==='inapp-stoploss-mid'?['SPREAD','≠ STOP']:x.id==='inapp-funding-index'?['120H','→ 48H']:null;
+function WireEntry({item,index,expanded,onToggle}){
+ const headlineParts=headline(item);
+ return <article className={'wire-item '+(index===0?'wire-lead ':'')+(item.observed?'wire-app':'wire-doc')} key={item.id}>
+  <div className="wire-item-bar"><span className="wire-number">{String(index+1).padStart(2,'0')}</span><span>{item.category?.toUpperCase()||'NOTICE'}</span><span className="wire-kind">{item.observed?'IN-APP NOTICE':'DOC REVISION'}</span></div>
+  {headlineParts?<div className="wire-bigtype" aria-label={headlineParts.join(' ')}><span>{headlineParts[0]}</span><span>{headlineParts[1]}</span></div>:<div className="wire-type-mark" aria-hidden="true">↗</div>}
+  <div className="wire-content"><div className="wire-titleline"><h2>{item.title}</h2><span>{stamp(item.date)}</span></div><p className="wire-direct">{brief(item)}</p>{impact(item)&&<div className="wire-takeaway"><span>FOR TRADERS</span><strong>{impact(item)}</strong></div>}
+   <div className="wire-actions"><button type="button" onClick={onToggle} aria-expanded={expanded}>DETAILS <ChevronDown size={13} className={expanded?'turned':''}/></button>{item.source&&<a href={item.source} target="_blank" rel="noopener noreferrer">SOURCE <ArrowUpRight size={14}/></a>}</div>
+   {expanded&&<div className="wire-expanded">{item.originalText&&<p>{item.originalText}</p>}{(item.details||[]).map((line,i)=><p key={i}>{line}</p>)}</div>}
+  </div>
+ </article>;
+}
 export default function VestUpdates(){
  const [data,setData]=useState(null),[error,setError]=useState(false),[filter,setFilter]=useState('All'),[open,setOpen]=useState({});
- useEffect(()=>{let active=true;fetch('/data/vest-updates.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Missing');return r.json()}).then(d=>{if(active)setData(d)}).catch(()=>{if(active)setError(true)});return()=>{active=false}},[]);
+ useEffect(()=>{let alive=true;fetch('/data/vest-updates.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Unavailable');return r.json()}).then(d=>{if(alive)setData(d)}).catch(()=>{if(alive)setError(true)});return()=>{alive=false}},[]);
  const rows=useMemo(()=>data?.updates?.filter(x=>filter==='All'||x.category===filter)||[],[data,filter]);
- return <main className="mu-page"><header className="mu-nav"><a href="#" className="mu-logo">MASSIVE<span>.</span></a><a href="#leaderboard" className="mu-return"><ArrowLeft size={15}/> LEADERBOARD</a></header>
- <div className="mu-wrap"><section className="mu-hero"><div className="mu-kicker"><Activity size={14}/> MASSIVE × VEST <span>PLATFORM CHANGES / TRADER IMPACT</span></div><div className="mu-hero-display"><div className="mu-mark" aria-hidden="true"><i className="mu-mark-left"/><i className="mu-mark-right"/><i className="mu-mark-bottom"/></div><div className="mu-hero-type"><span>VEST</span><span>WIRE<span className="mu-period">.</span></span></div></div><div className="mu-hero-lower"><div className="mu-status"><span className="mu-live"/> CHECKED DAILY <b>{data?.appCheckedAt||data?.checkedAt?shortDate(data?.appCheckedAt||data?.checkedAt):'AWAITING SCAN'}</b><span className="mu-status-count">{data?.sourcesTracked||'—'} DOCS TRACKED</span></div></div></section>
- <div className="mu-section-head"><div><span>VEST / WIRE</span><h2>WIRE<span className="mu-period">.</span></h2></div><div className="mu-summary"><RefreshCw size={13}/> DAILY / AUTOMATED</div></div>
- <nav className="mu-filters" aria-label="Filter updates">{filters.map(x=><button key={x} className={filter===x?'active':''} onClick={()=>setFilter(x)}>{x}</button>)}</nav>
- <section className="mu-list">{rows.map((x,i)=><article key={x.id} className="mu-entry"><div className="mu-entry-no">{String(i+1).padStart(2,'0')}</div><div className="mu-entry-body"><div className="mu-entry-meta">{x.category?.toUpperCase()} <i/> {shortDate(x.date)} <i/> {x.observed?"APP NOTICE":"DOC CHANGE"}</div><h3>{x.title}</h3><p>{brief(x)}</p>{traderImpact(x)&&<div className="mu-impact"><b>FOR TRADERS</b><span>{traderImpact(x)}</span></div>}<div className="mu-entry-actions"><button onClick={()=>setOpen(p=>({...p,[x.id]:!p[x.id]}))} aria-expanded={!!open[x.id]}>SOURCE NOTES <ChevronDown size={13} className={open[x.id]?'turned':''}/></button><a href={x.source} target="_blank" rel="noopener noreferrer">SOURCE <ArrowUpRight size={13}/></a></div>{open[x.id]&&<div className="mu-evidence">{x.details?.map((d,j)=><p key={j}><span>{String(j+1).padStart(2,'0')}</span>{d}</p>)}</div>}</div></article>)}
- {!data&&!error&&<p className="mu-empty">Reading the change ledger…</p>}{error&&<p className="mu-empty">The updates ledger is temporarily unavailable.</p>}{data&&!rows.length&&<p className="mu-empty">No entries in this category yet.</p>}</section>
- <footer className="mu-footer"><span>MASSIVE × VEST</span><span>APP NOTICES + DOCUMENTATION CHANGES</span><a href="#">RETURN HOME ↗</a></footer></div></main>;
+ return <main className="wire-page"><header className="wire-nav"><a href="#" className="wire-logo">MASSIVE<span>.</span></a><a href="#leaderboard" className="wire-back"><ArrowLeft size={14}/> LEADERBOARD</a></header>
+ <div className="wire-shell"><header className="wire-header"><div className="wire-masthead"><span><Radio size={14}/> MASSIVE / VEST</span><span>TRANSMISSION 001</span></div><div className="wire-title-row"><h1>VEST <em>WIRE.</em></h1><div className="wire-orbit" aria-hidden="true"><div className="wire-orbit-moon"/><i/><b/></div></div><div className="wire-feed-status"><span className="wire-beacon"/> PLATFORM CHANGES / TRADER IMPACT <span className="wire-last">LAST CHECK {stamp(data?.appCheckedAt||data?.checkedAt)}</span></div></header>
+ <div className="wire-control-line"><span>THE FEED <b>{String(rows.length).padStart(2,'0')}</b></span><nav className="wire-filters" aria-label="Filter transmissions">{categories.map(c=><button type="button" key={c} className={filter===c?'active':''} onClick={()=>setFilter(c)}>{c}</button>)}</nav></div>
+ <section className="wire-grid" aria-label="Vest Wire transmissions">{rows.map((item,i)=><WireEntry key={item.id} item={item} index={i} expanded={!!open[item.id]} onToggle={()=>setOpen(o=>({...o,[item.id]:!o[item.id]}))}/>)}{!data&&!error&&<p className="wire-empty">TUNING IN…</p>}{error&&<p className="wire-empty">THE FEED IS TEMPORARILY UNAVAILABLE.</p>}{data&&!rows.length&&<p className="wire-empty">NO TRANSMISSIONS IN THIS CATEGORY.</p>}</section>
+ <footer className="wire-footer"><span>MASSIVE / VEST WIRE</span><span>IN-APP NOTICES + DOCUMENTATION CHANGES</span><a href="#">BACK TO MASSIVE ↗</a></footer></div></main>;
 }
