@@ -27,3 +27,49 @@
 .mu-footer{padding:35px 0 55px;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;border-top:1px solid #ffffff25;font-size:9px;color:#79746e}.mu-footer a{color:#bab1a1;text-decoration:none}
 @media(max-width:700px){.mu-nav{padding:21px}.mu-hero{padding:62px 0 35px}.mu-hero h1{font-size:clamp(53px,12vw,82px);margin:33px 0}.mu-kicker span{display:none}.mu-status-count{margin-left:0;width:100%}.mu-feature{padding:23px 19px;margin-bottom:65px}.mu-feature-main{grid-template-columns:1fr;gap:22px;padding:38px 0 15px}.mu-feature-top,.mu-feature-bottom{font-size:8px}.mu-big{font-size:clamp(31px,8.1vw,55px)}.mu-section-head{align-items:start;flex-direction:column}.mu-entry{grid-template-columns:28px 1fr;gap:10px;padding:29px 0}.mu-entry-actions{gap:19px}.mu-feature-bottom{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.mu-page *{scroll-behavior:auto!important;transition:none!important}}
+
+/* MASSIVE × VEST — green-black flat editorial, reference-inspired stippled mark. */
+.mu-page{background:radial-gradient(ellipse 90% 540px at 50% 230px,#063e30 0%,#082419 34%,#080d0c 74%,#080809 100%)!important;color:#e9f3eb}
+.mu-page:before{opacity:.32;background-image:radial-gradient(#9bcdb934 .65px,transparent .65px);mask-image:linear-gradient(#000 0%,transparent 61%)}
+.mu-nav{border-bottom-color:#d6f8e11a}
+.mu-logo span,.mu-period{color:#bcebd4}
+.mu-hero{padding:54px 0 45px;border-bottom-color:#b4e2c723}
+.mu-hero-display{min-height:380px;display:grid;place-items:center;position:relative;isolation:isolate;margin:15px auto 0}
+.mu-mark{width:min(72vw,550px);height:335px;position:absolute;inset:0;margin:auto;opacity:.72;filter:drop-shadow(0 0 42px #88f9bd3c);z-index:-1;pointer-events:none}
+.mu-mark i{position:absolute;display:block;background:radial-gradient(circle,#c9ffe2 1.6px,transparent 1.9px) 0 0/8px 8px;filter:drop-shadow(0 0 7px #76e4a9aa);opacity:.8}
+.mu-mark-left{left:2%;top:0;width:38%;height:70%;clip-path:polygon(0 50%,100% 0,100% 100%)}
+.mu-mark-right{right:2%;top:0;width:38%;height:70%;clip-path:polygon(0 0,100% 50%,0 100%)}
+.mu-mark-bottom{left:23%;right:23%;bottom:0;height:44%;clip-path:polygon(0 0,50% 100%,100% 0)}
+.mu-hero-type{text-align:center;display:flex;flex-direction:column;font-weight:800;letter-spacing:-.09em;line-height:.88;text-shadow:0 0 38px #071b10}
+.mu-hero-type>span:first-child{font-size:clamp(60px,11vw,140px);color:#e4f5e8}
+.mu-hero-type>span:last-child{font-size:clamp(53px,10vw,127px);color:#a6d3b9}
+.mu-hero-lower{display:flex;justify-content:space-between;align-items:end;gap:20px}
+.mu-hero-lower>p{font-size:clamp(14px,1.5vw,19px);color:#b0c8b7;margin:0}
+.mu-status{margin:0;color:#9daea2}
+.mu-status b{color:#e0e9df}.mu-live{background:#b8f4d0;box-shadow:0 0 11px #b8f4d06b}
+.mu-feature{margin:33px 0 72px;border:1px solid #98c5ad47;background:radial-gradient(ellipse at 70% 5%,#4baa7b20,transparent 55%),linear-gradient(145deg,#10221a,#0a100e 85%);padding:28px 32px}
+.mu-feature:before{border-color:#b8e6ce}
+.mu-feature-top{color:#bbd4c3}.mu-feature-side>span,.mu-feature-eyebrow{color:#9cceb1}
+.mu-feature-main{padding:40px 0 24px}
+.mu-big{font-size:clamp(31px,5vw,72px);color:#f3fff7}.mu-big>span{color:#8fc5a3}.mu-big .mu-dot{color:#b6f6d0}
+.mu-feature-side p{color:#becbbf}
+.mu-feature-bottom{color:#91a898;border-top-color:#b5ddc02b}.mu-feature-bottom a{display:flex;gap:6px;color:#c5efcf;text-decoration:none;align-items:center}
+.mu-section-head>div>span,.mu-entry-no,.mu-impact>b{color:#9bbca5}
+.mu-filters button.active{border-color:#9cdbb589;background:#9cdbb516;color:#e1faeb}
+.mu-entry{border-top-color:#abdbbd22}.mu-entry-meta{color:#91ae9b}.mu-entry h3{color:#e9f4ec}
+.mu-entry-body>p{max-width:710px;color:#afc4b4;font-size:14px;line-height:1.65}
+.mu-impact{border-color:#82c29b}.mu-impact>span{color:#cad9ce}
+.mu-entry-actions a,.mu-entry-actions button{color:#bbdbc5}
+.mu-footer{border-color:#b5dfba25}
+@media(max-width:700px){
+ .mu-hero{padding-top:35px}
+ .mu-hero-display{min-height:290px;margin-top:12px}
+ .mu-mark{width:min(90vw,390px);height:250px}
+ .mu-mark i{background-size:6px 6px;background-image:radial-gradient(circle,#c9ffe2 1.1px,transparent 1.4px)}
+ .mu-hero-type>span:first-child{font-size:clamp(59px,16vw,90px)}
+ .mu-hero-type>span:last-child{font-size:clamp(43px,11vw,70px)}
+ .mu-hero-lower{flex-direction:column;align-items:start;gap:20px}
+ .mu-feature{padding:22px 19px}
+ .mu-feature-main{padding:35px 0 13px}
+ .mu-big{font-size:clamp(29px,7.5vw,48px)}
+}
