@@ -916,3 +916,23 @@
   max-height:calc(100dvh - 20px)!important;
  }
 }
+
+/* Chrome desktop-site mode on phones: preserve full podium handles on one line.
+   Scoped to weekly podium and JPG artwork, without altering desktop row typography. */
+.massive-scene.massive-scene .wk .wk-shell>.wk-podium.flat-podium .flat-podium-name,
+.massive-scene.massive-scene .wk .wk-award-canvas .flat-podium-name{
+ display:block!important;min-width:0!important;max-width:100%!important;
+ white-space:nowrap!important;overflow:visible!important;
+ text-overflow:clip!important;overflow-wrap:normal!important;word-break:normal!important;
+ letter-spacing:-.055em!important;
+}
+.massive-scene.massive-scene .wk .wk-shell>.wk-podium.flat-podium .flat-podium-name-long,
+.massive-scene.massive-scene .wk .wk-award-canvas .flat-podium-name-long{
+ font-size:clamp(12px,1.15vw,17px)!important;
+ letter-spacing:-.075em!important;
+}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk .wk-shell>.wk-podium.flat-podium .flat-podium-name-long{
+  font-size:clamp(9px,2.45vw,14px)!important;
+ }
+}
