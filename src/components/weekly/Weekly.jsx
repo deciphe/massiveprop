@@ -109,7 +109,9 @@ export default function Weekly(){
    const artwork=view==='weekly'?null:capture.querySelector('svg'),bounds=artwork?.viewBox.baseVal;
    if(view!=='weekly'&&(!bounds?.width||!bounds?.height))throw Error('Missing card dimensions');
    const width=view==='weekly'?capture.scrollWidth:capture.getBoundingClientRect().width,height=view==='weekly'?capture.scrollHeight:width*bounds.height/bounds.width;
-   const baseOptions={quality:0.97,width,height,canvasWidth:width,canvasHeight:height,pixelRatio:(view==='season'&&firm==='vest'&&!poster?.address?1800:3600)/width,backgroundColor:'#09090b',cacheBust:true,imagePlaceholder:'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',style:{margin:'0',padding:view==='weekly'&&!poster?.address?'24px':'0',border:'0',width:width+'px',height:height+'px',minHeight:'0',maxHeight:'none',maxWidth:'none',overflow:'hidden',transform:'none',boxSizing:'border-box'}};
+   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+   const targetPixels=isIOS?(poster?.address?1500:1700):(view==='season'&&firm==='vest'&&!poster?.address?1800:3600);
+   const baseOptions={quality:0.94,width,height,canvasWidth:width,canvasHeight:height,pixelRatio:targetPixels/width,backgroundColor:'#09090b',cacheBust:true,imagePlaceholder:'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',style:{margin:'0',padding:view==='weekly'&&!poster?.address?'24px':'0',border:'0',width:width+'px',height:height+'px',minHeight:'0',maxHeight:'none',maxWidth:'none',overflow:'hidden',transform:'none',boxSizing:'border-box'}};
    let fontEmbedCSS='';
    try{fontEmbedCSS=await posterFonts(capture)}catch{}
    let url;
