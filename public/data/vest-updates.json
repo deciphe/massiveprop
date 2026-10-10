@@ -1,0 +1,40 @@
+{
+  "checkedAt": null,
+  "sourcesTracked": 0,
+  "snapshots": {},
+  "updates": [
+    {
+      "id": "inapp-stoploss-mid",
+      "title": "Stop-loss triggers move to mid price",
+      "category": "Execution",
+      "date": null,
+      "origin": "In-app notice",
+      "source": "https://next.vestmarkets.com/",
+      "summary": "Stops now trigger against the mid price rather than best bid or ask. A wider spread alone is less likely to trigger a stop.",
+      "impact": "Stop activation is based on the midpoint, not a directly executable bid/ask price. Slippage on the resulting exit can still occur.",
+      "details": [
+        "Trigger basis: mid price",
+        "Previous basis: best bid / ask",
+        "Effect: reduced spread-widening false triggers"
+      ],
+      "observed": true
+    },
+    {
+      "id": "inapp-funding-index",
+      "title": "Funding framework revised",
+      "category": "Funding",
+      "date": null,
+      "origin": "In-app notice · documentation",
+      "source": "https://docs.vestmarkets.com/trading/funding-mechanism",
+      "summary": "The in-app notice reports removal of the interest-rate component for index and futures-based perpetuals, a shorter index normalization window, and a unified clamp multiplier.",
+      "impact": "Funding is transferred between longs and shorts, not charged by Vest. The live docs list CME index futures at 0% annual base interest and a 48-hour normalization interval.",
+      "details": [
+        "CME index futures: 48-hour normalization",
+        "Other CME futures: 120 hours",
+        "Crypto: 24 hours",
+        "Funding settlements: hourly"
+      ],
+      "observed": true
+    }
+  ]
+}
