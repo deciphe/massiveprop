@@ -37,7 +37,7 @@ async function posterFonts(node){
  return css;
 }
 function Badges({firms}){return <span className="wk-badges">{WEEKLY_FIRMS.filter(f=>firms[f.id]).map(f=><span key={f.id} title={f.name+' · '+usd(firms[f.id])}><img src={f.logo} alt=""/>{f.name}</span>)}</span>}
-const tagHref=profile=>profile?.tag&&/^[a-z0-9.-]+\.[a-z]{2,}(?:\/.*)?$/i.test(profile.tag)?'https://'+profile.tag:null;
+const tagHref=profile=>{const tag=profile?.tag?.trim();if(!tag)return null;if(/^https?:\/\/[^\s/]+(?:\/[^\s]*)?$/i.test(tag))return tag;if(/^[a-z0-9.-]+\.[a-z]{2,}(?:\/.*)?$/i.test(tag))return 'https://'+tag;return null;};
 function TraderTag({profile,compact=false}){const href=tagHref(profile);if(!profile?.tag)return null;return href?<a className={'wk-trader-tag wk-tag-link'+(compact?' wk-tag-compact':'')} href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()} aria-label={'Visit '+profile.tag}><span>{profile.tag}</span><ArrowUpRight size={compact?10:13}/></a>:<span className={'wk-trader-tag'+(compact?' wk-tag-compact':'')}>{profile.tag}</span>}
 function Spark({row,start,duration}){let total=0;const data=[...row.transfers].sort((a,b)=>Date.parse(a.timestamp)-Date.parse(b.timestamp));let line='0,46';for(const t of data){const x=(Date.parse(t.timestamp)-start)/duration*180;line+=` ${x},${46-total/row.total*40}`;total+=t.amount;line+=` ${x},${46-total/row.total*40}`;}return <svg viewBox="0 0 180 52" aria-hidden="true"><polyline points={line} fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>}
 function DailyChange({row}){
