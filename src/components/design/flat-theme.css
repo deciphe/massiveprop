@@ -955,3 +955,20 @@
  opacity:.62!important;transform:none!important;
 }
 .massive-scene.massive-scene :is(.gp-site .flat-home-leaders,.wk .wk-shell>.wk-podium.flat-podium) > .flat-podium-card.flat-place-1:before{opacity:.8!important}
+
+/* Home podium is nested one level below the leader section. */
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card.flat-place-1{--live-medal:#d7c49a;--live-medal-rgb:215,196,154}
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card.flat-place-2{--live-medal:#c9cdd0;--live-medal-rgb:201,205,208}
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card.flat-place-3{--live-medal:#c2a998;--live-medal-rgb:194,169,152}
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card{
+ background:radial-gradient(ellipse at 82% 12%,rgba(var(--live-medal-rgb),.12),transparent 46%),linear-gradient(150deg,rgba(var(--live-medal-rgb),.045),#080809 78%)!important;
+ box-shadow:inset 0 0 0 1px rgba(var(--live-medal-rgb),.14)!important;
+}
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card:before{
+ background:linear-gradient(var(--live-medal),var(--live-medal)) top left/70px 2px no-repeat,
+ linear-gradient(var(--live-medal),var(--live-medal)) top left/2px 76px no-repeat,
+ linear-gradient(var(--live-medal),var(--live-medal)) bottom right/50px 1px no-repeat,
+ linear-gradient(var(--live-medal),var(--live-medal)) bottom right/1px 50px no-repeat!important;
+ opacity:.62!important;transform:none!important;
+}
+.massive-scene.massive-scene .gp-site .flat-home-leaders>.flat-podium>.flat-podium-card.flat-place-1:before{opacity:.8!important}
