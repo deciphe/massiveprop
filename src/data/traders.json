@@ -103,5 +103,12 @@
     "name": "seroquel",
     "image": "ripz.jpg",
     "tag": ""
+  },
+  {
+    "wallet": "0x3e1d7beb16fe7fc6ba43e7ea10e017aa68ddb6ad",
+    "twitter": "RC_FUTURES",
+    "name": "RC",
+    "image": "rc.jpg",
+    "tag": "https://x.com/RC_FUTURES"
   }
 ]
