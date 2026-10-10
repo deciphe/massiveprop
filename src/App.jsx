@@ -31,7 +31,7 @@ function RoutedApp() {
   if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
   if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
 
-  if(route === "#updates")return <Suspense fallback={<MoonLoader label="Reading the change ledger"/>}><VestUpdates/></Suspense>;
+  if(route === "#wire")return <Suspense fallback={<MoonLoader label="Reading the change ledger"/>}><VestUpdates/></Suspense>;
   if(route === "#perpcopier")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><PerpCopier/></Suspense>;
 
   if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
