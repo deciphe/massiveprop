@@ -280,6 +280,7 @@ export default function Web3Hub(){
     <SpeedManifesto />
 
     <HomeLeaders />
+    <a className="flat-wire-link" href="#wire" aria-label="Open Vest Wire platform updates"><div className="flat-wire-art" aria-hidden="true"><div className="flat-wire-satellite"><i/><b/><em/></div><span className="flat-wire-beam"/><div className="flat-wire-moon"/></div><div className="flat-wire-copy"><span className="flat-wire-eyebrow">MASSIVE / TRANSMISSION 001</span><strong>VEST WIRE<span>.</span></strong><small>Platform changes. Trader impact.</small></div><span className="flat-wire-arrow" aria-hidden="true">↗</span></a>
 <details className="flat-research"><summary>Firm comparisons & tools</summary>
 
 
