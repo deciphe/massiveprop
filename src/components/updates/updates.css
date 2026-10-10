@@ -73,3 +73,36 @@
  .mu-feature-main{padding:35px 0 13px}
  .mu-big{font-size:clamp(29px,7.5vw,48px)}
 }
+
+/* Flat MASSIVE restoration: Vest green reduced to a trace, platinum leads. */
+.mu-page{background:radial-gradient(ellipse 82% 440px at 50% 180px,#181b19 0%,#0e100f 48%,#080809 100%)!important;color:#eae8e2!important}
+.mu-page:before{opacity:.21!important;background-image:radial-gradient(#b7b8b2 0.65px,transparent 0.65px)!important}
+.mu-nav,.mu-hero{border-bottom-color:#e2dfd51a!important}
+.mu-logo span,.mu-period{color:#c6b99e!important}
+.mu-kicker,.mu-section-head>div>span,.mu-entry-no,.mu-impact>b{color:#b6aea0!important}
+.mu-hero-type>span:first-child{color:#eeece6!important}
+.mu-hero-type>span:last-child{color:#a6a39d!important}
+.mu-hero-type{text-shadow:0 0 34px #b5b0a40d!important}
+.mu-hero-lower>p{color:#adaaa3!important}
+.mu-status{color:#96938d!important}.mu-status b{color:#dad6cf!important}
+.mu-status-count{color:#77756f!important}
+.mu-live{background:#bdc0ad!important;box-shadow:0 0 8px #a6b99b38!important}
+.mu-mark{opacity:.26!important;filter:drop-shadow(0 0 25px #7ebc8d16)!important}
+.mu-mark i{background-image:radial-gradient(circle,#d6ddd2 1.6px,transparent 1.9px)!important;filter:drop-shadow(0 0 5px #7cae8626)!important}
+.mu-feature{border-color:#c6c1b63a!important;background:radial-gradient(ellipse at 80% 6%,#b8b4a40c,transparent 55%),linear-gradient(145deg,#161715,#0a0a0b 85%)!important}
+.mu-feature:before{border-color:#c9c3b5!important}
+.mu-feature-top,.mu-feature-eyebrow,.mu-feature-side>span{color:#c4b9a5!important}
+.mu-feature-side p,.mu-feature-bottom{color:#aba8a0!important}
+.mu-feature-bottom{border-top-color:#d8d4c41f!important}
+.mu-feature-bottom a{color:#d1c9b9!important}
+.mu-big{color:#f0eee9!important}.mu-big>span{color:#97938c!important}.mu-big .mu-dot{color:#c7b99c!important}
+.mu-filters button.active{border-color:#c5b99c70!important;background:#c5b99c0d!important;color:#f0ede4!important}
+.mu-entry{border-top-color:#dedbd11e!important}
+.mu-entry-meta{color:#96928b!important}.mu-entry h3{color:#e9e6df!important}
+.mu-entry-body>p{color:#ada9a2!important}
+.mu-impact{border-color:#aea28c!important}.mu-impact>span{color:#cbc7bf!important}
+.mu-entry-actions a,.mu-entry-actions button{color:#c9beac!important}
+.mu-footer{border-color:#d6d2c420!important}
+@media(max-width:700px){
+ .mu-mark i{background-image:radial-gradient(circle,#d6ddd2 1.1px,transparent 1.4px)!important}
+}
