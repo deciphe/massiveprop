@@ -4,6 +4,7 @@ import './components/design/site-atmosphere.css';
 import { lazy, Suspense, useEffect, useState } from "react";
 import Web3Hub from "./components/web3/Web3Hub";
 
+const VestUpdates = lazy(() => import("./components/updates/VestUpdates"));
 const Affiliated = lazy(() => import("./components/affiliated/Affiliated"));
 const PerpCopier = lazy(() => import("./components/perpcopier/PerpCopier"));
 const VestPdf = lazy(() => import("./components/lessons/VestPdf"));
@@ -30,6 +31,7 @@ function RoutedApp() {
   if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
   if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
 
+  if(route === "#updates")return <Suspense fallback={<MoonLoader label="Reading the change ledger"/>}><VestUpdates/></Suspense>;
   if(route === "#perpcopier")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><PerpCopier/></Suspense>;
 
   if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
