@@ -5,6 +5,7 @@ const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
 const clean=s=>s.replace(/\r/g,'').replace(/\{%[\s\S]*?%\}/g,'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
 const read=async url=>{const r=await fetch(url,{headers:{'User-Agent':'MASSIVE-DocsWatch/1.0','Accept':'text/plain'},signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error(url+' returned '+r.status);return r.text()};
 const original=JSON.parse(await fs.readFile(target,'utf8'));const state={...original,snapshots:{...(original.snapshots||{})},updates:[...(original.updates||[])]};
+const now=new Date().toISOString();
 state.appNotices={...(original.appNotices||{})};
 
 /* Public Vest frontend: announcements are localized in the shipped Vite bundle,
@@ -26,10 +27,13 @@ async function scanAppNotices(){
  for(const match of raw.matchAll(/(\w+):("(?:\\.|[^"\\])*")(?=,|$)/g)){
   try{fields[match[1]]=JSON.parse(match[2])}catch{}
  }
- const notices=[
-  ['stopLossTitle','stopLoss','Execution','inapp-stoploss-mid','Stop activation uses the mid price, but execution can still differ due to liquidity and slippage.'],
-  ['fundingTitle','funding','Funding','inapp-funding-index','Review funding mechanics and normalization intervals before holding positions across funding events.']
- ];
+ const notices=Object.keys(fields).filter(key=>key.endsWith('Title')&&fields[key.slice(0,-5)]).map(titleKey=>{
+   const textKey=titleKey.slice(0,-5);
+   const category=/fund/i.test(textKey)?'Funding':/stop|order|slippage|spread/i.test(textKey)?'Execution':'Notices';
+   const seedId=textKey==='stopLoss'?'inapp-stoploss-mid':textKey==='funding'?'inapp-funding-index':null;
+   const impact=category==='Funding'?'Review funding terms and holding costs.':category==='Execution'?'Review order triggering and execution behavior.':'Review the notice before trading.';
+   return [titleKey,textKey,category,seedId,impact];
+ });
  const seen=new Set;
  for(const [titleKey,textKey,category,seedId,impact] of notices){
   const title=fields[titleKey],message=fields[textKey];if(!title||!message)continue;
@@ -57,7 +61,7 @@ try{await scanAppNotices()}catch(e){console.warn('App notices scan skipped:',e.m
 const indexText=await read(index);
 const links=[...indexText.matchAll(/\]\((https:\/\/docs\.vestmarkets\.com\/[^)]+\.md)\)/g)].map(x=>x[1]);
 if(links.length<8)throw Error('Documentation index unexpectedly small; keeping previous dataset');
-const now=new Date().toISOString();let changed=0,ok=0;
+let changed=0,ok=0;
 for(const url of [...new Set(links)]){
  try{
   const md=await read(url);if(md.length<80)continue;ok++;
