@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T23:11:12.102Z",
+  "checkedAt": "2026-10-10T23:11:26.674Z",
   "sourcesTracked": 21,
   "snapshots": {
     "https://docs.vestmarkets.com/home.md": {
@@ -1234,8 +1234,8 @@
       "title": "Stop-loss triggers move to mid price",
       "category": "Execution",
       "date": null,
-      "origin": "In-app notice",
-      "source": "https://next.vestmarkets.com/",
+      "origin": "Vest in-app announcement · verified in public JS",
+      "source": "https://next.vestmarkets.com/assets/index-BaHDUjfU.js",
       "summary": "Stops now trigger against the mid price rather than best bid or ask. A wider spread alone is less likely to trigger a stop.",
       "impact": "Stop activation is based on the midpoint, not a directly executable bid/ask price. Slippage on the resulting exit can still occur.",
       "details": [
@@ -1243,15 +1243,16 @@
         "Previous basis: best bid / ask",
         "Effect: reduced spread-widening false triggers"
       ],
-      "observed": true
+      "observed": true,
+      "originalText": "Stop losses now trigger on the mid price instead of the best bid/ask, reducing triggers caused by spread widening."
     },
     {
       "id": "inapp-funding-index",
       "title": "Funding framework revised",
       "category": "Funding",
       "date": null,
-      "origin": "In-app notice · documentation",
-      "source": "https://docs.vestmarkets.com/trading/funding-mechanism",
+      "origin": "Vest in-app announcement · verified in public JS",
+      "source": "https://next.vestmarkets.com/assets/index-BaHDUjfU.js",
       "summary": "The in-app notice reports removal of the interest-rate component for index and futures-based perpetuals, a shorter index normalization window, and a unified clamp multiplier.",
       "impact": "Funding is transferred between longs and shorts, not charged by Vest. The live docs list CME index futures at 0% annual base interest and a 48-hour normalization interval.",
       "details": [
@@ -1260,8 +1261,24 @@
         "Crypto: 24 hours",
         "Funding settlements: hourly"
       ],
-      "observed": true
+      "observed": true,
+      "originalText": "To reduce price deviation between perps and their underlying markets, index and futures-based perps no longer include an interest-rate component, and index perps’ funding normalization is shortened from 120h to 48h. All other markets now use a clamp multiplier of 1. Funding is exchanged between traders and is not an exchange fee. See the funding docs."
     }
   ],
-  "appNotices": {}
+  "appNotices": {
+    "fundingTitle": {
+      "hash": "53e8d0244003e53977f02d5b754f8b76813ccf5f51c68f9c5722194c37c61e47",
+      "title": "Funding Update",
+      "body": "To reduce price deviation between perps and their underlying markets, index and futures-based perps no longer include an interest-rate component, and index perps’ funding normalization is shortened from 120h to 48h. All other markets now use a clamp multiplier of 1. Funding is exchanged between traders and is not an exchange fee. See the funding docs.",
+      "seenAt": "2026-10-10T23:11:26.674Z"
+    },
+    "stopLossTitle": {
+      "hash": "03b3b24c82a4e484895fb3edba90f6e403b2e8c0877d1427a5c9ad88d309f162",
+      "title": "Stop-Loss Update",
+      "body": "Stop losses now trigger on the mid price instead of the best bid/ask, reducing triggers caused by spread widening.",
+      "seenAt": "2026-10-10T23:11:26.674Z"
+    }
+  },
+  "appCheckedAt": "2026-10-10T23:11:26.674Z",
+  "appSource": "https://next.vestmarkets.com/assets/index-BaHDUjfU.js"
 }
