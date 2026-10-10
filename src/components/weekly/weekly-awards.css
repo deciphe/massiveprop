@@ -128,3 +128,45 @@
 .wk-award-canvas .wk-award-place-1 .wk-award-edition strong{color:#e4d9bf}
 .wk-award-canvas .wk-award-place-2 .wk-award-edition strong{color:#d8dddb}
 .wk-award-canvas .wk-award-place-3 .wk-award-edition strong{color:#cdbeb3}
+
+/* WEEKLY PODIUM / rank-card edition identity. The live podium is untouched. */
+.wk-award-canvas .wk-award-place-1{--edition-metal:#d7c49a;--edition-rgb:215,196,154}
+.wk-award-canvas .wk-award-place-2{--edition-metal:#c9cdd0;--edition-rgb:201,205,208}
+.wk-award-canvas .wk-award-place-3{--edition-metal:#c2a998;--edition-rgb:194,169,152}
+.wk-award-canvas .wk-award-place .flat-podium-card{
+ position:relative;isolation:isolate;
+ background:radial-gradient(ellipse at 82% 12%,rgba(var(--edition-rgb),.12),transparent 46%),linear-gradient(150deg,rgba(var(--edition-rgb),.045),#080809 78%)!important;
+ box-shadow:inset 0 0 0 1px rgba(var(--edition-rgb),.14)!important;
+}
+.wk-award-canvas .wk-award-place .flat-podium-card:after{
+ content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+ border:1px solid rgba(var(--edition-rgb),.15);
+ background:linear-gradient(var(--edition-metal),var(--edition-metal)) 0 0/2px 76px no-repeat,
+ linear-gradient(var(--edition-metal),var(--edition-metal)) 0 0/70px 2px no-repeat,
+ linear-gradient(var(--edition-metal),var(--edition-metal)) 100% 100%/50px 1px no-repeat;
+ opacity:.62;
+}
+.wk-award-canvas .wk-award-place .wk-award-edition{
+ left:20px;right:20px;bottom:17px;padding-top:11px;gap:7px;
+ border-top:1px solid rgba(var(--edition-rgb),.35);
+}
+.wk-award-canvas .wk-award-edition-top{
+ display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+.wk-award-canvas .wk-award-edition-top>span{
+ font:800 8px/1.3 Manrope,sans-serif;letter-spacing:.16em;
+ color:var(--edition-metal);
+}
+.wk-award-canvas .wk-award-edition-top .wk-award-edition-rank{
+ font-size:9px;letter-spacing:.045em;opacity:.75;
+}
+.wk-award-canvas .wk-award-edition>strong{
+ font:750 12px/1.25 Manrope,sans-serif;letter-spacing:-.025em;
+ color:#e8e4dd;white-space:nowrap;
+}
+.wk-award-canvas .wk-award-edition-rule{
+ display:flex;align-items:center;gap:4px;width:100%;height:3px;margin-top:4px;
+}
+.wk-award-canvas .wk-award-edition-rule i{height:2px;background:var(--edition-metal);opacity:.28;flex:1}
+.wk-award-canvas .wk-award-edition-rule i:first-child{opacity:.9;flex:2}
+.wk-award-canvas .wk-award-edition-rule i:last-child{opacity:.14}
