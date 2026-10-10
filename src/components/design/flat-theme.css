@@ -894,3 +894,9 @@
 .massive-scene.massive-scene .wk .wk-row[data-trader="gigaxtrader"]:is(:hover,:focus-visible) > img.wk-row-portrait{
  object-position:center 48%!important;
 }
+
+/* Moon profile CTA — quiet editorial lettering, never crop at mobile widths. */
+.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon{width:auto!important;min-width:0!important;height:44px!important;display:inline-flex!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;flex-shrink:0;opacity:.75;white-space:nowrap}
+.massive-scene.massive-scene .wk .flat-claim-moon .flat-claim-label{font-family:inherit;font-size:9px;font-weight:600;letter-spacing:.13em;line-height:1;color:#c9c5ba}
+.massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{flex-shrink:0}
+@media(max-width:420px){.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon{gap:5px!important}.massive-scene.massive-scene .wk .flat-claim-moon .flat-claim-label{font-size:8px;letter-spacing:.08em}.massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{width:28px!important;height:28px!important}}
