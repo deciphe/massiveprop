@@ -900,3 +900,19 @@
 .massive-scene.massive-scene .wk .flat-claim-moon .flat-claim-label{font-family:inherit;font-size:9px;font-weight:600;letter-spacing:.13em;line-height:1;color:#c9c5ba}
 .massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{flex-shrink:0}
 @media(max-width:420px){.massive-scene.massive-scene .wk .wk-nav>button.flat-claim-moon{gap:5px!important}.massive-scene.massive-scene .wk .flat-claim-moon .flat-claim-label{font-size:8px;letter-spacing:.08em}.massive-scene.massive-scene .wk .flat-claim-moon .flat-moon-avatar{width:28px!important;height:28px!important}}
+
+/* Profile dialogs must scroll to payout evidence, even with portrait artwork. */
+.massive-scene.massive-scene .wk dialog.wk-modal,
+.massive-scene.massive-scene .wk dialog.wk-modal:has(.wk-profile-portrait){
+ max-height:calc(100dvh - 40px)!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+ scrollbar-gutter:stable;
+}
+@media(max-width:700px){
+ .massive-scene.massive-scene .wk dialog.wk-modal,
+ .massive-scene.massive-scene .wk dialog.wk-modal:has(.wk-profile-portrait){
+  max-height:calc(100dvh - 20px)!important;
+ }
+}
