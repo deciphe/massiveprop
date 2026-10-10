@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T22:52:37.149Z",
+  "checkedAt": "2026-10-10T23:11:12.102Z",
   "sourcesTracked": 21,
   "snapshots": {
     "https://docs.vestmarkets.com/home.md": {
@@ -1262,5 +1262,6 @@
       ],
       "observed": true
     }
-  ]
+  ],
+  "appNotices": {}
 }
