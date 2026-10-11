@@ -62,12 +62,13 @@ function validateOrder(o) {
   if (!o || !clean(o.account_id) || !clean(o.market_id) || !['buy','sell'].includes(o.side)) throw bad('Choose account, market and side');
   if (!['market','limit'].includes(o.type)) throw bad('Unsupported entry order type');
   if (!positive(o.size) || !positive(o.leverage)) throw bad('Size and leverage must be positive');
+  if(o.margin_mode != null && !['cross','isolated'].includes(o.margin_mode))throw bad('Invalid margin mode');
   if (o.type === 'limit' && !positive(o.limit_price)) throw bad('Set a valid limit price');
   if (o.stop_loss_price != null && !positive(o.stop_loss_price)) throw bad('Invalid stop price');
   if (o.take_profit_price != null && !positive(o.take_profit_price)) throw bad('Invalid TP price');
   return {
     account_id: o.account_id, market_id:o.market_id, side:o.side, type:o.type,
-    size:val(o.size), leverage:val(o.leverage), margin_mode:'cross',
+    size:val(o.size), leverage:val(o.leverage), margin_mode:o.margin_mode||'cross',
     ...(o.type === 'limit' ? {limit_price:val(o.limit_price)} : {}),
     ...(o.stop_loss_price != null ? {stop_loss_price:val(o.stop_loss_price)} : {}),
     ...(o.take_profit_price != null ? {take_profit_price:val(o.take_profit_price)} : {})
