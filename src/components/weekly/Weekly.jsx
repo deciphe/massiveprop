@@ -25,7 +25,7 @@ const ROOT='https://raw.githubusercontent.com/deciphe/massiveprop/vestflow-data/
 const API='https://gigaprop-profiles.johnhuska1260335.chatgpt.site/api';
 const usd=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
 const short=a=>a.slice(0,6)+'…'+a.slice(-4);
-const weekRange=s=>new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'})+' — '+new Date(calendarWeekEnd(s)-1).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'America/New_York'});
+const weekRange=s=>{const timeZone=s<Date.parse('2026-10-11T22:00:00Z')?'UTC':'America/New_York';return new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone})+' — '+new Date(calendarWeekEnd(s)-1).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone})};
 function initial(){const p=new URLSearchParams(window.location.hash.split('?')[1]||'');const w=p.get('season')||p.get('week');return {week:w&&validSeasonKey(w)?w:weekKey(weekStart()),view:p.get('view')==='weekly'?'weekly':'season',wallet:canonicalTraderWallet(p.get('wallet')),firm:'vest',card:p.get('card')||''};}
 async function read(path,signal){for(const root of [ROOT,'/data/']){try{const r=await fetch(root+path+'?t='+Math.floor(Date.now()/300000),{signal:AbortSignal.any([signal,AbortSignal.timeout(8000)].filter(Boolean)),cache:'default'});if(r.ok)return await r.json();}catch{if(signal?.aborted)throw Error('Cancelled');}}throw Error('Snapshot unavailable');}
 async function posterFonts(node){
