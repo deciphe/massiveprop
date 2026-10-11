@@ -16,7 +16,7 @@ for(const [i,config] of FLOW_SOURCES.entries()){
  try{const bundled=JSON.parse(await readFile(new URL(`../public/data/${config.slug}.json`,import.meta.url),'utf8'));if(!previous||Date.parse(bundled.updatedAt)>Date.parse(previous.updatedAt))previous=bundled;}catch{}
  try{
   let snapshot;
-  try{snapshot=await fetchFlow(config,{previous,signal:AbortSignal.timeout(config.id==='vest'?90000:30000),historyDays:config.id==='vest'?32:2,includeBalance:config.id==='vest',onProgress:page=>{if(page%10===0)console.log(`${config.title} / ${config.chain}: page ${page}`);}});}
+  try{snapshot=await fetchFlow(config,{previous,signal:AbortSignal.timeout(config.id==='vest'?90000:30000),historyDays:32,includeBalance:true,onProgress:page=>{if(page%10===0)console.log(`${config.title} / ${config.chain}: page ${page}`);}});}
   catch(error){
    if(!config.balanceRpcs||!previous?.complete)throw error;
    // Keep transfer timestamps unchanged when only the contract balance can refresh.

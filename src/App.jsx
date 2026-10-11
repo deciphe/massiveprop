@@ -36,9 +36,9 @@ function RoutedApp() {
 
   if(route === "#affiliated")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><Affiliated/></Suspense>;
 
-  const flow=route === "#vestflow" ? "vest" : null;
+  const flow=({"#vestflow":"vest","#breakoutflow":"breakout","#novaflow":"nova","#proprflow":"propr"})[route]||null;
   if(route === "#leaderboard")return <Suspense fallback={<MoonLoader label="Loading standings"/>}><Weekly/></Suspense>;
-  if(["#flow","#breakoutflow","#novaflow","#proprflow"].includes(route))return <Suspense fallback={<MoonLoader label="Opening the vault"/>}><FlowHub/></Suspense>;
+  if(route === "#flow")return <Suspense fallback={<MoonLoader label="Opening the vault"/>}><FlowHub/></Suspense>;
   return flow ? <Suspense fallback={<MoonLoader label="Reading the flow"/>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
 }
 
