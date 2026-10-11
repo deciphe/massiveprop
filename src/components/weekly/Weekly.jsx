@@ -39,7 +39,7 @@ async function posterFonts(node){
  return css;
 }
 function Badges({firms}){return <span className="wk-badges">{WEEKLY_FIRMS.filter(f=>firms[f.id]).map(f=><span key={f.id} title={f.name+' · '+usd(firms[f.id])}><img src={f.logo} alt=""/>{f.name}</span>)}</span>}
-const tagHref=profile=>{const tag=profile?.tag?.trim();if(!tag)return null;if(/^https?:\/\/[^\s/]+(?:\/[^\s]*)?$/i.test(tag))return tag;if(/^[a-z0-9.-]+\.[a-z]{2,}(?:\/.*)?$/i.test(tag))return 'https://'+tag;return null;};
+const tagHref=profile=>{if(/^https?:\/\//i.test(profile?.tagUrl||''))return profile.tagUrl;const tag=profile?.tag?.trim();if(!tag)return null;if(/^https?:\/\/[^\s/]+(?:\/[^\s]*)?$/i.test(tag))return tag;if(/^[a-z0-9.-]+\.[a-z]{2,}(?:\/.*)?$/i.test(tag))return 'https://'+tag;return null;};
 function TraderTag({profile,compact=false}){const href=tagHref(profile);if(!profile?.tag)return null;return href?<a className={'wk-trader-tag wk-tag-link'+(compact?' wk-tag-compact':'')} href={href} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()} aria-label={'Visit '+profile.tag}><span>{profile.tag}</span><ArrowUpRight size={compact?10:13}/></a>:<span className={'wk-trader-tag'+(compact?' wk-tag-compact':'')}>{profile.tag}</span>}
 function Spark({row,start,duration}){let total=0;const data=[...row.transfers].sort((a,b)=>Date.parse(a.timestamp)-Date.parse(b.timestamp));let line='0,46';for(const t of data){const x=(Date.parse(t.timestamp)-start)/duration*180;line+=` ${x},${46-total/row.total*40}`;total+=t.amount;line+=` ${x},${46-total/row.total*40}`;}return <svg viewBox="0 0 180 52" aria-hidden="true"><polyline points={line} fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>}
 function DailyChange({row}){
@@ -138,7 +138,7 @@ export default function Weekly(){
   }finally{setExporting(false)}
  }
  useEffect(()=>{setHistory(null);if(!selected||view==='weekly')return;const c=new AbortController();const old=weeks.filter(w=>w.closed&&w.week!==week).slice(0,8);Promise.all(old.map(async w=>{try{const b=await read('seasons/'+w.week+'.json',c.signal),r=rankWeekly(b,firm).find(r=>r.address===selected);return {week:w.week,start:w.start,row:r,available:true}}catch{return {week:w.week,start:w.start,available:false}}})).then(d=>{if(!c.signal.aborted)setHistory(d)});return()=>c.abort()},[selected,weeks,week,firm,view]);
- const name=r=>profiles[r.address]?'@'+profiles[r.address].username:short(r.address);
+ const name=r=>profiles[r.address]?.displayLabel||(profiles[r.address]?'@'+profiles[r.address].username:short(r.address));
  const options=[...new Set([weekKey(weekStart()),...weeks.map(w=>w.week),week])].sort().reverse();
  const weeklyRange=weekRange(selectedWeekStart);
  const closeAt=calendarWeekEnd(currentWeekStart),left=Math.max(0,Math.floor((closeAt-clock)/1000));

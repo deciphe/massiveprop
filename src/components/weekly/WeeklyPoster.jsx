@@ -16,7 +16,7 @@ const moonPaths=(()=>{
  return paths.map(p=>p.join(''));
 })();
 function RankArtwork({person,profiles}){
- const id=useId().replace(/:/g,''),ref=n=>`url(#${id}-${n})`,profile=profiles[person.address],name=profile?.username?'@'+profile.username:profile?.displayName||'Trader';
+ const id=useId().replace(/:/g,''),ref=n=>`url(#${id}-${n})`,profile=profiles[person.address],name=profile?.displayLabel||(profile?.username?'@'+profile.username:profile?.displayName||'Trader');
  const primary=Object.keys(person.firms||{}).sort((a,b)=>person.firms[b]-person.firms[a])[0];
  const firm=WEEKLY_FIRMS.find(f=>f.id===primary),logo=primary==='vest'?BRAND_ASSETS.vestSymbol:firm?.logo;
  const champion=person.rank===1;
@@ -56,7 +56,7 @@ export default function WeeklyPoster({board,rows,profiles,firm,person}){
  {list.map((r,i)=><g key={r.address} transform={`translate(0 ${225+i*76})`}>
  <text x="65" y="42" fontSize="29" fontWeight="800" fill="#bdb6a7">{String(r.rank).padStart(2,'0')}</text>
  {profiles[r.address]?.avatar&&<image href={profiles[r.address].avatar} x="145" y="0" width="54" height="54" preserveAspectRatio="xMidYMid slice"/>}
- <FitText x="222" y="38" maxWidth={540} fontSize={26} fontWeight="800" fill="#d5d3cc">{profiles[r.address]?.username?'@'+profiles[r.address].username:'Trader '+r.rank}</FitText>
+ <FitText x="222" y="38" maxWidth={540} fontSize={26} fontWeight="800" fill="#d5d3cc">{profiles[r.address]?.displayLabel||(profiles[r.address]?.username?'@'+profiles[r.address].username:'Trader '+r.rank)}</FitText>
  <FitText x="1135" y="38" textAnchor="end" maxWidth={320} fontSize={32} fontWeight="800" fill="#e8e5dc">{usd(r.total)}</FitText>
  </g>)}
  </svg>;
