@@ -992,3 +992,12 @@
 .massive-scene .gp-site .flat-wire-copy small{font:500 13px Manrope,sans-serif;color:#aaa59b}
 .massive-scene .gp-site .flat-wire-arrow{font-size:24px;color:#c4b495;align-self:start;justify-self:end}
 @media(max-width:700px){.massive-scene .gp-site .flat-wire-link{grid-template-columns:1fr 27px;grid-template-rows:104px auto;min-height:197px;padding:12px 18px 22px;gap:0;margin:6px 0 33px}.massive-scene .gp-site .flat-wire-art{grid-column:1/-1;grid-row:1;height:101px}.massive-scene .gp-site .flat-wire-moon{width:91px;height:91px;top:4px;right:24%}.massive-scene .gp-site .flat-wire-satellite{left:18%;top:28px;transform:rotate(-19deg) scale(.75)}.massive-scene .gp-site .flat-wire-beam{left:29%;right:40%;top:48%}.massive-scene .gp-site .flat-wire-copy strong{font-size:clamp(31px,9vw,48px)}.massive-scene .gp-site .flat-wire-copy small{font-size:12px}.massive-scene .gp-site .flat-wire-arrow{grid-column:2;grid-row:2;align-self:center}}
+
+/* Kaiweeen only — lift the atmospheric portrait on long standings rows.
+   Applies in both season Top 50 and weekly Top 20, not podium/export/profile. */
+.massive-scene.massive-scene .wk .wk-row[data-trader*="kaiwee"] > .wk-row-portrait{
+ transform:translateY(-25%)!important;
+}
+.massive-scene.massive-scene .wk .wk-row[data-trader*="kaiwee"]:hover > .wk-row-portrait{
+ transform:translateY(-25%)!important;
+}
