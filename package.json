@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run discipline:check && vite build",
     "audit:onchain": "node scripts/match-onchain.mjs",
     "preview": "vite preview",
-    "leaderboard:email": "node scripts/send-leaderboard-live.mjs"
+    "leaderboard:email": "node scripts/send-leaderboard-live.mjs",
+    "discipline:check": "node --check tools/discipline/bridge.mjs && node --check tools/discipline/extension/background.js && node --check tools/discipline/extension/panel.js"
   },
   "dependencies": {
     "framer-motion": "^11.16.4",
