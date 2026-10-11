@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((m,sender,reply)=>{
       ...(method==='POST'?{body:JSON.stringify(m.body||{})}:{})
     });
     const json=await response.json();
-    if(!response.ok)throw Error(json.error||'Bridge refused request');
+    if(!response.ok)throw Error((json.error||'Bridge refused request')+(json.client_order_id?' [Client order: '+json.client_order_id+']':''));
     return json.data;
   })().then(data=>reply({data})).catch(e=>reply({error:String(e.message||e)}));
   return true;
