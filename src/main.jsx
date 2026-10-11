@@ -11,7 +11,7 @@ import "./components/web3/home-atmosphere.css";
 // A deployment can replace a lazy route chunk while an older tab is open.
 // Recover once per minute, retaining the requested route without a reload loop.
 window.addEventListener('vite:preloadError', event => {
-  if (!['', '#', '#leaderboard', '#flow', '#vestflow'].includes(window.location.hash.split('?')[0])) return;
+  if (!['', '#', '#leaderboard', '#flow', '#vestflow', '#breakoutflow', '#novaflow', '#proprflow'].includes(window.location.hash.split('?')[0])) return;
   try {
     const key = 'massive-chunk-recovery';
     const previous = Number(sessionStorage.getItem(key) || 0);

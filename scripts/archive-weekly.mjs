@@ -1,5 +1,5 @@
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
-import {VEST_CHAINS as FLOW_SOURCES} from '../src/lib/flow-config.js';
+import {FLOW_SOURCES} from '../src/lib/flow-config.js';
 import {weekStart,weekKey,WEEK,weeklyBoard} from '../src/lib/weekly-leaderboard.js';
 const dest=process.argv[2]||'public/data',root='https://raw.githubusercontent.com/deciphe/massiveprop/vestflow-data/';
 await mkdir(dest+'/weekly',{recursive:true});const snapshots={};
@@ -10,7 +10,7 @@ const weeks=new Map((prior.weeks||[]).map(w=>[w.week,w]));
 for(let offset=0;offset<5;offset++){
  let start=weekStart();for(let n=0;n<offset;n++)start=weekStart(start-1);const key=weekKey(start);
  if(weeks.get(key)?.closed)continue;
- const board=weeklyBoard(snapshots,start,Date.now(),WEEK,'vest');if(!board.available)continue;
+ const board=weeklyBoard(snapshots,start,Date.now(),WEEK,'all');if(!board.available)continue;
  await writeFile(`${dest}/weekly/${key}.json`,JSON.stringify(board));
  weeks.set(key,{week:key,start,closed:board.closed,asOf:board.asOf});
 }

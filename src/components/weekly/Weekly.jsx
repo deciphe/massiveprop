@@ -20,13 +20,13 @@ import './daily-changes.css';
 import {rankSeasonChanges} from '../../lib/season-changes.js';
 import {BRAND_ASSETS} from '../../lib/brand-assets.js';
 
-const WEEKLY_FIRMS=TRACKED_FIRMS.filter(f=>f.id==='vest');
+const WEEKLY_FIRMS=TRACKED_FIRMS;
 const ROOT='https://raw.githubusercontent.com/deciphe/massiveprop/vestflow-data/';
 const API='https://gigaprop-profiles.johnhuska1260335.chatgpt.site/api';
 const usd=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(n);
 const short=a=>a.slice(0,6)+'…'+a.slice(-4);
 const weekRange=s=>{const timeZone=s<Date.parse('2026-10-11T22:00:00Z')?'UTC':'America/New_York';return new Date(s).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone})+' — '+new Date(calendarWeekEnd(s)-1).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone})};
-function initial(){const p=new URLSearchParams(window.location.hash.split('?')[1]||'');const w=p.get('season')||p.get('week');return {week:w&&validSeasonKey(w)?w:weekKey(weekStart()),view:p.get('view')==='weekly'?'weekly':'season',wallet:canonicalTraderWallet(p.get('wallet')),firm:'vest',card:p.get('card')||''};}
+function initial(){const p=new URLSearchParams(window.location.hash.split('?')[1]||'');const w=p.get('season')||p.get('week');return {week:w&&validSeasonKey(w)?w:weekKey(weekStart()),view:p.get('view')==='weekly'?'weekly':'season',wallet:canonicalTraderWallet(p.get('wallet')),firm:TRACKED_FIRMS.some(f=>f.id===p.get('firm'))?p.get('firm'):'vest',card:p.get('card')||''};}
 async function read(path,signal){for(const root of [ROOT,'/data/']){try{const r=await fetch(root+path+'?t='+Math.floor(Date.now()/300000),{signal:AbortSignal.any([signal,AbortSignal.timeout(8000)].filter(Boolean)),cache:'default'});if(r.ok)return await r.json();}catch{if(signal?.aborted)throw Error('Cancelled');}}throw Error('Snapshot unavailable');}
 async function posterFonts(node){
  const chars=[...new Set(node.textContent)].sort().join('');
@@ -52,7 +52,7 @@ export default function Weekly(){
  const [route]=useState(initial),[week,setWeek]=useState(route.week),[view,setView]=useState(route.view),[firm,setFirm]=useState(route.firm),[snapshots,setSnapshots]=useState(null),[edition,setEdition]=useState(null),[weeks,setWeeks]=useState([]),[busy,setBusy]=useState(true),[error,setError]=useState(''),[query,setQuery]=useState(''),[selected,setSelected]=useState(route.wallet),[profiles,setProfiles]=useState(FEATURED_TRADERS),[claim,setClaim]=useState(null),[poster,setPoster]=useState(null),[exporting,setExporting]=useState(false),[copied,setCopied]=useState(false),[history,setHistory]=useState(null);
  const [weeklyChoice,setWeeklyChoice]=useState(()=>{const k=new URLSearchParams(window.location.hash.split('?')[1]||'').get('weekly');return validWeeklyKey(k)?k:''}),[weeklyEditions,setWeeklyEditions]=useState([]),[weeklyArchive,setWeeklyArchive]=useState(null),[archiveOpen,setArchiveOpen]=useState(false),[archiveError,setArchiveError]=useState(''),[clock,setClock]=useState(Date.now());
  const specialRow=route.card==='yush-overall'?{address:'0x701903615450b87e9ced7941abcb9dde54a69531',addresses:['0x701903615450b87e9ced7941abcb9dde54a69531'],raw:'85756732929',count:3,firms:{vest:85756.732929},transfers:[{id:'yush-3',raw:'62961827026',amount:62961.827026,timestamp:'2026-09-29T20:48:27.000Z',firm:'vest',chain:'Base',to:'0x701903615450b87e9ced7941abcb9dde54a69531'},{id:'yush-2',raw:'1138089427',amount:1138.089427,timestamp:'2026-09-28T13:34:35.000Z',firm:'vest',chain:'Base',to:'0x701903615450b87e9ced7941abcb9dde54a69531'},{id:'yush-1',raw:'21656816476',amount:21656.816476,timestamp:'2026-09-26T12:49:21.000Z',firm:'vest',chain:'Base',to:'0x701903615450b87e9ced7941abcb9dde54a69531'}],largest:62961.827026,rank:3,total:85756.732929,changeAvailable:false,received24h:0}:null;
- useEffect(()=>{const sync=()=>{const next=initial();setWeek(next.week);setView(next.view);setSelected(next.wallet);};window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync)},[]);
+ useEffect(()=>{const sync=()=>{const next=initial();setWeek(next.week);setView(next.view);setFirm(next.firm);setSelected(next.wallet);};window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync)},[]);
  const posterRef=useRef(null),dialog=useRef(null),refresh=useRef(()=>{});
  const seasonStart=Date.parse(week+'T00:00:00Z'),currentWeekStart=calendarWeekStart(clock),selectedWeekStart=weeklyChoice?weekStartForKey(weeklyChoice):currentWeekStart,selectedWeekKey=new Date(selectedWeekStart).toISOString().slice(0,10),isPastWeek=selectedWeekStart<currentWeekStart,start=view==='weekly'?selectedWeekStart:seasonStart,live=view==='weekly'?!isPastWeek:week===weekKey(weekStart());
  useEffect(()=>{const timer=setInterval(()=>setClock(Date.now()),1000);return()=>clearInterval(timer)},[]);
@@ -196,7 +196,7 @@ function ClaimForm({initialAddress,onDone}){
   if(!walletList.length){setStatus('Add at least one payout wallet.');return;}
   if(walletList.some(wallet=>!/^0x[a-f0-9]{40}$/.test(wallet))){setStatus('Check each payout wallet. Every address must be a complete 0x address.');return;}
   if(new Set(walletList).size!==walletList.length){setStatus('Remove duplicate wallet addresses before submitting.');return;}
-  if(!attachment?.size){setStatus('Attach a screenshot of your Vest withdrawal confirmation email.');return;}
+  if(!attachment?.size){setStatus('Attach a screenshot of your firm’s withdrawal confirmation email.');return;}
   if(attachment.size>10*1024*1024){setStatus('Please use an image under 10 MB.');return;}
   if(!['image/png','image/jpeg','image/webp'].includes(attachment.type)){setStatus('Use a PNG, JPG or WebP screenshot.');return;}
   setBusy(true);setStatus('Sending your screenshot and profile…');
@@ -224,7 +224,7 @@ function ClaimForm({initialAddress,onDone}){
   }
  }
  if(sent)return <div className="wk-claim-form wk-submission wk-submission-success" role="status" aria-live="polite"><div className="wk-success-mark"><Check size={32}/></div><span className="wk-profile-label">PROFILE CLAIM / RECEIVED</span><h2>Submission received.</h2><p>Your claim is in. MASSIVE will review the withdrawal confirmation and combine the approved payout wallets into one leaderboard profile.</p><div className="wk-success-wallet wk-success-wallets"><span>{walletList.length===1?'Submitted wallet':walletList.length+' submitted wallets'}</span><div>{walletList.map(wallet=><strong key={wallet}>{short(wallet)}</strong>)}</div></div><p className="wk-claim-note">You do not need to submit again. If anything is missing, MASSIVE will follow up using the contact email you provided.</p><button className="wk-primary wk-success-done" type="button" onClick={onDone}><Check size={16}/> Done</button></div>;
- return <form className="wk-claim-form wk-submission" onSubmit={submit} action="https://formsubmit.co/ajax/gp@gigaprop.xyz" method="POST" encType="multipart/form-data"><ShieldCheck size={30}/><span className="wk-profile-label">VEST / MANUAL PROFILE REVIEW</span><h2>Put your name on it.</h2><p>Submit your Vest withdrawal confirmation and every payout wallet you want under the profile. MASSIVE will cross-reference the receiving addresses onchain before publishing them as one combined identity.</p>
+ return <form className="wk-claim-form wk-submission" onSubmit={submit} action="https://formsubmit.co/ajax/gp@gigaprop.xyz" method="POST" encType="multipart/form-data"><ShieldCheck size={30}/><span className="wk-profile-label">PAYOUT / MANUAL PROFILE REVIEW</span><h2>Put your name on it.</h2><p>Submit your firm’s withdrawal confirmation and every payout wallet you want under the profile. MASSIVE will cross-reference the receiving addresses onchain before publishing them as one combined identity.</p>
  <input name="_honey" type="text" tabIndex={-1} autoComplete="off" style={{display:'none'}} aria-hidden="true"/>
  <input type="hidden" name="_captcha" value="false"/>
   <input type="hidden" name="_subject" value={'MASSIVE VEST PROFILE REVIEW — @'+twitter.trim().replace(/^@/,'')}/>

@@ -42,9 +42,9 @@ for(const config of Object.values(FLOW_CONFIGS)){
  assert.ok(!html.includes('vf-table'));
  assert.ok(html.includes('24H'));
  assert.ok(html.includes('#vestflow'));
- assert.ok(!html.includes('href="#breakoutflow"'));
- assert.ok(!html.includes('href="#novaflow"'));
- assert.ok(!html.includes('href="#proprflow"'));
+ assert.ok(html.includes('href="#breakoutflow"'));
+ assert.ok(html.includes('href="#novaflow"'));
+ assert.ok(html.includes('href="#proprflow"'));
 
 }
 console.log('All aggregate tracker views render without the removed transfer table and with correct referral and explorer links.');

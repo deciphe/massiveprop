@@ -12,7 +12,7 @@ export const WEEKLY_CUTOVER=Date.parse('2026-10-11T22:00:00Z');
 const oldWeekStart=time=>{const d=new Date(time);d.setUTCHours(0,0,0,0);d.setUTCDate(d.getUTCDate()-(d.getUTCDay()+6)%7);return d.getTime()};
 const easternOffset=time=>{
  const tz=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',timeZoneName:'shortOffset'}).formatToParts(new Date(time)).find(p=>p.type==='timeZoneName')?.value||'GMT-4';
- return Number(tz.match(/GMT([+-]\\d+)/)?.[1]||-4);
+ return Number(tz.match(/GMT([+-]\d+)/)?.[1]||-4);
 };
 const sundayAtSix=(time)=>{
  const d=new Date(time);d.setUTCHours(0,0,0,0);d.setUTCDate(d.getUTCDate()-d.getUTCDay());
