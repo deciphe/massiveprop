@@ -7,7 +7,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const origin=process.env.QA_ORIGIN||'http://127.0.0.1:4173/';
-const routes=['','#leaderboard','#flow','#vestflow','#breakoutflow','#novaflow','#proprflow','#thebook','#vestpdf','#perpcopier','#affiliated'];
+const routes=['','#leaderboard','#leaderboard?view=weekly&weekly=2026-09-21','#flow','#vestflow','#breakoutflow','#novaflow','#proprflow','#thebook','#vestpdf','#perpcopier','#affiliated'];
 const widths=[320,390,430,768,1024,1440];
 const out='artifacts/responsive';
 await fs.mkdir(out,{recursive:true});
@@ -20,9 +20,11 @@ try{
    const exceptions=[];
    page.on('pageerror',e=>exceptions.push(e.message));
    const url=origin+route;
+   if(route.includes('weekly='))await page.route('https://raw.githubusercontent.com/deciphe/massiveprop/vestflow-data/**',async r=>{const file=new URL(r.request().url()).pathname.split('/vestflow-data/')[1];try{await r.fulfill({path:'public/data/'+file,contentType:'application/json'})}catch{await r.abort()}});
    try{
     const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:25000});
     await page.waitForTimeout(1300);
+    if(route.includes('weekly=')){await page.locator('.flat-podium-card .pd-calendar').first().waitFor();if(await page.locator('.flat-podium-card .pd-calendar').count()!==3)throw Error('Closed podium must have three payout calendars');await page.locator('.wk-podium').screenshot({path:path.join(out,'podium-days-'+width+'.png')});await page.locator('.flat-podium-card').first().click();await page.locator('dialog .pd-calendar').waitFor();await page.locator('dialog').screenshot({path:path.join(out,'podium-profile-'+width+'.png')});await page.getByRole('button',{name:'Close',exact:true}).click();}
     const details=await page.evaluate(()=>{
      const vw=document.documentElement.clientWidth;
      const over=[];

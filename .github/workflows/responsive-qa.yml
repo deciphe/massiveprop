@@ -1,6 +1,10 @@
 name: Responsive QA (manual)
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "src/components/weekly/PodiumDays.jsx"
+      - "src/components/weekly/podium-days.css"
 jobs:
   mobile-and-desktop:
     runs-on: ubuntu-latest
