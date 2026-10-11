@@ -14,4 +14,4 @@ export function weeklyAwardsUnlocked(board,now=Date.now()){
  return board.closed===true&&now>=close&&board.end>=close&&Date.parse(board.asOf)>=close;
 }
 const dayLabel=(t,legacy)=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:legacy?'UTC':'America/New_York'});
-export const weeklyAwardRange=start=>{const legacy=start<Date.parse('2026-10-11T22:00:00Z');return dayLabel(start,legacy)+' — '+dayLabel(weekEnd(start)-1,legacy)};
+export const weeklyAwardRange=start=>{const legacy=start<Date.parse('2026-10-11T22:00:00Z');const tz=legacy?'UTC':'America/New_York';return new Date(start).toLocaleDateString('en-US',{month:'short',day:'numeric',timeZone:tz})+' — '+dayLabel(weekEnd(start)-1,legacy)};
