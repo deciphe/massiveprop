@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T23:11:26.674Z",
+  "checkedAt": "2026-10-11T16:21:12.772Z",
   "sourcesTracked": 21,
   "snapshots": {
     "https://docs.vestmarkets.com/home.md": {
@@ -1270,15 +1270,15 @@
       "hash": "53e8d0244003e53977f02d5b754f8b76813ccf5f51c68f9c5722194c37c61e47",
       "title": "Funding Update",
       "body": "To reduce price deviation between perps and their underlying markets, index and futures-based perps no longer include an interest-rate component, and index perps’ funding normalization is shortened from 120h to 48h. All other markets now use a clamp multiplier of 1. Funding is exchanged between traders and is not an exchange fee. See the funding docs.",
-      "seenAt": "2026-10-10T23:11:26.674Z"
+      "seenAt": "2026-10-11T16:21:12.772Z"
     },
     "stopLossTitle": {
       "hash": "03b3b24c82a4e484895fb3edba90f6e403b2e8c0877d1427a5c9ad88d309f162",
       "title": "Stop-Loss Update",
       "body": "Stop losses now trigger on the mid price instead of the best bid/ask, reducing triggers caused by spread widening.",
-      "seenAt": "2026-10-10T23:11:26.674Z"
+      "seenAt": "2026-10-11T16:21:12.772Z"
     }
   },
-  "appCheckedAt": "2026-10-10T23:11:26.674Z",
+  "appCheckedAt": "2026-10-11T16:21:12.772Z",
   "appSource": "https://next.vestmarkets.com/assets/index-BaHDUjfU.js"
 }
