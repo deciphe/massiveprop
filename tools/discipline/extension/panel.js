@@ -50,7 +50,7 @@
       return;
     }
     if(state.view==='connect'){
-      shell('CONNECT','<div class="eyebrow">LOCAL EXECUTION</div><h1>YOUR RULES.<br><i>YOUR TICKET.</i></h1><p class="sub">Enter your local bridge token. Never paste an MFP API key into an extension.</p><label>BRIDGE TOKEN<input name="bridgeToken" type="password" autocomplete="off" placeholder="Your private local token"></label>'+button('connect','CONNECT BRIDGE →','primary wide')+'<p class="hint">Start tools/discipline/bridge.mjs locally with an MFP sandbox API key first.</p>');
+      shell('CONNECT','<div class="eyebrow">LOCAL EXECUTION</div><h1>YOUR RULES.<br><i>YOUR TICKET.</i></h1><p class="sub">Paste your MFP sandbox API key once. It stays in Chrome extension-local storage.</p><label>MFP API KEY<input name="mfpApiKey" type="password" autocomplete="off" placeholder="Your private local token"></label>'+button('connect','CONNECT BRIDGE →','primary wide')+'<p class="hint">No server or terminal required. Start with an fp_test_ sandbox key.</p>');
     }else if(state.view==='plan'){
       const optionList=state.accounts.map(a=>({value:a.id,text:(a.name||a.account_number||a.id)+' · '+(a.status||'unknown')}));
       shell('SESSION PLAN','<div class="eyebrow">01 / PLAN</div><h1>DEFINE<br><i>THE DAY.</i></h1><p class="sub">Targets describe the session from ARM onward, not earlier trades.</p><label>ACCOUNT<select name="account"></select></label><div class="two">'+field('DAILY TARGET $','target',state.target,'type="number" min="1" step="1"')+field('DAILY STOP $','stop',state.stop,'type="number" min="1" step="1"')+'</div>'+field('MAX RISK PER TRADE $','maxRisk',state.maxRisk,'type="number" min="1" step="1"')+'<div class="projection">'+row('5 TARGET DAYS',money(state.target*5))+row('20 TARGET DAYS',money(state.target*20))+'</div><p class="hint">Projections assume every session hits its target. They are not earnings forecasts.</p>'+button('arm','ARM DISCIPLINE →','primary wide'));
@@ -93,13 +93,13 @@
     ];
   }
   async function boot(){
-    const values=await chrome.storage.local.get(['bridgeToken','massiveSettings','massiveHistory','massiveReleased']);
+    const values=await chrome.storage.local.get(['mfpApiKey','massiveSettings','massiveHistory','massiveReleased']);
     state.history=Array.isArray(values.massiveHistory)?values.massiveHistory:[];
     state.released=values.massiveReleased||null;
     Object.assign(state,values.massiveSettings||{});
-    state.view=values.bridgeToken?'plan':'connect';
+    state.view=values.mfpApiKey?'plan':'connect';
     render();
-    if(values.bridgeToken)await load();
+    if(values.mfpApiKey)await load();
   }
   async function load(){
     try{
@@ -125,10 +125,9 @@
     state.busy=true;
     try {
       if(name==='connect'){
-        const token=app.querySelector('[name="bridgeToken"]')?.value?.trim();
-        if(!token || token.length<24)throw Error('Enter a bridge token of at least 24 characters');
-        await chrome.storage.local.set({bridgeToken:token});
-        await api('health'); await load();
+        const token=app.querySelector('[name="mfpApiKey"]')?.value?.trim();
+        if(!token?.startsWith('fp_test_'))throw Error('Paste a sandbox fp_test_ API key');
+        await api('connect',{api_key:token}); await load();
       }else if(name==='arm'||name==='rearm'){
         if(name==='arm'){
           for(const key of ['target','stop','maxRisk'])if(!Number.isFinite(Number(state[key]))||Number(state[key])<=0)throw Error('Plan fields must be positive numbers');
@@ -191,7 +190,7 @@
   });
   app.addEventListener('input',e=>{
     const el=e.target;
-    if(el.name==='bridgeToken'||el.name==='phrase')return;
+    if(el.name==='mfpApiKey'||el.name==='phrase')return;
     if(['target','stop','maxRisk'].includes(el.name))state[el.name]=Number(el.value);
     else if(el.name in state)state[el.name]=el.value;
     if(state.view==='plan'&&['target','stop'].includes(el.name)){
