@@ -1,18 +1,39 @@
 {
   "manifest_version": 3,
   "name": "MASSIVE Discipline",
-  "version": "0.1.0",
-  "description": "Voluntary order-entry discipline on MyFundedPerps through the documented API.",
-  "permissions": ["storage"],
-  "host_permissions": ["http://127.0.0.1:18740/*"],
-  "content_scripts": [{
-    "matches": ["https://myfundedperpetuals.com/trade/*", "https://www.myfundedperpetuals.com/trade/*"],
-    "js": ["panel.js"],
-    "run_at": "document_idle"
-  }],
-  "background": {"service_worker": "background.js"},
-  "web_accessible_resources": [{
-    "resources": ["panel.css"],
-    "matches": ["https://myfundedperpetuals.com/*", "https://www.myfundedperpetuals.com/*"]
-  }]
+  "version": "0.2.0",
+  "description": "Self-contained MASSIVE Discipline ticket with direct MFP sandbox API key setup.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://sandbox.myfundedperpetuals.com/*",
+    "https://developers.myfundedperpetuals.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://myfundedperpetuals.com/trade/*",
+        "https://www.myfundedperpetuals.com/trade/*"
+      ],
+      "js": [
+        "panel.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "panel.css"
+      ],
+      "matches": [
+        "https://myfundedperpetuals.com/*",
+        "https://www.myfundedperpetuals.com/*"
+      ]
+    }
+  ]
 }
