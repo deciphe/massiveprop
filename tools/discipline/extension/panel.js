@@ -1,220 +1,109 @@
-/* MASSIVE Discipline. MFP ticket overlay; requests go only to the public API via a local bridge. */
-(()=> {
-  if(document.getElementById('massive-discipline-root')) return;
-  const host=document.createElement('div');
-  host.id='massive-discipline-root';
-  host.style.cssText='position:fixed;right:0;top:0;width:386px;max-width:100vw;height:100dvh;z-index:2147483646;pointer-events:none;';
-  document.documentElement.appendChild(host);
-  const shadow=host.attachShadow({mode:'closed'});
-  const css=document.createElement('link');css.rel='stylesheet';css.href=chrome.runtime.getURL('panel.css');shadow.append(css);
-  const app=document.createElement('div');app.className='massive-app';shadow.append(app);
-  const state={
-    view:'connect',accounts:[],markets:[],account:'',market:'',
-    target:400,stop:400,maxRisk:100,
-    side:'buy',type:'market',marginMode:'cross',size:'0.001',leverage:'2',limit:'',sl:'',tp:'',
-    busy:false,error:'',info:'',preview:null,session:null,gateStep:0,lastWarning:null,
-    lastClientId:'',result:null,history:[],saved:{},released:null
-  };
-  const money=(v)=>Number.isFinite(Number(v))?'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
-  const escape=(v)=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const nice=(v)=>escape(v).slice(0,90);
-  const api=async(action,body=null,query=null)=>{
-    const reply=await chrome.runtime.sendMessage({kind:'MASSIVE_BRIDGE',action,body,query});
-    if(reply?.error)throw Error(reply.error);
-    return reply?.data;
-  };
-  const save=async()=>{await chrome.storage.local.set({massiveSettings:{account:state.account,market:state.market,target:state.target,stop:state.stop,maxRisk:state.maxRisk},massiveHistory:state.history.slice(-600),massiveReleased:state.released});};
-  const record=async(type,details={})=>{
-    state.history.push({type,account:state.account,at:Date.now(),day:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),...details});
-    await save();
-  };
-  const status=(msg,bad=false)=>{state.error=bad?msg:'';state.info=bad?'':msg;render();};
-  const button=(name,txt,cls='')=>'<button data-action="'+name+'" class="'+cls+'">'+txt+'</button>';
-  const field=(label,name,value,extra='')=>'<label>'+label+'<input name="'+name+'" value="'+escape(value)+'" '+extra+'></label>';
-  const row=(label,value)=>'<div class="line"><span>'+label+'</span><strong>'+value+'</strong></div>';
-  const shell=(title,body,footer='')=>{
-    app.innerHTML='<div class="window"><header><div class="brand">MASSIVE<span>.</span></div><div class="caps">DISCIPLINE <em>/</em> '+nice(title)+'</div></header><main>'+body+'</main><footer><div class="small">MYFUNDEDPERPS <span>·</span> VOLUNTARY CONTROL</div>'+footer+'</footer></div>';
-  };
-  const setOpts=(name,items,selected)=>{
-    const el=app.querySelector('[name="'+name+'"]');
-    if(!el)return;
-    for(const item of items){const o=document.createElement('option');o.value=String(item.value);o.textContent=String(item.text);el.append(o);}
-    if(selected && items.some(x=>String(x.value)===String(selected)))el.value=selected;
-    else if(el.options.length) {el.selectedIndex=0;state[name]=el.value;}
-  };
-  function render(){
-    host.style.width=state.view==='released'?'245px':'386px';
-    host.style.height=state.view==='released'?'auto':'100dvh';
-    if(state.view==='released'){
-      app.innerHTML='<div class="dock"><div class="brand">MASSIVE.</div><p>NATIVE TICKET UNLOCKED</p>'+button('rearm','RE-ARM DISCIPLINE','primary')+'</div>';
-      return;
-    }
-    if(state.view==='connect'){
-      shell('CONNECT','<div class="eyebrow">API CONNECTION</div><h1>YOUR RULES.<br><i>YOUR TICKET.</i></h1><p class="sub">Paste your MFP sandbox API key once. It stays in Chrome extension-local storage.</p><label>MFP API KEY<input name="mfpApiKey" type="password" autocomplete="off" placeholder="fp_test_..."></label>'+button('connect','CONNECT ACCOUNT →','primary wide')+'<p class="hint">No server or terminal required. Start with an fp_test_ sandbox key.</p>');
-    }else if(state.view==='plan'){
-      const optionList=state.accounts.map(a=>({value:a.id,text:(a.name||a.account_number||a.id)+' · '+(a.status||'unknown')}));
-      shell('SESSION PLAN','<div class="eyebrow">01 / PLAN</div><h1>DEFINE<br><i>THE DAY.</i></h1><p class="sub">Targets describe the session from ARM onward, not earlier trades.</p><label>ACCOUNT<select name="account"></select></label><div class="two">'+field('DAILY TARGET $','target',state.target,'type="number" min="1" step="1"')+field('DAILY STOP $','stop',state.stop,'type="number" min="1" step="1"')+'</div>'+field('MAX RISK PER TRADE $','maxRisk',state.maxRisk,'type="number" min="1" step="1"')+'<div class="projection">'+row('5 TARGET DAYS',money(state.target*5))+row('20 TARGET DAYS',money(state.target*20))+'</div><p class="hint">Projections assume every session hits its target. They are not earnings forecasts.</p>'+button('arm','ARM DISCIPLINE →','primary wide'));
-      setOpts('account',optionList,state.account);
-    }else if(state.view==='ticket'){
-      const symbols=state.markets.map(m=>({value:m.id,text:m.symbol || m.name || m.id}));
-      shell('ARMED','<div class="eyebrow armed">● SESSION ARMED</div><div class="accountline">'+nice(state.accounts.find(a=>a.id===state.account)?.name||state.account)+'</div><div class="large">'+money(state.session?.session_pnl??0)+'<span> SINCE ARM</span></div><div class="line tight"><span>DAILY TARGET</span><b>'+money(state.target)+'</b></div><div class="line tight"><span>SESSION STOP</span><b>−'+money(state.stop)+'</b></div><div class="line tight"><span>PER TRADE</span><b>'+money(state.maxRisk)+'</b></div><div class="rule"></div><div class="eyebrow">02 / ORDER ENTRY</div><label>MARKET<select name="market"></select></label><div class="two">'+button('buy','BUY / LONG','segment '+(state.side==='buy'?'on':''))+button('sell','SELL / SHORT','segment '+(state.side==='sell'?'on':''))+'</div><div class="two"><label>ORDER TYPE<select name="type"><option value="market">MARKET</option><option value="limit">LIMIT</option></select></label>'+field('LEVERAGE','leverage',state.leverage,'type="number" min="1" step=".1"')+'</div><label>MARGIN MODE<select name="marginMode"><option value="cross">CROSS</option><option value="isolated">ISOLATED</option></select></label>'+field('SIZE · BASE ASSET','size',state.size,'type="number" min="0" step="any"')+(state.type==='limit'?field('LIMIT PRICE','limit',state.limit,'type="number" min="0" step="any"'):'')+'<div class="two">'+field('STOP LOSS','sl',state.sl,'type="number" min="0" step="any"')+field('TAKE PROFIT','tp',state.tp,'type="number" min="0" step="any"')+'</div>'+button('preview','CHECK ORDER →','primary wide')+'<p class="hint">Opening orders run through our plan. Native closes and protective orders remain available outside the overlay.</p>');
-      setOpts('market',symbols,state.market);
-      const typ=app.querySelector('[name="type"]');if(typ)typ.value=state.type;
-      const mm=app.querySelector('[name="marginMode"]');if(mm)mm.value=state.marginMode;
-    }else if(state.view==='confirm'){
-      const p=state.preview;
-      shell('CONFIRM','<div class="eyebrow armed">● ORDER PASSED YOUR PLAN</div><h1>READY<br><i>TO SEND.</i></h1><div class="projection">'+row('REFERENCE PRICE',money(p.entry))+row('EST. STOP RISK',money(p.estimated_risk))+row('SESSION P&L',money(p.session_pnl))+row('REMAINING DD',money(p.remaining_drawdown))+'</div><p class="hint">Risk is estimated. Quotes, fees, slippage and fills can change. Sending does not guarantee execution.</p>'+button('submit','CONFIRM & PLACE ORDER','primary wide')+button('back','← CHANGE ORDER','ghost wide'));
-    }else if(state.view==='gate'){
-      const step=state.gateStep;
-      const bars=Array.from({length:10},(_,i)=>'<span class="'+(i<step?'lit':'')+'"></span>').join('');
-      shell('DEGEN GATE','<div class="eyebrow">YOUR RULES / YOUR OVERRIDE</div><h1>YOU SET<br><i>THE LIMIT.</i></h1><div class="progress">'+bars+'</div><div class="gateNum">'+String(Math.min(step+1,10)).padStart(2,'0')+'<span>/10</span></div><div class="consequence">'+(state.lastWarning?'<div class="eyebrow">'+nice(state.lastWarning.label)+'</div><div class="warning">'+nice(state.lastWarning.value)+'</div>':'<p class="sub">Complete ten separate acknowledgments to return to the original MFP order ticket.</p>')+'</div><label>TYPE TO OVERRIDE<input name="phrase" spellcheck="false" autocomplete="off" placeholder="I am a degen"></label>'+button('confess','ACKNOWLEDGE →','primary wide')+button('back','← KEEP MY PLAN','ghost wide')+'<p class="hint">Each confession reveals one account consequence. Your plan breach will be recorded locally.</p>');
-    }else if(state.view==='result'){
-      shell('ORDER STATUS','<div class="eyebrow armed">ORDER SENT TO MFP</div><h1>REQUEST<br><i>RECEIVED.</i></h1><div class="projection">'+row('CLIENT ORDER ID',nice(state.lastClientId))+row('CURRENT STATUS',nice(state.result?.status||'unknown'))+'</div><p class="hint">Order acceptance is not a fill. Reconcile before placing any additional order.</p>'+button('reconcile','CHECK ORDER STATUS →','primary wide')+button('back','← ORDER TICKET','ghost wide'));
-    }
-    const notice=app.querySelector('main');
-    if(state.error) notice.insertAdjacentHTML('afterbegin','<div class="notice bad">'+nice(state.error)+'</div>');
-    else if(state.info)notice.insertAdjacentHTML('afterbegin','<div class="notice">'+nice(state.info)+'</div>');
-  }
-  function warnings(){
-    const p=state.preview||{}, s=state.session||{};
-    const r=Number(p.estimated_risk),room=Number(p.remaining_drawdown);
-    const totalOverrides=state.history.filter(x=>x.type==='override').length;
-    return [
-      {label:'01 / AGREEMENT',value:'This order breaks the plan you chose before trading.'},
-      {label:'02 / TRADE EXPOSURE',value:Number.isFinite(r)?'Estimated risk: '+money(r):'No calculable stop risk.'},
-      {label:'03 / DRAWDOWN BUFFER',value:Number.isFinite(room)?money(room)+' remaining to your drawdown floor.':'Drawdown data unavailable.'},
-      {label:'04 / LOSSES LEFT',value:r>0 && room>0?Math.floor(room/r)+' similar full-stop losses fit the remaining buffer (estimate).':'Cannot calculate without a valid stop.'},
-      {label:'05 / DAYS LEFT',value:s.stop>0 && room>=0?Math.floor(room/s.stop)+' daily-stop losses fit that buffer (estimate).':'Daily-stop scenario unavailable.'},
-      {label:'06 / WINS TO RECOVER',value:s.target>0?Math.ceil(Math.max(0,-Number(p.session_pnl||0))/s.target)+' target-sized wins to recover session P&L (before costs).':'Recovery scenario unavailable.'},
-      {label:'07 / TRADE LIMIT',value:'Your approved per-trade risk was '+money(s.maxRisk||state.maxRisk)+'.'},
-      {label:'08 / SESSION RESULT',value:'Current P&L since ARM: '+money(p.session_pnl||0)+'.'},
-      {label:'09 / HISTORY',value:totalOverrides+' earlier overrides logged in this browser.'},
-      {label:'10 / OWNERSHIP',value:'The native ticket will reopen. The choice and outcome remain yours.'}
-    ];
-  }
-  async function boot(){
-    const values=await chrome.storage.local.get(['mfpApiKey','massiveSettings','massiveHistory','massiveReleased']);
-    state.history=Array.isArray(values.massiveHistory)?values.massiveHistory:[];
-    state.released=values.massiveReleased||null;
-    Object.assign(state,values.massiveSettings||{});
-    state.view=values.mfpApiKey?'plan':'connect';
-    render();
-    if(values.mfpApiKey)await load();
-  }
-  async function load(){
-    try{
-      state.accounts=await api('accounts');
-      state.markets=await api('markets');
-      if(!Array.isArray(state.accounts))state.accounts=state.accounts?.accounts||[];
-      if(!Array.isArray(state.markets))state.markets=state.markets?.markets||[];
-      if(!state.accounts.length)throw Error('No accessible MFP accounts in this environment');
-      state.account=state.accounts.some(a=>a.id===state.account)?state.account:state.accounts[0].id;
-      state.market=state.markets.some(m=>m.id===state.market)?state.market:state.markets[0]?.id||'';
-      try{
-        const sess=await api('session',null,{account_id:state.account});
-        state.session=sess;
-        state.target=sess.target;state.stop=sess.stop;state.maxRisk=sess.maxRisk;
-        state.view='ticket';
-        if(state.released?.account===state.account && state.released?.day===sess.day) state.view='released';
-      }catch{state.view='plan';}
-      state.error='';render();
-    }catch(e){state.error=e.message;state.view='connect';render();}
-  }
-  async function act(name){
-    if(state.busy)return;
-    state.busy=true;
-    try {
-      if(name==='connect'){
-        const token=app.querySelector('[name="mfpApiKey"]')?.value?.trim();
-        if(!token?.startsWith('fp_test_'))throw Error('Paste a sandbox fp_test_ API key');
-        await api('connect',{api_key:token}); await load();
-      }else if(name==='arm'||name==='rearm'){
-        if(name==='arm'){
-          for(const key of ['target','stop','maxRisk'])if(!Number.isFinite(Number(state[key]))||Number(state[key])<=0)throw Error('Plan fields must be positive numbers');
-        }
-        const s=await api('arm',{account_id:state.account,target:Number(state.target),stop:Number(state.stop),maxRisk:Number(state.maxRisk)});
-        state.session={...s,session_pnl:0};state.target=s.target;state.stop=s.stop;state.maxRisk=s.maxRisk;
-        state.view='ticket';state.error='';state.released=null;
-        await record(name==='rearm'?'rearm':'arm',{plan:{target:s.target,stop:s.stop,maxRisk:s.maxRisk}});
-      }else if(name==='buy'||name==='sell'){state.side=name;}
-      else if(name==='preview'){
-        if(!state.market)throw Error('Select a market');
-        const order={
-          account_id:state.account,market_id:state.market,side:state.side,type:state.type,
-          size:Number(state.size),leverage:Number(state.leverage),margin_mode:state.marginMode,
-          ...(state.type==='limit'?{limit_price:Number(state.limit)}:{}),
-          ...(state.sl?{stop_loss_price:Number(state.sl)}:{}),
-          ...(state.tp?{take_profit_price:Number(state.tp)}:{})
-        };
-        const p=await api('preview',order);
-        state.preview=p;state.session={...state.session,session_pnl:p.session_pnl};
-        if(p.allowed){state.view='confirm';}
-        else {
-          state.gateStep=0;state.lastWarning=null;state.view='gate';
-          await record('violation',{reasons:p.reasons.map(x=>x.code),estimatedRisk:p.estimated_risk});
-        }
-      }else if(name==='submit'){
-        const p=state.preview;
-        if(!p?.allowed)throw Error('No approved order preview');
-        const o=await api('place',{preview_id:p.preview_id});
-        state.lastClientId=o.client_order_id||'';
-        state.result=o.order||{status:'pending'};
-        await record('order_submitted',{clientOrderId:state.lastClientId,estimatedRisk:p.estimated_risk});
-        state.view='result';
-      }else if(name==='reconcile'){
-        if(!state.lastClientId)throw Error('No order ID to reconcile');
-        const data=await api('order-lookup',null,{client_order_id:state.lastClientId});
-        state.result=Array.isArray(data)?data[0]||{status:'not_found'}:data?.[0]||data?.orders?.[0]||{status:'unknown'};
-      }else if(name==='back'){state.view='ticket';state.error='';}
-      else if(name==='confess'){
-        if(app.querySelector('[name="phrase"]')?.value?.trim().toLowerCase()!=='i am a degen')throw Error('Type I am a degen to acknowledge');
-        state.lastWarning=warnings()[state.gateStep];
-        state.gateStep+=1;
-        if(state.gateStep===10){
-          await record('override',{reasonCodes:state.preview?.reasons?.map(x=>x.code)||[],estimatedRisk:state.preview?.estimated_risk});
-          state.view='released';
-          state.released={account:state.account,day:state.session?.day||'',at:Date.now()};
-        }
-      }
-      await save();render();
-    }catch(e){
-      state.error=e.message;
-      const unknown=(e.message||'').match(/massive-[0-9a-f-]{36}/i);
-      if(unknown){state.lastClientId=unknown[0];state.result={status:'unknown — reconcile before another trade'};state.view='result';}
-      render();
-    }
-    finally{state.busy=false;}
-  }
-  app.addEventListener('click',e=>{
-    const btn=e.target.closest('[data-action]');if(btn){e.preventDefault();act(btn.dataset.action);}
-  });
-  app.addEventListener('input',e=>{
-    const el=e.target;
-    if(el.name==='mfpApiKey'||el.name==='phrase')return;
-    if(['target','stop','maxRisk'].includes(el.name))state[el.name]=Number(el.value);
-    else if(el.name in state)state[el.name]=el.value;
-    if(state.view==='plan'&&['target','stop'].includes(el.name)){
-      const proj=app.querySelector('.projection');
-      if(proj)proj.innerHTML=row('5 TARGET DAYS',money(state.target*5))+row('20 TARGET DAYS',money(state.target*20));
-    }
-  });
-  app.addEventListener('change',e=>{
-    if(e.target.name in state)state[e.target.name]=e.target.value;
-    if(state.view==='ticket'&&e.target.name==='type')render();
-    if(state.view==='plan'&&e.target.name==='account')save();
-  });
-  app.addEventListener('keydown',e=>{
-    if(e.key==='Enter'&&state.view==='gate'&&e.target.name==='phrase'){e.preventDefault();act('confess');}
-  });
-  // Refresh visible session values, but don't steal focus by rebuilding a form mid-typing.
-  setInterval(async()=>{
-    if(state.view!=='ticket'||state.busy||!state.account)return;
-    try{
-      const s=await api('session',null,{account_id:state.account});
-      state.session=s;
-      const large=app.querySelector('.large');
-      if(large)large.innerHTML=money(s.session_pnl)+'<span> SINCE ARM</span>';
-    }catch{/* Show failure when next order is previewed; never submit with a stale snapshot. */}
-  },10000);
-  boot().catch(e=>status(e.message,true));
+// MASSIVE Discipline: the same controller runs in-page and in the toolbar window.
+(()=>{
+ if(document.getElementById('massive-discipline-root'))return;
+ const standalone=location.protocol==='chrome-extension:';
+ // FontFace registers bundled type in the document; @font-face inside Shadow DOM is not reliable.
+ for(const weight of [700,800]){const face=new FontFace('MassiveManrope','url('+chrome.runtime.getURL('manrope-'+weight+'.ttf')+')',{weight:String(weight)});document.fonts.add(face);face.load().catch(()=>{});}
+ const host=document.createElement('div');host.id='massive-discipline-root';
+ host.style.cssText=standalone?'height:100dvh;width:100%':'position:fixed;right:18px;top:18px;width:380px;max-width:calc(100vw - 24px);height:calc(100dvh - 36px);z-index:2147483646;pointer-events:none;';
+ document.documentElement.append(host);const shadow=host.attachShadow({mode:'closed'});
+ const css=document.createElement('link');css.rel='stylesheet';css.href=chrome.runtime.getURL('panel.css');shadow.append(css);
+ const app=document.createElement('div');app.className='massive-app';shadow.append(app);
+ const s={view:'connect',returnView:'ticket',accounts:[],markets:[],account:'',market:'',target:400,stop:400,maxRisk:100,side:'buy',type:'market',marginMode:'cross',size:'0.001',leverage:'2',limit:'',sl:'',tp:'',busy:false,error:'',info:'',preview:null,session:null,gateStep:0,lastWarning:null,lastClientId:'',result:null,history:[],override:false,collapsed:false,pending:[],lastSync:0};
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const money=v=>v!==null&&v!==undefined&&Number.isFinite(Number(v))?'$'+Number(v).toLocaleString('en-US',{maximumFractionDigits:2,minimumFractionDigits:2}):'—';
+ const api=async(action,body=null,query=null)=>{const r=await chrome.runtime.sendMessage({kind:'MASSIVE_BRIDGE',action,body,query});if(r?.error)throw Error(r.error);if(!r)throw Error('Extension disconnected. Reload the trading page.');return r.data};
+ const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ const save=()=>chrome.storage.local.set({massiveSettings:{account:s.account,market:s.market,target:s.target,stop:s.stop,maxRisk:s.maxRisk}});
+ async function record(type,details={}){const {massiveHistory=[]}=await chrome.storage.local.get('massiveHistory');s.history=[...massiveHistory,{id:crypto.randomUUID(),type,account:s.account,at:Date.now(),day:today(),...details}].slice(-600);await chrome.storage.local.set({massiveHistory:s.history})}
+ function moon(){let dots='';for(let y=3;y<80;y+=3)for(let x=3+(Math.round(y/3)%2)*1.5;x<80;x+=3){const nx=(x-40)/36,ny=(y-40)/36,q=nx*nx+ny*ny;if(q>=1)continue;const z=Math.sqrt(1-q),v=Math.min(1,Math.max(.035,nx*.65-ny*.35+z*.65)*(.7+.2*Math.sin(nx*18)*Math.cos(ny*14)));dots+='<circle cx="'+x+'" cy="'+y+'" r="'+(.35+v*1.05)+'" opacity="'+(.15+v*.8)+'"/>'}return '<svg viewBox="0 0 80 80" fill="#ded7c7" class="moon" aria-hidden="true">'+dots+'</svg>'}
+ const btn=(action,text,cls='')=>'<button data-action="'+action+'" class="'+cls+'" '+(action==='collapse'?'aria-label="Collapse discipline panel" ':'')+(s.busy?'disabled':'')+'>'+text+'</button>';
+ const field=(label,name,val,extra='')=>'<label>'+label+'<input name="'+name+'" value="'+esc(val)+'" '+extra+'></label>';
+ const numField=(label,name,val)=>field(label,name,val,'type="number" min="0" step="any"');
+ const row=(label,value)=>'<div class="line"><span>'+label+'</span><strong>'+value+'</strong></div>';
+ const title=(a,b)=>'<h1>'+a+'<br><span>'+b+'</span></h1>';
+ const options=(items,current,label)=>items.map(x=>'<option value="'+esc(x.id)+'" '+(String(x.id)===String(current)?'selected':'')+'>'+esc(label(x))+'</option>').join('');
+ function shell(body){
+ app.innerHTML='<div class="window"><header><div class="brand">MASSIVE<span>.</span><small>discipline</small></div><div class="header-actions">'+btn('history','Record','text-button')+btn('collapse','&#8722;','icon')+'</div></header><main>'+body+'</main><div class="notice-area" role="status" aria-live="polite">'+(s.error?'<div class="notice bad">'+esc(s.error)+'</div>':s.info?'<div class="notice">'+esc(s.info)+'</div>':'')+'</div><footer><span class="status-dot"></span><span>SANDBOX</span><span class="footer-right">'+(s.busy?'WORKING…':'MFP / NATIVE COPY')+'</span></footer></div>';
+ }
+ function render(){
+ host.style.width=s.collapsed&&!standalone?'170px':standalone?'100%':'380px';host.style.height=s.collapsed?'auto':standalone?'100dvh':'calc(100dvh - 36px)';
+ if(s.collapsed){app.innerHTML='<div class="dock">'+moon()+btn('expand','MASSIVE. <small>'+ (s.override?'OVERRIDE':'DISCIPLINE')+'</small>','dock-button')+'</div>';return}
+ let b='';
+ if(s.view==='connect'){
+ b='<div class="hero">'+moon()+'<div class="eyebrow">YOUR EDGE / YOUR RULES</div>'+title('Stay','Massive.')+'<p class="sub">One plan. Every entry.</p></div><label>API KEY<input name="mfpApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="fp_test_…"></label>'+btn('connect','Connect →','primary wide')+'<p class="hint">MFP sandbox. Key saved only in this extension.</p>';
+ }else if(s.view==='plan'){
+ b='<div class="hero compact">'+moon()+'<div class="eyebrow">01 / SET THE DAY</div>'+title('Define','the limit.')+'</div><label>ACCOUNT<select name="account">'+options(s.accounts,s.account,a=>a.name||a.account_number||a.id)+'</select></label><div class="two">'+numField('TARGET / $','target',s.target)+numField('DAILY STOP / $','stop',s.stop)+'</div>'+numField('RISK PER ENTRY / $','maxRisk',s.maxRisk)+'<div class="plan-note">Your plan stays fixed until the next New York day.</div>'+btn('arm','Arm discipline →','primary wide')+btn('disconnect','Disconnect','ghost wide');
+ }else if(s.view==='ticket'){
+ const pnl=s.session?.session_pnl,room=s.session?.drawdown_room;
+ b='<div class="session-hero">'+moon()+'<div class="eyebrow '+(s.override?'override':'')+'">'+(s.override?'OVERRIDE ACTIVE':'PLAN ENGAGED')+'</div><div class="accountline">'+esc(s.accounts.find(a=>a.id===s.account)?.name||s.account)+'</div><div class="large" data-pnl>'+money(pnl)+'</div><div class="small">SESSION P&L <span data-sync>'+ (s.lastSync?'LIVE SNAPSHOT':'AWAITING SNAPSHOT')+'</span></div></div><div class="metrics"><div><small>TARGET</small><b>'+money(s.target)+'</b></div><div><small>DAILY STOP</small><b>'+money(s.stop)+'</b></div><div><small>ENTRY RISK</small><b>'+money(s.maxRisk)+'</b></div></div><div class="budget"><div class="budget-fill" style="width:'+Math.min(100,Math.max(0,(1+Number(pnl||0)/s.stop)*100))+'%"></div></div><div class="line tight"><span>DRAWDOWN ROOM</span><b data-room>'+money(room)+'</b></div><div class="rule"></div><div class="entry-head"><span class="eyebrow">02 / ENTRY</span>'+btn('plan','Switch account','text-button')+'</div><label>MARKET<select name="market">'+options(s.markets,s.market,m=>m.symbol||m.name||m.id)+'</select></label><div class="two sides">'+btn('buy','Long','segment '+(s.side==='buy'?'on':''))+btn('sell','Short','segment '+(s.side==='sell'?'on':''))+'</div><div class="two"><label>TYPE<select name="type"><option value="market" '+(s.type==='market'?'selected':'')+'>Market</option><option value="limit" '+(s.type==='limit'?'selected':'')+'>Limit</option></select></label>'+numField('LEVERAGE','leverage',s.leverage)+'</div><div class="two">'+numField('SIZE / BASE ASSET','size',s.size)+'<label>MARGIN<select name="marginMode"><option value="cross" '+(s.marginMode==='cross'?'selected':'')+'>Cross</option><option value="isolated" '+(s.marginMode==='isolated'?'selected':'')+'>Isolated</option></select></label></div>'+(s.type==='limit'?numField('LIMIT ENTRY','limit',s.limit):'')+'<div class="two">'+numField('STOP LOSS','sl',s.sl)+numField('TAKE PROFIT','tp',s.tp)+'</div>'+btn('preview','Check entry →','primary wide')+(s.override?btn('rearm','Return to my plan','ghost wide'):'');
+ }else if(s.view==='confirm'){
+ const p=s.preview;b='<div class="hero compact">'+moon()+'<div class="eyebrow">'+(s.override?'OVERRIDE / REVIEW':'WITHIN YOUR PLAN')+'</div>'+title('Make','your move.')+'</div><div class="trade-summary">'+esc(s.side==='buy'?'Long':'Short')+' <span>'+esc(s.markets.find(m=>m.id===s.market)?.symbol||s.market)+'</span><small>'+esc(s.size)+' / '+esc(s.type)+'</small></div><div class="projection">'+row('ENTRY ESTIMATE',money(p.entry))+row('STOP RISK',money(p.estimated_risk))+row('FEES / ONE WAY',money(p.fee_estimate))+row('SLIPPAGE',esc(p.slippage_bps)+' bps')+row('DD AFTER STOP',money(p.remaining_drawdown-p.estimated_risk))+'</div><p class="hint">Fresh risk check on send. Preview expires in 60 seconds.</p>'+btn('submit','Confirm entry →','primary wide')+btn('back','Change entry','ghost wide');
+ }else if(s.view==='held'){
+ b='<div class="hero compact">'+moon()+'<div class="eyebrow">ENTRY HELD</div>'+title('Fix','the entry.')+'</div><div class="reasons">'+s.preview.reasons.map(r=>'<p>'+esc(r.text)+'</p>').join('')+'</div>'+btn('back','Back to entry →','primary wide');
+ }else if(s.view==='gate'){
+ b='<div class="eyebrow">YOUR PLAN / YOUR DECISION</div>'+title('You set','the limit.')+'<div class="progress">'+Array.from({length:10},(_,i)=>'<span class="'+(i<s.gateStep?'lit':'')+'"></span>').join('')+'</div><div class="gateNum">'+String(s.gateStep).padStart(2,'0')+'<span>/10</span></div><div class="consequence" aria-live="polite">'+(s.lastWarning?'<div class="eyebrow">'+esc(s.lastWarning.label)+'</div><div class="warning">'+esc(s.lastWarning.value)+'</div>':'<p class="sub">Ten acknowledgments. Then you control this ticket.</p>')+'</div><label>TYPE / I AM A DEGEN<input name="phrase" spellcheck="false" autocomplete="off" placeholder="I am a degen"></label>'+btn('confess','Acknowledge →','primary wide')+btn('back','Keep my plan','ghost wide');
+ }else if(s.view==='unlocked'){
+ b='<div class="hero">'+moon()+'<div class="eyebrow override">10 / 10 ACKNOWLEDGED</div>'+title('Your','decision.')+'</div><div class="consequence"><div class="warning">'+esc(s.lastWarning?.value||'Override recorded.')+'</div></div><p class="sub">Your Massive ticket stays here. Plan limits are overridden for this account today; protective checks remain.</p>'+btn('back','Return to entry →','primary wide')+btn('rearm','Restore my plan','ghost wide');
+ }else if(s.view==='result'){
+ b='<div class="hero compact">'+moon()+'<div class="eyebrow">ENTRY / RECEIPT</div>'+title('Sent.','Track it.')+'</div><div class="projection">'+row('STATUS',esc(s.result?.status||'unknown'))+'</div><div class="order-id">'+esc(s.lastClientId)+'</div><p class="hint">Acceptance is not a fill. Check MFP before another entry.</p>'+btn('reconcile','Refresh status →','primary wide')+btn('back','Return to entry','ghost wide');
+ }else if(s.view==='history'){
+ const h=s.history.filter(x=>x.account===s.account),over=h.filter(x=>x.type==='override').length,orders=h.filter(x=>x.type==='order_submitted'),clean=orders.filter(x=>!x.override).length,score=orders.length?Math.round(clean/orders.length*100):null;
+ b='<div class="trader-card">'+moon()+'<div class="eyebrow">MASSIVE / TRADER RECORD</div><h1>'+ (over?'Own your<br><span>decisions.</span>':'Keep your<br><span>edge.</span>')+'</h1><div class="card-score">'+(score===null?'—':score+'<small>%</small>')+'</div><div class="small">ENTRIES WITHIN PLAN</div><div class="card-metrics">'+row('DISCIPLINED ENTRIES',clean)+row('OVERRIDE ENTRIES',orders.length-clean)+row('DEGEN SESSIONS',over)+'</div><div class="card-label">'+(over?'SELF-AWARE DEGEN':'DISCIPLINE CLUB')+'</div><div class="accountline">'+esc(s.account||'Connect an account')+'</div></div><div class="entry-head"><span class="eyebrow">RECENT ACTIVITY</span>'+btn('export','Export','text-button')+'</div><div class="history-list">'+h.slice(-8).reverse().map(x=>'<div class="history-row"><span>'+esc(x.type.replaceAll('_',' '))+'</span><time>'+new Date(x.at).toLocaleDateString(undefined,{month:'short',day:'numeric'})+'</time></div>').join('')+'</div>'+ (s.pending.length?'<div class="reasons"><p>'+s.pending.length+' unresolved submission(s)</p>'+s.pending.map((p,i)=>btn('pending-'+i,'Check '+esc(p.client_order_id.slice(-8)),'ghost wide')).join('')+'</div>':'')+btn('back-history','Back →','primary wide');
+ }
+ shell(b);app.querySelectorAll('input,select').forEach(el=>el.disabled=s.busy);
+ }
+ function warnings(){const p=s.preview||{},r=p.estimated_risk,room=p.remaining_drawdown;return [
+ {label:'01 / THE AGREEMENT',value:'This entry breaks the plan you chose.'},
+ {label:'02 / YOUR EXPOSURE',value:'Estimated stop risk: '+money(r)+'.'},
+ {label:'03 / YOUR BUFFER',value:money(room)+' to the drawdown floor.'},
+ {label:'04 / LOSSES LEFT',value:r>0?Math.floor(room/r)+' comparable stop losses remain.':'Stop risk unavailable.'},
+ {label:'05 / DAYS LEFT',value:Math.floor(room/s.stop)+' daily-stop losses fit this buffer.'},
+ {label:'06 / RECOVERY',value:Math.ceil(Math.max(0,-p.session_pnl)/s.target)+' target days to recover session P&L.'},
+ {label:'07 / YOUR LIMIT',value:'Your planned entry risk: '+money(s.maxRisk)+'.'},
+ {label:'08 / TODAY',value:'Session P&L: '+money(p.session_pnl)+'.'},
+ {label:'09 / YOUR RECORD',value:s.history.filter(x=>x.type==='override'&&x.account===s.account).length+' earlier overrides for this account.'},
+ {label:'10 / YOUR DECISION',value:'Override recorded. Your Massive ticket remains in your control.'}
+ ]}
+ async function session(){const p=await api('session',null,{account_id:s.account});s.session=p;s.target=p.target;s.stop=p.stop;s.maxRisk=p.maxRisk;s.lastSync=Date.now();const {mfpOverrides={}}=await chrome.storage.local.get('mfpOverrides');s.override=mfpOverrides[s.account]?.day===today()}
+ async function load(){const [a,m]=await Promise.all([api('accounts'),api('markets')]);s.accounts=(Array.isArray(a)?a:a.accounts||[]).map(x=>({...x,id:x.id||x.account_id}));s.markets=(Array.isArray(m)?m:m.markets||[]).map(x=>({...x,id:x.id||x.market_id}));if(!s.accounts.length)throw Error('No accessible sandbox accounts.');s.account=s.accounts.some(a=>a.id===s.account)?s.account:s.accounts[0].id;s.market=s.markets.some(m=>m.id===s.market)?s.market:s.markets.find(m=>m.symbol==='BTC')?.id||s.markets[0]?.id||'';try{await session();s.view='ticket'}catch{s.view='plan'}s.pending=await api('pending')}
+ async function act(name){
+ if(s.busy)return;
+ // Read sensitive input before rendering the busy state.
+ const key=app.querySelector('[name="mfpApiKey"]')?.value,phrase=app.querySelector('[name="phrase"]')?.value;
+ s.busy=true;s.error='';s.info='';render();
+ try{
+ switch(name){
+ case 'connect':await api('connect',{api_key:key});await load();break;
+ case 'disconnect':await api('disconnect');s.view='connect';s.session=null;s.override=false;break;
+ case 'arm':case 'rearm':await api('arm',{account_id:s.account,target:s.target,stop:s.stop,maxRisk:s.maxRisk});await session();s.view='ticket';await record('arm');break;
+ case 'buy':case 'sell':s.side=name;break;
+ case 'plan':s.view='plan';break;
+ case 'preview':{
+ const o={account_id:s.account,market_id:s.market,side:s.side,type:s.type,size:Number(s.size),leverage:Number(s.leverage),margin_mode:s.marginMode,...(s.type==='limit'?{limit_price:Number(s.limit)}:{}),...(s.sl?{stop_loss_price:Number(s.sl)}:{}),...(s.tp?{take_profit_price:Number(s.tp)}:{})};
+ s.preview=await api('preview',o);await session();
+ if(s.preview.allowed||s.override&&!s.preview.reasons.some(r=>r.hard))s.view='confirm';else if(!s.preview.overrideable)s.view='held';else{s.view='gate';s.gateStep=0;s.lastWarning=null;await record('violation',{reasons:s.preview.reasons.map(r=>r.code)})}break;
+ }
+ case 'submit':{const r=await api('place',{preview_id:s.preview?.preview_id});s.lastClientId=r.client_order_id;s.result=r.order;s.view='result';await record('order_submitted',{clientOrderId:s.lastClientId,override:s.override,risk:s.preview.estimated_risk});break}
+ case 'reconcile':{const r=await api('order-lookup',null,{client_order_id:s.lastClientId});const arr=Array.isArray(r)?r:r.orders||[];s.result=arr.find(o=>o.client_order_id===s.lastClientId)||{status:'Not found yet. Check MFP; do not repeat.'};s.pending=await api('pending');break}
+ case 'confess':{const r=await api('confess',{preview_id:s.preview.preview_id,phrase});s.lastWarning=warnings()[r.step-1];s.gateStep=r.step;if(r.unlocked){s.override=true;s.view='unlocked';await record('override',{reasons:s.preview.reasons.map(r=>r.code),risk:s.preview.estimated_risk})}break}
+ case 'history':s.returnView=s.view;s.view='history';s.pending=await api('pending').catch(()=>[]);break;
+ case 'back-history':s.view=s.returnView;break;
+ case 'back':s.view='ticket';break;
+ case 'collapse':s.collapsed=true;break;
+ case 'expand':s.collapsed=false;break;
+ case 'export':{const blob=new Blob([JSON.stringify(s.history,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='massive-discipline-history.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);break}
+ default:if(name.startsWith('pending-')){s.lastClientId=s.pending[Number(name.slice(8))]?.client_order_id||'';s.result={status:'Unresolved'};s.view='result'}
+ }
+ await save();
+ }catch(e){s.error=e.message;const cid=e.message.match(/massive-[0-9a-f-]{36}/i);if(cid){s.lastClientId=cid[0];s.result={status:'Unknown. Reconcile before another entry.'};s.view='result'}}
+ finally{s.busy=false;render();if(s.view==='gate')app.querySelector('[name="phrase"]')?.focus()}
+ }
+ app.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(b){e.preventDefault();act(b.dataset.action)}});
+ app.addEventListener('input',e=>{if(e.target.name in s)s[e.target.name]=['target','stop','maxRisk'].includes(e.target.name)?Number(e.target.value):e.target.value});
+ app.addEventListener('change',async e=>{if(e.target.name in s)s[e.target.name]=['target','stop','maxRisk'].includes(e.target.name)?Number(e.target.value):e.target.value;if(e.target.name==='type')render();if(e.target.name==='account'){s.session=null;s.override=false;try{await session();s.view='ticket'}catch{s.view='plan'}render();await save()}});
+ app.addEventListener('keydown',e=>{if(e.key==='Enter'&&['phrase','mfpApiKey'].includes(e.target.name)){e.preventDefault();act(e.target.name==='phrase'?'confess':'connect')}});
+ chrome.storage.onChanged.addListener((changes,area)=>{if(area==='local'&&changes.massiveHistory)s.history=changes.massiveHistory.newValue||[]});
+ setInterval(async()=>{if(s.view!=='ticket'||s.busy)return;try{await session();const pnl=app.querySelector('[data-pnl]'),room=app.querySelector('[data-room]'),sync=app.querySelector('[data-sync]');if(pnl)pnl.textContent=money(s.session.session_pnl);if(room)room.textContent=money(s.session.drawdown_room);if(sync)sync.textContent='LIVE SNAPSHOT';const fill=app.querySelector('.budget-fill');if(fill)fill.style.width=Math.min(100,Math.max(0,(1+s.session.session_pnl/s.stop)*100))+'%'}catch{const sync=app.querySelector('[data-sync]');if(sync)sync.textContent='SNAPSHOT UNAVAILABLE'}},10000);
+ (async()=>{const v=await chrome.storage.local.get(['mfpApiKey','massiveSettings','massiveHistory']);Object.assign(s,v.massiveSettings||{});s.history=v.massiveHistory||[];render();if(v.mfpApiKey){s.busy=true;render();try{await load()}catch(e){s.error=e.message}finally{s.busy=false;render()}}})().catch(e=>{s.error=e.message;render()});
 })();

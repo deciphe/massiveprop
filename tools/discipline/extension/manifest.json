@@ -1,14 +1,13 @@
 {
   "manifest_version": 3,
   "name": "MASSIVE Discipline",
-  "version": "0.2.0",
-  "description": "Self-contained MASSIVE Discipline ticket with direct MFP sandbox API key setup.",
+  "version": "0.3.0",
+  "description": "MASSIVE discipline ticket: daily plan, deliberate override, and local trader record.",
   "permissions": [
     "storage"
   ],
   "host_permissions": [
-    "https://sandbox.myfundedperpetuals.com/*",
-    "https://developers.myfundedperpetuals.com/*"
+    "https://sandbox.myfundedperpetuals.com/*"
   ],
   "content_scripts": [
     {
@@ -28,12 +27,18 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "panel.css"
+        "panel.css",
+        "manrope-700.ttf",
+        "manrope-800.ttf"
       ],
       "matches": [
         "https://myfundedperpetuals.com/*",
         "https://www.myfundedperpetuals.com/*"
       ]
     }
-  ]
+  ],
+  "action": {
+    "default_title": "Open MASSIVE Discipline",
+    "default_popup": "popup.html"
+  }
 }

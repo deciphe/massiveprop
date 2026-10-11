@@ -1,0 +1,46 @@
+name: MASSIVE Discipline QA
+on:
+  push:
+    branches: [main]
+    paths: ['tools/discipline/**', '.github/workflows/discipline-qa.yml']
+  pull_request:
+    paths: ['tools/discipline/**', '.github/workflows/discipline-qa.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: discipline-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Syntax and durable execution tests
+        run: |
+          npm run discipline:check
+          node tools/discipline/tests/worker.test.mjs
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Interaction, responsive and moon-theme QA
+        run: node tools/discipline/tests/browser.mjs
+      - name: Preserve report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: massive-discipline-qa
+          path: artifacts/discipline/
+          if-no-files-found: warn
+          retention-days: 21
+      - name: Package tested extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: massive-discipline-extension
+          path: tools/discipline/extension/
+          if-no-files-found: error
+          retention-days: 30
