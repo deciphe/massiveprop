@@ -1,0 +1,55 @@
+/* MASSIVE flat ticket · warm platinum on near-black · Shadow DOM scoped */
+:host{all:initial}
+*{box-sizing:border-box}
+.massive-app{pointer-events:auto;width:100%;height:100%;color:#e6e2d8;font-family:Manrope,Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;letter-spacing:-.02em}
+.window{background:linear-gradient(162deg,rgba(18,18,18,.995),rgba(7,7,7,.996) 66%);height:100%;width:100%;display:flex;flex-direction:column;box-shadow:-18px 0 50px rgba(0,0,0,.48);border-left:1px solid #282725;overflow:hidden}
+header{height:78px;min-height:78px;display:flex;align-items:center;justify-content:space-between;padding:24px 23px;border-bottom:1px solid #292825}
+.brand{font-size:25px;font-weight:880;letter-spacing:-.095em;color:#e8e5dc}.brand span{color:#ada798}
+.caps,.eyebrow{font-size:9px;font-weight:750;letter-spacing:.13em;color:#97948a}
+.caps em{color:#564f46;font-style:normal}
+main{flex:1;padding:27px 23px 22px;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#484641 transparent}
+footer{padding:13px 23px 18px;border-top:1px solid #242321}
+.small{font-size:9px;font-weight:750;letter-spacing:.08em;color:#6f6d66}
+.small span{color:#9b8873}
+h1{font-size:43px;line-height:.99;margin:16px 0 20px;font-weight:850;letter-spacing:-.075em;color:#e5e1d7}
+h1 i{font-style:normal;color:#9f998d}
+p.sub{font-size:12px;line-height:1.65;color:#a49f94;margin:16px 0 28px;letter-spacing:0}
+.hint{font-size:10px;line-height:1.55;color:#88857e;margin:13px 0 0;letter-spacing:0}
+label{display:block;font-size:9px;letter-spacing:.07em;font-weight:750;color:#979389;margin:15px 0 11px}
+input,select{appearance:none;-webkit-appearance:none;width:100%;border:1px solid #393834;border-radius:0;background:#171716;color:#eae7df;padding:13px 11px;margin-top:7px;font:700 13px Manrope,Inter,system-ui,sans-serif;outline:0;min-height:42px;letter-spacing:0}
+input:focus,select:focus{border-color:#b1a995;background:#1b1a18}
+input::placeholder{color:#6c6961}
+select{background:#171716;cursor:pointer}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.two>*{min-width:0}
+button{font:800 11px Manrope,Inter,system-ui,sans-serif;letter-spacing:.04em;cursor:pointer;border-radius:0;transition:background .13s,border .13s}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.primary{border:1px solid #e6e0d5;background:#e5e0d6;color:#0b0b0b;padding:15px 12px;margin-top:17px}
+button.primary:hover{background:#f6f2e9}
+button.ghost{background:transparent;border:0;color:#b4afa5;padding:14px 8px}
+button.ghost:hover{color:#e5e0d6}
+button.wide{width:100%}
+button.segment{background:#141413;border:1px solid #383733;color:#9d9990;padding:11px 4px;margin:11px 0 5px;font-size:10px}
+button.segment.on{background:#272623;color:#eae5da;border-color:#968c79}
+.projection{background:rgba(203,193,168,.055);border-top:1px solid #4b463d;border-bottom:1px solid #34312d;margin:20px 0 14px;padding:5px 0}
+.line{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 1px;font-size:10px;letter-spacing:0}
+.line span{color:#939087}
+.line strong,.line b{font-size:13px;letter-spacing:-.04em;color:#e7e2d8}
+.line.tight{padding:6px 0;font-size:10px}
+.line.tight b{font-size:12px}
+.accountline{font-size:10px;color:#a5a197;letter-spacing:.025em;margin-top:14px}
+.large{font-size:40px;font-weight:850;letter-spacing:-.08em;line-height:1.12;padding:13px 0 18px}
+.large span{font-size:9px;font-weight:700;letter-spacing:.06em;color:#777269}
+.rule{margin:15px 0 20px;height:1px;background:linear-gradient(90deg,#b2a58e,#44413a 42%,#161616)}
+.armed{color:#bfb5a0}
+.notice{background:#292820;color:#d7cdb7;padding:12px;font-size:11px;line-height:1.45;margin:-5px 0 20px;word-break:break-word}
+.notice.bad{background:#362522;color:#e5b6a9}
+.progress{display:flex;gap:4px;margin:22px 0 26px;height:5px}.progress span{background:#3d3a34;flex:1}.progress .lit{background:#d9d0bf}
+.gateNum{font-size:115px;font-weight:860;letter-spacing:-.12em;line-height:1;color:#e3ded4}
+.gateNum span{font-size:27px;letter-spacing:-.05em;color:#666258}
+.consequence{min-height:88px;padding:12px 0;border-bottom:1px solid #2f2d29}
+.warning{font-size:16px;line-height:1.3;font-weight:750;letter-spacing:-.045em;margin:10px 0}
+.dock{padding:15px;background:#10100f;box-shadow:-10px 10px 30px #0009;border:1px solid #514a3e}
+.dock .brand{font-size:22px}
+.dock p{font-size:9px;font-weight:800;color:#aea797;letter-spacing:.1em}
+.dock button{width:100%;font-size:9px;padding:11px}
+@media(max-width:460px){header{padding:16px}main{padding:20px 16px}footer{padding:11px 16px}h1{font-size:35px}.large{font-size:35px}}
