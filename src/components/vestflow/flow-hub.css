@@ -30,3 +30,6 @@
 @keyframes flow-wisp-pulse{0%,20%{transform:scaleX(0)}55%,100%{transform:scaleX(1)}}@keyframes flow-wisp-float{50%{transform:translateY(-5px)}}
 @media(max-width:560px){.flow-wisp{flex-direction:column;gap:12px;text-align:center}.flow-wisp-copy{min-width:0}.flow-wisp-progress{justify-content:center}}
 @media(prefers-reduced-motion:reduce){.flow-wisp-art>span,.flow-wisp-progress i:after{animation:none}.flow-wisp-progress i:after{transform:scaleX(1)}}
+
+.fh-card{cursor:pointer}.fh-card .fh-open-flow{font-size:12px;font-weight:800;letter-spacing:-.02em;padding:10px 13px;background:rgb(var(--home-paper) / .08);border:1px solid rgb(var(--home-paper) / .2);border-radius:5px;color:rgb(var(--home-paper));transition:background .15s,border-color .15s}.fh-card:hover .fh-open-flow,.fh-card:focus-visible .fh-open-flow{background:rgb(var(--home-paper) / .15);border-color:rgb(var(--home-paper) / .4)}
+@media(max-width:420px){.fh-card-foot{flex-wrap:wrap}.fh-card .fh-open-flow{margin-left:auto}}

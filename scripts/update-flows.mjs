@@ -6,17 +6,18 @@ await mkdir(dest,{recursive:true});
 const results=[];
 // Publish successful sources independently; preserve explicit stale fallbacks.
 const isSnapshot=(d,c)=>d?.complete&&d.wallet===c.wallet&&d.token===c.token&&d.chain===c.chain&&Array.isArray(d.transfers);
+const preferHistory=(old,next)=>{if(!next?.complete)return old;if(!old?.complete)return next;const cutoff=Date.now()-32*86400000;const full=d=>Date.parse(d.periodStart)<=cutoff;if(full(old)!==full(next))return full(next)?next:old;return Date.parse(next.updatedAt)>Date.parse(old.updatedAt)?next:old;};
 for(const [i,config] of FLOW_SOURCES.entries()){
  let previous;
  try{previous=JSON.parse(await readFile(`${dest}/${config.slug}.json`,'utf8'));}catch{}
  try{
   const response=await fetch(`https://raw.githubusercontent.com/deciphe/massiveprop/vestflow-data/${config.slug}.json`,{signal:AbortSignal.timeout(15000)});
-  if(response.ok){const remote=await response.json();if(!previous||Date.parse(remote.updatedAt)>Date.parse(previous.updatedAt))previous=remote;}
+  if(response.ok){const remote=await response.json();previous=preferHistory(previous,remote);}
  }catch{}
- try{const bundled=JSON.parse(await readFile(new URL(`../public/data/${config.slug}.json`,import.meta.url),'utf8'));if(!previous||Date.parse(bundled.updatedAt)>Date.parse(previous.updatedAt))previous=bundled;}catch{}
+ try{const bundled=JSON.parse(await readFile(new URL(`../public/data/${config.slug}.json`,import.meta.url),'utf8'));previous=preferHistory(previous,bundled);}catch{}
  try{
   let snapshot;
-  try{snapshot=await fetchFlow(config,{previous,signal:AbortSignal.timeout(config.id==='vest'?90000:30000),historyDays:32,includeBalance:true,onProgress:page=>{if(page%10===0)console.log(`${config.title} / ${config.chain}: page ${page}`);}});}
+  try{snapshot=await fetchFlow(config,{previous,signal:AbortSignal.timeout(240000),historyDays:32,includeBalance:true,onProgress:page=>{if(page%10===0)console.log(`${config.title} / ${config.chain}: page ${page}`);}});}
   catch(error){
    if(!config.balanceRpcs||!previous?.complete)throw error;
    // Keep transfer timestamps unchanged when only the contract balance can refresh.

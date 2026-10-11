@@ -27,6 +27,7 @@ function RoutedApp() {
   }, []);
 
   const route = hash.split("?")[0];
+  useEffect(()=>{if(route==="#flow")import("./components/vestflow/Vestflow").catch(()=>{});},[route]);
   if(["#vestpdf","#vestatm","#lesson1"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><VestPdf/></Suspense>;
   if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
   if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
@@ -39,7 +40,7 @@ function RoutedApp() {
   const flow=({"#vestflow":"vest","#breakoutflow":"breakout","#novaflow":"nova","#proprflow":"propr"})[route]||null;
   if(route === "#leaderboard")return <Suspense fallback={<MoonLoader label="Loading standings"/>}><Weekly/></Suspense>;
   if(route === "#flow")return <Suspense fallback={<MoonLoader label="Opening the vault"/>}><FlowHub/></Suspense>;
-  return flow ? <Suspense fallback={<MoonLoader label="Reading the flow"/>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
+  return flow ? <Suspense key={flow} fallback={<MoonLoader label="Reading the flow"/>}><Vestflow key={flow} firm={flow}/></Suspense> : <Web3Hub />;
 }
 
 /*

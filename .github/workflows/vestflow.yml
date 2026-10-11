@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: [".flow-migration-trigger", ".github/workflows/vestflow.yml"]
+    paths: [".flow-migration-trigger", ".github/workflows/vestflow.yml", "scripts/update-flows.mjs", "src/lib/flow-config.js"]
 permissions:
   contents: write
 concurrency:
@@ -12,7 +12,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 30
     steps:
       - name: Record refresh trigger
         env:

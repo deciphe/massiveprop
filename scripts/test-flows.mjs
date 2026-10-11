@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {sortTransfers} from '../src/lib/flow-metrics.js';
 import {fetchFlow} from '../src/lib/flow-data.js';
 import {FLOW_CONFIGS} from '../src/lib/flow-config.js';
-const c=FLOW_CONFIGS.breakout,other='0x1111111111111111111111111111111111111111',second='0x2222222222222222222222222222222222222222';
+// This fixture exercises the explorer balance path; RPC recovery is covered in test-refresh.
+const c={...FLOW_CONFIGS.breakout,balanceRpcs:undefined},other='0x1111111111111111111111111111111111111111',second='0x2222222222222222222222222222222222222222';
 const now=Date.now(),at=ms=>new Date(now-ms).toISOString();
 const row=(to,raw,direction='out')=>({from:c.wallet,to,raw,direction,timestamp:at(1000)});
 const sortRows=[{raw:'9007199254740993',block:2,logIndex:1},{raw:'9007199254740992',block:3,logIndex:0},{raw:'100',block:1,logIndex:0}];
