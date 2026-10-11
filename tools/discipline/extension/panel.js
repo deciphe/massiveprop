@@ -11,7 +11,7 @@
   const state={
     view:'connect',accounts:[],markets:[],account:'',market:'',
     target:400,stop:400,maxRisk:100,
-    side:'buy',type:'market',size:'0.001',leverage:'2',limit:'',sl:'',tp:'',
+    side:'buy',type:'market',marginMode:'cross',size:'0.001',leverage:'2',limit:'',sl:'',tp:'',
     busy:false,error:'',info:'',preview:null,session:null,gateStep:0,lastWarning:null,
     lastClientId:'',result:null,history:[],saved:{},released:null
   };
@@ -57,9 +57,10 @@
       setOpts('account',optionList,state.account);
     }else if(state.view==='ticket'){
       const symbols=state.markets.map(m=>({value:m.id,text:m.symbol || m.name || m.id}));
-      shell('ARMED','<div class="eyebrow armed">● SESSION ARMED</div><div class="accountline">'+nice(state.accounts.find(a=>a.id===state.account)?.name||state.account)+'</div><div class="large">'+money(state.session?.session_pnl??0)+'<span> SINCE ARM</span></div><div class="line tight"><span>DAILY TARGET</span><b>'+money(state.target)+'</b></div><div class="line tight"><span>SESSION STOP</span><b>−'+money(state.stop)+'</b></div><div class="line tight"><span>PER TRADE</span><b>'+money(state.maxRisk)+'</b></div><div class="rule"></div><div class="eyebrow">02 / ORDER ENTRY</div><label>MARKET<select name="market"></select></label><div class="two">'+button('buy','BUY / LONG','segment '+(state.side==='buy'?'on':''))+button('sell','SELL / SHORT','segment '+(state.side==='sell'?'on':''))+'</div><div class="two"><label>ORDER TYPE<select name="type"><option value="market">MARKET</option><option value="limit">LIMIT</option></select></label>'+field('LEVERAGE','leverage',state.leverage,'type="number" min="1" step=".1"')+'</div>'+field('SIZE · BASE ASSET','size',state.size,'type="number" min="0" step="any"')+(state.type==='limit'?field('LIMIT PRICE','limit',state.limit,'type="number" min="0" step="any"'):'')+'<div class="two">'+field('STOP LOSS','sl',state.sl,'type="number" min="0" step="any"')+field('TAKE PROFIT','tp',state.tp,'type="number" min="0" step="any"')+'</div>'+button('preview','CHECK ORDER →','primary wide')+'<p class="hint">Opening orders run through our plan. Native closes and protective orders remain available outside the overlay.</p>');
+      shell('ARMED','<div class="eyebrow armed">● SESSION ARMED</div><div class="accountline">'+nice(state.accounts.find(a=>a.id===state.account)?.name||state.account)+'</div><div class="large">'+money(state.session?.session_pnl??0)+'<span> SINCE ARM</span></div><div class="line tight"><span>DAILY TARGET</span><b>'+money(state.target)+'</b></div><div class="line tight"><span>SESSION STOP</span><b>−'+money(state.stop)+'</b></div><div class="line tight"><span>PER TRADE</span><b>'+money(state.maxRisk)+'</b></div><div class="rule"></div><div class="eyebrow">02 / ORDER ENTRY</div><label>MARKET<select name="market"></select></label><div class="two">'+button('buy','BUY / LONG','segment '+(state.side==='buy'?'on':''))+button('sell','SELL / SHORT','segment '+(state.side==='sell'?'on':''))+'</div><div class="two"><label>ORDER TYPE<select name="type"><option value="market">MARKET</option><option value="limit">LIMIT</option></select></label>'+field('LEVERAGE','leverage',state.leverage,'type="number" min="1" step=".1"')+'</div><label>MARGIN MODE<select name="marginMode"><option value="cross">CROSS</option><option value="isolated">ISOLATED</option></select></label>'+field('SIZE · BASE ASSET','size',state.size,'type="number" min="0" step="any"')+(state.type==='limit'?field('LIMIT PRICE','limit',state.limit,'type="number" min="0" step="any"'):'')+'<div class="two">'+field('STOP LOSS','sl',state.sl,'type="number" min="0" step="any"')+field('TAKE PROFIT','tp',state.tp,'type="number" min="0" step="any"')+'</div>'+button('preview','CHECK ORDER →','primary wide')+'<p class="hint">Opening orders run through our plan. Native closes and protective orders remain available outside the overlay.</p>');
       setOpts('market',symbols,state.market);
       const typ=app.querySelector('[name="type"]');if(typ)typ.value=state.type;
+      const mm=app.querySelector('[name="marginMode"]');if(mm)mm.value=state.marginMode;
     }else if(state.view==='confirm'){
       const p=state.preview;
       shell('CONFIRM','<div class="eyebrow armed">● ORDER PASSED YOUR PLAN</div><h1>READY<br><i>TO SEND.</i></h1><div class="projection">'+row('REFERENCE PRICE',money(p.entry))+row('EST. STOP RISK',money(p.estimated_risk))+row('SESSION P&L',money(p.session_pnl))+row('REMAINING DD',money(p.remaining_drawdown))+'</div><p class="hint">Risk is estimated. Quotes, fees, slippage and fills can change. Sending does not guarantee execution.</p>'+button('submit','CONFIRM & PLACE ORDER','primary wide')+button('back','← CHANGE ORDER','ghost wide'));
@@ -141,7 +142,7 @@
         if(!state.market)throw Error('Select a market');
         const order={
           account_id:state.account,market_id:state.market,side:state.side,type:state.type,
-          size:Number(state.size),leverage:Number(state.leverage),
+          size:Number(state.size),leverage:Number(state.leverage),margin_mode:state.marginMode,
           ...(state.type==='limit'?{limit_price:Number(state.limit)}:{}),
           ...(state.sl?{stop_loss_price:Number(state.sl)}:{}),
           ...(state.tp?{take_profit_price:Number(state.tp)}:{})
