@@ -177,7 +177,12 @@
         }
       }
       await save();render();
-    }catch(e){state.error=e.message;render();}
+    }catch(e){
+      state.error=e.message;
+      const unknown=(e.message||'').match(/massive-[0-9a-f-]{36}/i);
+      if(unknown){state.lastClientId=unknown[0];state.result={status:'unknown — reconcile before another trade'};state.view='result';}
+      render();
+    }
     finally{state.busy=false;}
   }
   app.addEventListener('click',e=>{
