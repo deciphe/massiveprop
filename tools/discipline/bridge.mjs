@@ -12,7 +12,9 @@ const LIVE = KEY.startsWith('fp_live_');
 if (!/^fp_(test|live)_/.test(KEY)) throw Error('Set an fp_test_ API key in FP_API_KEY');
 if (LIVE && process.env.MASSIVE_ALLOW_LIVE !== 'YES_I_UNDERSTAND') throw Error('Live account access is disabled; start with a sandbox key.');
 if (TOKEN.length < 24) throw Error('MASSIVE_BRIDGE_TOKEN must contain at least 24 characters');
-const BASE = LIVE ? 'https://developers.myfundedperpetuals.com' : 'https://sandbox.myfundedperpetuals.com';
+const BASE = process.env.NODE_ENV==='test' && process.env.MASSIVE_TEST_UPSTREAM==='YES' 
+  ? 'http://127.0.0.1:18839' // CI-only local stub; never forwards production traffic here
+  : (LIVE ? 'https://developers.myfundedperpetuals.com' : 'https://sandbox.myfundedperpetuals.com');
 const PORT = Number(process.env.MASSIVE_BRIDGE_PORT || 18740);
 const sessions = new Map();
 const previews = new Map();
