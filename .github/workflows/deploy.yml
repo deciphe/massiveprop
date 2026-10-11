@@ -85,6 +85,14 @@ jobs:
           if-no-files-found: ignore
           retention-days: 21
 
+      - name: Package MASSIVE Discipline extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: massive-discipline-extension
+          path: tools/discipline/extension/
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
