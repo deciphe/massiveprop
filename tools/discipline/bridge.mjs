@@ -76,9 +76,11 @@ function signature(order) {
 }
 async function evaluate(o) {
   const order=validateOrder(o), session=getSession(order.account_id);
-  const [a,quote] = await Promise.all([
+  const [a,quote,positions,working] = await Promise.all([
     account(order.account_id),
-    api('GET','/v1/markets/' + encodeURIComponent(order.market_id) + '/quote?side=' + order.side + '&size=' + encodeURIComponent(order.size))
+    api('GET','/v1/markets/' + encodeURIComponent(order.market_id) + '/quote?side=' + order.side + '&size=' + encodeURIComponent(order.size)),
+    api('GET','/v1/positions?account_id='+encodeURIComponent(order.account_id)),
+    api('GET','/v1/orders?account_id='+encodeURIComponent(order.account_id)+'&status=working')
   ]);
   if (a.status !== 'active') throw bad('Account is not active',409);
   if (a.risk?.marks_complete !== true || !finite(a.risk?.equity)) throw bad('Account marks unavailable. Order held until fresh.',409);
@@ -93,6 +95,12 @@ async function evaluate(o) {
   const risk = stopValid ? Math.abs(entry-stop)*order.size + 2*fee + slippageBuffer : null;
   const pnl = val(a.risk.equity)-session.startEquity;
   const reasons=[];
+  // V1 deliberately does not resize or reverse existing positions. Attached exits
+  // may protect the entire resulting position, not just the incremental order.
+  const positionList=Array.isArray(positions)?positions:positions?.data||[];
+  const workingList=Array.isArray(working)?working:working?.data||[];
+  if(positionList.some(p=>p.market_id===order.market_id && Number(p.size)>0 && p.status!=='closed')) reasons.push({code:'existing_position',text:'Existing position in this market; manage through the native terminal'});
+  if(workingList.some(o=>o.market_id===order.market_id && o.reduce_only!==true && !['canceled','filled','rejected'].includes(o.status))) reasons.push({code:'working_entry',text:'Unsettled entry already exists in this market'});
   if (!stopValid) reasons.push({code:'stop',text:'No valid protective stop'});
   if (risk != null && risk > session.maxRisk) reasons.push({code:'risk',text:'Risk exceeds $'+session.maxRisk.toFixed(2)+' per trade'});
   if (pnl >= session.target) reasons.push({code:'target',text:'Session profit target reached'});
@@ -128,6 +136,10 @@ async function route(req,url,body) {
     if(!clean(id) || !positive(body.target) || !positive(body.stop) || !positive(body.maxRisk)) throw bad('Enter positive daily target, stop and trade risk');
     const a=await account(id);
     if(a.status !== 'active' || a.risk?.marks_complete!==true || !finite(a.risk?.equity)) throw bad('Account is not active or prices unavailable',409);
+    // Re-arming on the same trading day MUST NOT reset the original loss baseline.
+    // Keep the first armed plan so an override cannot quietly rewrite history.
+    const old=sessions.get(id);
+    if(old && old.day===nyDay()) {old.armed=true;return old;}
     const s={account_id:id,day:nyDay(),armed:true,startEquity:val(a.risk.equity),
       target:val(body.target),stop:val(body.stop),maxRisk:val(body.maxRisk),armedAt:Date.now()};
     sessions.set(id,s);
