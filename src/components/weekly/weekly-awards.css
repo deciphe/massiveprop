@@ -170,3 +170,9 @@
 .wk-award-canvas .wk-award-edition-rule i{height:2px;background:var(--edition-metal);opacity:.28;flex:1}
 .wk-award-canvas .wk-award-edition-rule i:first-child{opacity:.9;flex:2}
 .wk-award-canvas .wk-award-edition-rule i:last-child{opacity:.14}
+
+/* Weekly downloads share the landscape rank artwork at fixed export dimensions. */
+.wk-award-preview.wk-rank-award-preview{max-width:100%;overflow:hidden;margin-inline:auto}
+.wk-award-canvas.wk-rank-award-canvas,.wk-award-canvas.wk-rank-award-canvas.wk-award-single{width:1200px;padding:0;display:flex;flex-direction:column;gap:16px;background:#080809;overflow:hidden}
+.wk-rank-award-canvas>svg{flex:none;display:block;width:1200px;height:800px}
+.wk-rank-award-canvas.wk-award-single{gap:0}
