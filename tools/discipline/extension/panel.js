@@ -3,7 +3,7 @@
   if(document.getElementById('massive-discipline-root')) return;
   const host=document.createElement('div');
   host.id='massive-discipline-root';
-  host.style.cssText='position:fixed;right:0;top:0;width:386px;height:100dvh;z-index:2147483646;pointer-events:none;';
+  host.style.cssText='position:fixed;right:0;top:0;width:386px;max-width:100vw;height:100dvh;z-index:2147483646;pointer-events:none;';
   document.documentElement.appendChild(host);
   const shadow=host.attachShadow({mode:'closed'});
   const css=document.createElement('link');css.rel='stylesheet';css.href=chrome.runtime.getURL('panel.css');shadow.append(css);
@@ -13,7 +13,7 @@
     target:400,stop:400,maxRisk:100,
     side:'buy',type:'market',size:'0.001',leverage:'2',limit:'',sl:'',tp:'',
     busy:false,error:'',info:'',preview:null,session:null,gateStep:0,lastWarning:null,
-    lastClientId:'',result:null,history:[],saved:{}
+    lastClientId:'',result:null,history:[],saved:{},released:null
   };
   const money=(v)=>Number.isFinite(Number(v))?'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
   const escape=(v)=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -23,7 +23,7 @@
     if(reply?.error)throw Error(reply.error);
     return reply?.data;
   };
-  const save=async()=>{await chrome.storage.local.set({massiveSettings:{account:state.account,market:state.market,target:state.target,stop:state.stop,maxRisk:state.maxRisk},massiveHistory:state.history.slice(-600)});};
+  const save=async()=>{await chrome.storage.local.set({massiveSettings:{account:state.account,market:state.market,target:state.target,stop:state.stop,maxRisk:state.maxRisk},massiveHistory:state.history.slice(-600),massiveReleased:state.released});};
   const record=async(type,details={})=>{
     state.history.push({type,account:state.account,at:Date.now(),day:new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),...details});
     await save();
@@ -92,8 +92,9 @@
     ];
   }
   async function boot(){
-    const values=await chrome.storage.local.get(['bridgeToken','massiveSettings','massiveHistory']);
+    const values=await chrome.storage.local.get(['bridgeToken','massiveSettings','massiveHistory','massiveReleased']);
     state.history=Array.isArray(values.massiveHistory)?values.massiveHistory:[];
+    state.released=values.massiveReleased||null;
     Object.assign(state,values.massiveSettings||{});
     state.view=values.bridgeToken?'plan':'connect';
     render();
@@ -113,6 +114,7 @@
         state.session=sess;
         state.target=sess.target;state.stop=sess.stop;state.maxRisk=sess.maxRisk;
         state.view='ticket';
+        if(state.released?.account===state.account && state.released?.day===sess.day) state.view='released';
       }catch{state.view='plan';}
       state.error='';render();
     }catch(e){state.error=e.message;state.view='connect';render();}
@@ -132,7 +134,7 @@
         }
         const s=await api('arm',{account_id:state.account,target:Number(state.target),stop:Number(state.stop),maxRisk:Number(state.maxRisk)});
         state.session={...s,session_pnl:0};state.target=s.target;state.stop=s.stop;state.maxRisk=s.maxRisk;
-        state.view='ticket';state.error='';
+        state.view='ticket';state.error='';state.released=null;
         await record(name==='rearm'?'rearm':'arm',{plan:{target:s.target,stop:s.stop,maxRisk:s.maxRisk}});
       }else if(name==='buy'||name==='sell'){state.side=name;}
       else if(name==='preview'){
@@ -171,6 +173,7 @@
         if(state.gateStep===10){
           await record('override',{reasonCodes:state.preview?.reasons?.map(x=>x.code)||[],estimatedRisk:state.preview?.estimated_risk});
           state.view='released';
+          state.released={account:state.account,day:state.session?.day||'',at:Date.now()};
         }
       }
       await save();render();
