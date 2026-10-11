@@ -13,5 +13,5 @@ export function weeklyAwardsUnlocked(board,now=Date.now()){
  const close=weekEnd(board.start);
  return board.closed===true&&now>=close&&board.end>=close&&Date.parse(board.asOf)>=close;
 }
-const dayLabel=t=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'America/New_York'});
-export const weeklyAwardRange=start=>dayLabel(start)+' — '+dayLabel(weekEnd(start)-1);
+const dayLabel=(t,legacy)=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:legacy?'UTC':'America/New_York'});
+export const weeklyAwardRange=start=>{const legacy=start<Date.parse('2026-10-11T22:00:00Z');return dayLabel(start,legacy)+' — '+dayLabel(weekEnd(start)-1,legacy)};
