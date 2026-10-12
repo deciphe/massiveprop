@@ -5,6 +5,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import Web3Hub from "./components/web3/Web3Hub";
 
 const VestUpdates = lazy(() => import("./components/updates/VestUpdates"));
+const Discipline = lazy(() => import("./components/discipline/Discipline"));
 const Affiliated = lazy(() => import("./components/affiliated/Affiliated"));
 const PerpCopier = lazy(() => import("./components/perpcopier/PerpCopier"));
 const VestPdf = lazy(() => import("./components/lessons/VestPdf"));
@@ -28,6 +29,7 @@ function RoutedApp() {
 
   const route = hash.split("?")[0];
   useEffect(()=>{if(route==="#flow")import("./components/vestflow/Vestflow").catch(()=>{});},[route]);
+  if(route === "#discipline")return <Suspense fallback={<MoonLoader label="MASSIVE Discipline"/>}><Discipline/></Suspense>;
   if(["#vestpdf","#vestatm","#lesson1"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><VestPdf/></Suspense>;
   if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
   if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
