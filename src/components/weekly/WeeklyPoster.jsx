@@ -16,7 +16,7 @@ const moonPaths=(()=>{
  for(let y=190;y<800;y+=6)for(let x=(Math.round(y/6)%2)*3;x<1200;x+=6){const nx=(x-cx)/r,ny=(y-cy)/r,q=nx*nx+ny*ny;if(q>=1)continue;let terrain=Math.sin(nx*29+Math.sin(ny*17))*Math.cos(ny*23)*.15;for(const [a,b,s] of craters){const d=Math.hypot(nx-a,ny-b)/s;if(d<1.5)terrain-=.44*Math.exp(-d*d*3)-.19*Math.exp(-Math.pow((d-1)*6,2))}const v=Math.max(0,Math.min(.99,(-nx*.35-ny*.6+Math.sqrt(1-q)*.12)*(.55+terrain))),bucket=Math.floor(v*6),size=(.7+v*1.7).toFixed(2);paths[bucket].push(`M${x},${y}m-${size},0a${size},${size} 0 1,0 ${2*size},0a${size},${size} 0 1,0 -${2*size},0`)}
  return paths.map(p=>p.join(''));
 })();
-export function RankArtwork({person,profiles,weeklyBoard}){
+export function RankArtwork({person,profiles,weeklyBoard,weeklyTrack=[]}){
  const id=useId().replace(/:/g,''),ref=n=>`url(#${id}-${n})`,profile=profiles[person.address],name=profile?.displayLabel||(profile?.username?'@'+profile.username:profile?.displayName||'Trader');
  const primary=Object.keys(person.firms||{}).sort((a,b)=>person.firms[b]-person.firms[a])[0];
  const firm=WEEKLY_FIRMS.find(f=>f.id===primary),logo=primary==='vest'?BRAND_ASSETS.vestSymbol:firm?.logo;
@@ -46,7 +46,16 @@ export function RankArtwork({person,profiles,weeklyBoard}){
   {profile?.tag&&<FitText x="70" y="510" maxWidth={490} fontSize={22} fontWeight="700" fontStyle="italic" letterSpacing=".2" fill="#bdb6a7">{profile.tag}</FitText>}
   <FitText x="65" y="628" maxWidth={600} fontSize={88} fontWeight="800" letterSpacing="-4" fill="#eeece5">{usd(person.total)}</FitText>
   {!weeklyBoard&&Number.isFinite(person.received24h)&&<g><text x="70" y="699" fontSize="23" fontWeight="800" fill="#cfc4ae">+{usd(person.received24h)}</text><text x="70" y="731" fontSize="16" fontWeight="700" fill="#969187">24h gain</text><text x="340" y="699" fontSize="23" fontWeight="800" fill="#cfc4ae">{!person.changeAvailable?'—':person.isNew?'NEW':person.rankChange>0?'↑'+person.rankChange:person.rankChange<0?'↓'+Math.abs(person.rankChange):'—'}</text><text x="340" y="731" fontSize="16" fontWeight="700" fill="#969187">24h rank</text></g>}
- {weeklyBoard&&<g><path d="M70 671H560" stroke={metal} strokeOpacity=".25"/><text x="70" y="704" fontSize="13" fontWeight="800" letterSpacing="3" fill={metal}>{podium?'WEEKLY PODIUM':'WEEKLY RANK'} / {String(person.rank).padStart(2,'0')}</text><text x="70" y="738" fontSize="20" fontWeight="700" fill="#aaa69d">{weeklyAwardRange(weeklyBoard.start)}</text></g>}
+ {weeklyBoard&&<g>
+  {weeklyTrack.length>0?<g aria-label="Five-week rank history">{weeklyTrack.map((week,i)=>{
+   const entry=week.rows?.[person.address],place=entry?.rank,podiumFinish=week.closed&&place>=1&&place<=3;
+   const fill=podiumFinish?place===1?'#e7d6a6':place===2?'#d4d3ce':'#bfa99a':'#080809';
+   const label=weeklyAwardRange(week.start)+' · '+(!week.available?'History unavailable':entry?'Rank #'+place+' · '+usd(entry.total)+(week.closed?'':' · live'):'No eligible payouts');
+   return <g key={week.key} transform={`translate(${70+i*50} 662)`}><title>{label}</title><rect width="42" height="42" rx="8" fill={fill} stroke={podiumFinish?fill:'#eeeae24d'} strokeWidth="1" strokeDasharray={!week.closed&&week.available?'3 3':undefined}/><text x="21" y="27" textAnchor="middle" fontSize="18" fontWeight="800" fill={podiumFinish?'#171715':'#b8b4aa'}>{week.available?(place||'–'):'·'}</text>{i===weeklyTrack.length-1&&<rect x="-3" y="-3" width="48" height="48" rx="10" fill="none" stroke="#eeeae22e"/>}</g>;
+  })}</g>:<path d="M70 671H560" stroke={metal} strokeOpacity=".25"/>}
+  <text x={weeklyTrack.length?350:70} y={weeklyTrack.length?680:704} fontSize="13" fontWeight="800" letterSpacing="3" fill={metal}>{podium?'WEEKLY PODIUM':'WEEKLY RANK'} / {String(person.rank).padStart(2,'0')}</text>
+  <text x="70" y="750" fontSize="20" fontWeight="700" fill="#aaa69d">{weeklyAwardRange(weeklyBoard.start)}</text>
+ </g>}
  </svg>;
 }
 export default function WeeklyPoster({board,rows,profiles,firm,person}){
