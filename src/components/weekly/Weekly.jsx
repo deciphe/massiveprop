@@ -212,33 +212,14 @@ function ClaimForm({initialAddress,onDone}){
   if(attachment.size>10*1024*1024){setStatus('Please use an image under 10 MB.');return;}
   if(!['image/png','image/jpeg','image/webp'].includes(attachment.type)){setStatus('Use a PNG, JPG or WebP screenshot.');return;}
   setBusy(true);setStatus('Sending your screenshot and profile…');
-  const controller=new AbortController();
-  if(submissionTimer.current)clearTimeout(submissionTimer.current);
-  submissionTimer.current=setTimeout(()=>controller.abort(),45000);
-  try{
-   const data=new FormData(form);
-   data.set('attachment_filename',attachment.name||'withdrawal-proof');
-   data.set('attachment_bytes',String(attachment.size));
-   data.set('attachment_type',attachment.type||'unknown');
-   // FormSubmit's AJAX endpoint gives us a real response instead of relying on
-   // a cross-origin iframe redirect that mobile browsers can leave unresolved.
-   data.delete('_next');
-   const response=await fetch('https://formsubmit.co/ajax/gp@gigaprop.xyz',{method:'POST',body:data,headers:{Accept:'application/json'},signal:controller.signal});
-   const result=await response.json().catch(()=>null);
-   if(!response.ok||![true,'true'].includes(result?.success))throw Error(result?.message||('FormSubmit returned '+response.status));
-   if(submissionTimer.current)clearTimeout(submissionTimer.current);
-   submitted.current=false;setBusy(false);setSent(true);setStatus('Submitted for review. MASSIVE will check your withdrawal against the onchain record before publishing your profile.');
-  }catch(error){
-   if(submissionTimer.current)clearTimeout(submissionTimer.current);
-   submitted.current=false;setBusy(false);
-   setStatus(error?.name==='AbortError'?'FormSubmit timed out. Nothing was marked received — please try again.':'FormSubmit rejected the submission. Please try again.');
-   console.error('MASSIVE profile claim submission failed',error);
-  }
+  // Use the native multipart endpoint: the AJAX endpoint does not deliver files.
+  HTMLFormElement.prototype.submit.call(form);
  }
  if(sent)return <div className="wk-claim-form wk-submission wk-submission-success" role="status" aria-live="polite"><div className="wk-success-mark"><Check size={32}/></div><span className="wk-profile-label">PROFILE CLAIM / RECEIVED</span><h2>Submission received.</h2><p>Your claim is in. MASSIVE will review the withdrawal confirmation and combine the approved payout wallets into one leaderboard profile.</p><div className="wk-success-wallet wk-success-wallets"><span>{walletList.length===1?'Submitted wallet':walletList.length+' submitted wallets'}</span><div>{walletList.map(wallet=><strong key={wallet}>{short(wallet)}</strong>)}</div></div><p className="wk-claim-note">You do not need to submit again. If anything is missing, MASSIVE will follow up using the contact email you provided.</p><button className="wk-primary wk-success-done" type="button" onClick={onDone}><Check size={16}/> Done</button></div>;
- return <form className="wk-claim-form wk-submission" onSubmit={submit} action="https://formsubmit.co/ajax/gp@gigaprop.xyz" method="POST" encType="multipart/form-data"><ShieldCheck size={30}/><span className="wk-profile-label">PAYOUT / MANUAL PROFILE REVIEW</span><h2>Put your name on it.</h2><p>Submit your firm’s withdrawal confirmation and every payout wallet you want under the profile. MASSIVE will cross-reference the receiving addresses onchain before publishing them as one combined identity.</p>
+ return <form className="wk-claim-form wk-submission" onSubmit={submit} action="https://formsubmit.co/gp@gigaprop.xyz" method="POST" encType="multipart/form-data"><ShieldCheck size={30}/><span className="wk-profile-label">PAYOUT / MANUAL PROFILE REVIEW</span><h2>Put your name on it.</h2><p>Submit your firm’s withdrawal confirmation and every payout wallet you want under the profile. MASSIVE will cross-reference the receiving addresses onchain before publishing them as one combined identity.</p>
  <input name="_honey" type="text" tabIndex={-1} autoComplete="off" style={{display:'none'}} aria-hidden="true"/>
  <input type="hidden" name="_captcha" value="false"/>
+ <input type="hidden" name="_next" value={location.origin+'/claim-received.html'}/>
   <input type="hidden" name="_subject" value={'MASSIVE VEST PROFILE REVIEW — @'+twitter.trim().replace(/^@/,'')}/>
  <input type="hidden" name="source" value="massiveprop.xyz/#leaderboard"/>
  <input type="hidden" name="consent" value="I agree to publication of the approved profile details and payout wallet(s)."/>
