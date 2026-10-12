@@ -142,5 +142,14 @@
     "tag": "@RC_FUTURES",
     "displayLabel": "RC",
     "tagUrl": "https://x.com/RC_FUTURES"
+  },
+  {
+    "wallet": "0xaf7285e534cb86d1b8159d4ea5050ab9b469703b",
+    "twitter": "bluey_trades",
+    "name": "Bluey",
+    "image": "bluey.jpg",
+    "tag": "@bluey_trades",
+    "displayLabel": "Bluey",
+    "tagUrl": "https://x.com/bluey_trades"
   }
 ]
