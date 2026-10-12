@@ -291,7 +291,7 @@
 .vf .vf-live-topups{display:grid;grid-template-columns:minmax(210px,1fr) minmax(0,2.4fr);align-items:center;gap:24px;margin:22px 0}
 .vf .vf-live-topups>.massive-freshness{margin:0}
 .vf .vf-recent-topups{min-width:0}
-.vf .vf-recent-topups h2{margin:0 0 7px;font:700 8px/1.2 Manrope,sans-serif;letter-spacing:.16em;color:#89857d}
+.vf .vf-recent-topups h2{margin:0 0 7px;font:700 10px/1.2 Manrope,sans-serif;letter-spacing:.16em;color:#89857d}
 .vf .vf-recent-topup-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
 .vf .vf-recent-topup{position:relative;min-width:0;display:flex;align-items:center;min-height:53px;padding:17px 9px 8px;overflow:hidden;border:0;background:none;transition:opacity .2s}
 .vf .vf-recent-topup:hover{opacity:.8}
