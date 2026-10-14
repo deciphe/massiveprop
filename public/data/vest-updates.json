@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-13T17:39:54.314Z",
-  "sourcesTracked": 21,
+  "checkedAt": "2026-10-14T15:13:47.455Z",
+  "sourcesTracked": 22,
   "snapshots": {
     "https://docs.vestmarkets.com/home.md": {
       "hash": "3fc8b7993e145dd7c63d423b513845142754cb3772aadc8fd3aeeb08469d36bc",
@@ -1240,6 +1240,32 @@
         "Refunds are available within 28 days of purchase, provided no trades have been placed. Once the first trade is opened, the account is active and no longer eligible for a refund.",
         "To request a refund, contact our support team via livechat, or email <support@vestmarkets.com>."
       ]
+    },
+    "https://docs.vestmarkets.com/platform/exchange-notices.md": {
+      "hash": "8a2906948ddaf4fc9248ae41b873869acf54ab3bce50f5033e5f7cf7599bd5ed",
+      "lines": [
+        "The URL `platform/exchange-notices` does not exist. This page may have been moved, renamed, or deleted.",
+        "You may be looking for one of the following:",
+        "- [Deposits](https://docs.vestmarkets.com/platform/deposits.md)",
+        "- [Withdrawals](https://docs.vestmarkets.com/platform/withdrawals.md)",
+        "- [Perpetual Contract Specifications](https://docs.vestmarkets.com/platform/perpetual-contract-specifications.md)",
+        "- [Account Tiers](https://docs.vestmarkets.com/vest-capital/account-tiers.md)",
+        "- [Getting Started](https://docs.vestmarkets.com/welcome/getting-started.md)",
+        "If the exact page cannot be found, you can still retrieve the information using the documentation query interface.",
+        "Perform an HTTP GET request on the following URL with the `ask` and `goal` query parameters:",
+        "```",
+        "GET https://docs.vestmarkets.com/platform/deposits.md?ask=<question>&goal=<user_goal>",
+        "```",
+        "`ask` is the immediate question: it should be specific, self-contained, and written in natural language.",
+        "`goal` is what the user is ultimately trying to achieve, the reason they need the answer. Sharing it helps GitBook give you a better, more relevant answer. A goal is most helpful when it describes the outcome the user wants rather than restating the question. For example, with `ask=how do I create an API token`, a goal like `automate deployments from our CI pipeline` lets GitBook tailor the answer to that use case.",
+        "The response will contain a direct answer to the question and relevant excerpts and sources from the documentation.",
+        "Full index: https://docs.vestmarkets.com/sitemap.md",
+        "Use this to discover valid page paths or navigate the documentation structure.",
+        "Full export: https://docs.vestmarkets.com/llms-full.txt",
+        "Use this to access all content at once and perform your own parsing or retrieval. It will be more expensive.",
+        "Prefer `.md` URLs for structured content, append `.md` to URLs (e.g., `/platform/deposits.md`).",
+        "You may also use `Accept: text/markdown` header for content negotiation."
+      ]
     }
   },
   "updates": [
@@ -1355,15 +1381,15 @@
       "hash": "53e8d0244003e53977f02d5b754f8b76813ccf5f51c68f9c5722194c37c61e47",
       "title": "Funding Update",
       "body": "To reduce price deviation between perps and their underlying markets, index and futures-based perps no longer include an interest-rate component, and index perps’ funding normalization is shortened from 120h to 48h. All other markets now use a clamp multiplier of 1. Funding is exchanged between traders and is not an exchange fee. See the funding docs.",
-      "seenAt": "2026-10-13T17:39:54.314Z"
+      "seenAt": "2026-10-14T15:13:47.455Z"
     },
     "stopLossTitle": {
       "hash": "03b3b24c82a4e484895fb3edba90f6e403b2e8c0877d1427a5c9ad88d309f162",
       "title": "Stop-Loss Update",
       "body": "Stop losses now trigger on the mid price instead of the best bid/ask, reducing triggers caused by spread widening.",
-      "seenAt": "2026-10-13T17:39:54.314Z"
+      "seenAt": "2026-10-14T15:13:47.455Z"
     }
   },
-  "appCheckedAt": "2026-10-13T17:39:54.314Z",
-  "appSource": "https://next.vestmarkets.com/assets/index-D1USiWN3.js"
+  "appCheckedAt": "2026-10-14T15:13:47.455Z",
+  "appSource": "https://next.vestmarkets.com/assets/index-D8_JJJLA.js"
 }
