@@ -49,6 +49,7 @@ jobs:
           node scripts/test-weekly.mjs
           node scripts/test-seasons.mjs
           node scripts/test-trader-wallets.mjs
+          node scripts/test-lead-history.mjs
           node scripts/test-refresh.mjs
           node scripts/test-assets.mjs
 

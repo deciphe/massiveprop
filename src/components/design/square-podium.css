@@ -1,0 +1,7 @@
+/* Crisp portrait tiles; lunar rank and stippled backdrop stay intact. */
+.massive-scene .flat-podium-card .flat-podium-art .flat-podium-face,
+.massive-scene .flat-podium-card:hover .flat-podium-art .flat-podium-face{inset:35px 22px auto auto!important;left:auto!important;right:22px!important;top:35px!important;width:43%!important;height:auto!important;aspect-ratio:1;object-fit:cover;object-position:center!important;border-radius:22%!important;mask-image:none!important;-webkit-mask-image:none!important;filter:saturate(.92)!important;opacity:1!important;box-shadow:0 0 0 1px #e8e0cc12}
+.massive-scene .flat-podium-card.flat-place-1 .flat-podium-art .flat-podium-face{top:46px!important;right:25px!important;width:43%!important}
+@media(max-width:700px){.massive-scene .flat-podium-card .flat-podium-art .flat-podium-face{right:14px!important;top:30px!important;width:43%!important}.massive-scene .flat-podium-card.flat-place-1 .flat-podium-art .flat-podium-face{right:24px!important;top:45px!important}}
+
+.massive-scene .flat-podium-card .flat-podium-art .flat-lunar-rank,.massive-scene .flat-podium-card.flat-place-1 .flat-podium-art .flat-lunar-rank{width:52%!important;left:10px!important}

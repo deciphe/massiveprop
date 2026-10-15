@@ -137,6 +137,16 @@ try{
  await page.goto(base+'#leaderboard',{waitUntil:'domcontentloaded'});
  try{
   await page.locator('.wk-view-switch').waitFor({state:'visible',timeout:12000});
+  const history=page.locator('.wk-shell>.lead-history');
+  await history.locator('summary').waitFor({timeout:20000});
+  await history.locator('summary').click();
+  if(!await history.locator('details').evaluate(e=>e.open))add('leaderboard','interaction','Lead history did not expand');
+  if(await page.locator('dialog[open]').count())add('leaderboard','interaction','Lead history opened profile modal');
+  if(!await history.locator('.lead-history-holder').count())add('leaderboard','interaction','No historical leaders rendered');
+  await history.screenshot({path:`${dest}/leader-history-mobile.png`});
+  const tile=await page.locator('.flat-place-1 .flat-podium-face').evaluate(e=>({mask:getComputedStyle(e).maskImage,radius:getComputedStyle(e).borderRadius}));
+  if(tile.mask!=='none'||tile.radius==='0px')add('leaderboard','interaction','Podium portrait is not a crisp rounded tile');
+  await history.locator('summary').click();
   const tabs=page.locator('.wk-view-switch');
   await tabs.getByRole('button',{name:/weekly/i}).click();
   if(!await tabs.getByRole('button',{name:/weekly/i}).evaluate(e=>e.classList.contains('active')))add('leaderboard','interaction','Weekly tab failed to activate');

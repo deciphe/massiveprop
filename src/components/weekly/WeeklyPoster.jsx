@@ -24,6 +24,7 @@ export function RankArtwork({person,profiles,weeklyBoard,weeklyTrack=[]}){
  const podium=!!weeklyBoard&&person.rank<=3,metal=person.rank===1?'#cdb887':person.rank===2?'#ccd0d5':'#b99078';
  return <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label={`${name}, rank ${person.rank}, ${usd(person.total)} in payouts`} style={{display:'block',width:'100%',height:'auto',fontFamily:'Manrope,sans-serif'}}>
   <defs>
+   <clipPath id={id+'-square-face'}><rect x="805" y="155" width="310" height="310" rx="55"/></clipPath>
    <radialGradient id={id+'-glow'} cx=".88" cy=".8" r=".85"><stop stopColor="#bcbab0" stopOpacity=".1"/><stop offset="1" stopColor="#080809" stopOpacity="0"/></radialGradient>
    <linearGradient id={id+'-metal'} x2=".8" y2="1"><stop stopColor="#eeece5"/><stop offset=".55" stopColor={champion?'#cec5ad':'#bebdb8'}/><stop offset="1" stopColor="#686866"/></linearGradient>
    <linearGradient id={id+'-portrait'}><stop stopColor="black"/><stop offset=".25" stopColor="white"/><stop offset=".9" stopColor="white"/><stop offset="1" stopColor="black"/></linearGradient>
@@ -37,7 +38,7 @@ export function RankArtwork({person,profiles,weeklyBoard,weeklyTrack=[]}){
   <g fill={podium?metal:"#c6c6bf"}>{moonPaths.map((d,i)=><path key={i} d={d} opacity={.20+i*.065}/>)}</g>
   {podium&&<g fill="none" stroke={metal} transform="rotate(-24 980 830)"><ellipse cx="980" cy="830" rx="720" ry="240" strokeWidth="1.5" opacity=".3"/><ellipse cx="980" cy="830" rx="744" ry="254" strokeWidth=".8" opacity=".17"/>{person.rank===1&&<ellipse cx="980" cy="830" rx="774" ry="270" strokeWidth=".8" strokeDasharray="1 9" opacity=".25"/>}<circle cx="350" cy="714" r={person.rank===1?8:5} fill={metal} stroke="none" opacity=".65"/></g>}
   {Array.from({length:28},(_,i)=><circle key={i} cx={(i*173+87)%1200} cy={(i*97+31)%650} r={i%4===0?1.2:.65} fill="#d6d5ce" opacity=".18"/>)}
-  {profile?.avatar&&<g mask={ref('foot')}><image href={profile.avatar} x="605" y="105" width="560" height="620" preserveAspectRatio="xMidYMid slice" opacity=".88" mask={ref('mask')} filter={ref('portrait-color')}/></g>}
+  {profile?.avatar&&<image href={profile.avatar} x="805" y="155" width="310" height="310" preserveAspectRatio="xMidYMid slice" clipPath={ref('square-face')}/>}
   <text x="68" y="88" fontSize="36" fontWeight="800" letterSpacing="-2.1" fill="#e8e5dc">MASSIVE.</text>
   {primary==='vest'&&<g transform="translate(888 633) scale(.38)" opacity=".48" fill={ref('mark-metal')}><path d="M546.559 104.307L418.198 1.642C415.785-.29 412.222 1.432 412.222 4.525V217.483L546.559 110.043C548.401 108.561 548.401 105.768 546.559 104.307Z"/><path d="M130.463 1.641L2.101 104.296C.259 105.778.259 108.571 2.101 110.032L136.429 217.472V4.524C136.429 1.431 132.865-.261 130.453 1.641Z"/><path d="M272.038 325.934L136.429 217.482V335.143C136.429 337.165 138.06 338.827 140.112 338.827H408.597C410.62 338.827 412.281 337.195 412.281 335.143V217.482L276.672 325.934C275.331 327.005 273.439 327.005 272.068 325.934Z"/></g>}
   {primary!=='vest'&&logo&&<g><image href={logo} x="985" y="57" width="38" height="27" preserveAspectRatio="xMidYMid meet" filter={ref('mono')} opacity=".8"/><text x="1040" y="80" fontSize="18" fontWeight="800" fill="#bab8b0">{firm?.name||'Vest'}</text></g>}
