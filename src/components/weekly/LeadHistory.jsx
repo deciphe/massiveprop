@@ -6,7 +6,7 @@ import './lead-history.css';
 
 export default function LeadHistory({board,firm,profiles}){
  const history=useMemo(()=>leadHistory(board,firm),[board,firm]),[limit,setLimit]=useState(5);
- const {reigns,through}=history;
+ const {reigns}=history;
  const known=a=>Boolean(profiles[a]?.displayLabel||profiles[a]?.displayName||profiles[a]?.username);
  const holders=history.holders.filter(h=>known(h.address));
  const recent=[...reigns].reverse().filter(r=>known(r.address)),latest=recent[0];
@@ -35,7 +35,6 @@ export default function LeadHistory({board,firm,profiles}){
     {recent.length>limit&&<button className="lead-history-more" type="button" onClick={()=>setLimit(n=>n+10)}>Earlier takeovers +</button>}
     <div className="lead-history-heading"><strong>TIME ON TOP</strong><span>Total · {holders.length} known {holders.length===1?'trader':'traders'}</span></div>
     <div className="lead-history-holders">{holders.map(h=><div className={'lead-history-holder'+(h.address===current?' is-current':'')} key={h.address}>{avatar(h.address)}<span className="lead-history-person">{name(h.address)}<small>{h.count}× at #1</small><span className="lead-history-meter"><i style={{width:Math.max(2,h.duration/maxDuration*100)+'%'}}/></span></span><strong>{leadDuration(h.duration)}</strong></div>)}</div>
-    <p className="lead-history-cutoff">Known profiles only · Actual #1 history across all wallets.<br/>{board.closed?'Final record':'Data through '+date(through)} · Durations update with payout data.</p>
    </div>
   </details>
  </div>;
