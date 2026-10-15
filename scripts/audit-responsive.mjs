@@ -7,7 +7,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const origin=process.env.QA_ORIGIN||'http://127.0.0.1:4173/';
-const routes=['','#leaderboard','#leaderboard?view=weekly&weekly=2026-09-21','#flow','#vestflow','#breakoutflow','#novaflow','#proprflow','#thebook','#vestpdf','#perpcopier','#affiliated'];
+const routes=['','#leaderboard','#leaderboard?view=weekly&weekly=2026-09-21','#flow','#vestflow','#breakoutflow','#novaflow','#proprflow','#vestpdf','#perpcopier','#affiliated'];
 const widths=[320,390,430,768,1024,1440];
 const out='artifacts/responsive';
 await fs.mkdir(out,{recursive:true});

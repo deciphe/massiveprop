@@ -13,7 +13,6 @@ const EmailTest = lazy(() => import("./components/email/EmailTest"));
 const Weekly = lazy(() => import("./components/weekly/Weekly"));
 const FlowHub = lazy(() => import("./components/vestflow/FlowHub"));
 const Vestflow = lazy(() => import("./components/vestflow/Vestflow"));
-const TheBook = lazy(() => import("./components/learn/LearnPerps"));
 
 function RoutedApp() {
   const [hash, setHash] = useState(() => typeof window === "undefined" ? "" : window.location.hash);
@@ -32,7 +31,6 @@ function RoutedApp() {
   if(route === "#discipline")return <Suspense fallback={<MoonLoader label="MASSIVE Discipline"/>}><Discipline/></Suspense>;
   if(["#vestpdf","#vestatm","#lesson1"].includes(route))return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><VestPdf/></Suspense>;
   if(route === "#massiveprop")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><EmailTest/></Suspense>;
-  if(route === "#thebook")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><TheBook/></Suspense>;
 
   if(route === "#wire")return <Suspense fallback={<MoonLoader label="Reading the change ledger"/>}><VestUpdates/></Suspense>;
   if(route === "#perpcopier")return <Suspense fallback={<div style={{background:"#080809",minHeight:"100vh"}}/>}><PerpCopier/></Suspense>;

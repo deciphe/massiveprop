@@ -14,7 +14,6 @@ const routes = [
   {hash:'#leaderboard', root:'.wk', label:'leaderboard'},
   {hash:'#flow', root:'.fh', label:'flow'},
   {hash:'#vestflow', root:'.vf', label:'vestflow'},
-  {hash:'#thebook', root:'.lp, .learn-perps, main', label:'thebook'},
   {hash:'#perpcopier', root:'.pc-page', label:'perpcopier'},
   {hash:'#affiliated', root:'.af-page, .affiliated-page, main', label:'affiliated'}
 ];
