@@ -151,5 +151,14 @@
     "tag": "@bluey_trades",
     "displayLabel": "Bluey",
     "tagUrl": "https://x.com/bluey_trades"
+  },
+  {
+    "wallet": "0x58a17cdaaa31f6d2700bfa8fb730cde166b9dd36",
+    "twitter": "ev_trades",
+    "name": "Ev Trades",
+    "image": "ev.jpg",
+    "tag": "evtrades.com",
+    "displayLabel": "Ev Trades",
+    "tagUrl": "https://evtrades.com"
   }
 ]
