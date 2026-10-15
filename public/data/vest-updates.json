@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-14T15:13:47.455Z",
+  "checkedAt": "2026-10-15T15:07:12.731Z",
   "sourcesTracked": 22,
   "snapshots": {
     "https://docs.vestmarkets.com/home.md": {
@@ -164,7 +164,7 @@
       ]
     },
     "https://docs.vestmarkets.com/trading/cross-margin-and-leverage.md": {
-      "hash": "9cd3a9910f0b9f19c93c9cd5c790abdf8abc659a7b3744bf16f59fb3dc69a566",
+      "hash": "f129b62c24eed8c53f6717cbe9b191270c71bc5c5d7c78687ad11195ca279cf1",
       "lines": [
         "> For the complete documentation index, see [llms.txt](https://docs.vestmarkets.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.vestmarkets.com/trading/cross-margin-and-leverage.md).",
         "Vest uses a single, unified margin model across every account: **cross margin**, with leverage up to 100x depending on account type and market.",
@@ -1242,33 +1242,49 @@
       ]
     },
     "https://docs.vestmarkets.com/platform/exchange-notices.md": {
-      "hash": "8a2906948ddaf4fc9248ae41b873869acf54ab3bce50f5033e5f7cf7599bd5ed",
+      "hash": "8fcc32b622a25150a63ffa2ca39a0135c5d0e893338cde2a6c51aa116ad43539",
       "lines": [
-        "The URL `platform/exchange-notices` does not exist. This page may have been moved, renamed, or deleted.",
-        "You may be looking for one of the following:",
-        "- [Deposits](https://docs.vestmarkets.com/platform/deposits.md)",
-        "- [Withdrawals](https://docs.vestmarkets.com/platform/withdrawals.md)",
-        "- [Perpetual Contract Specifications](https://docs.vestmarkets.com/platform/perpetual-contract-specifications.md)",
-        "- [Account Tiers](https://docs.vestmarkets.com/vest-capital/account-tiers.md)",
-        "- [Getting Started](https://docs.vestmarkets.com/welcome/getting-started.md)",
-        "If the exact page cannot be found, you can still retrieve the information using the documentation query interface.",
-        "Perform an HTTP GET request on the following URL with the `ask` and `goal` query parameters:",
+        "> For the complete documentation index, see [llms.txt](https://docs.vestmarkets.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.vestmarkets.com/platform/exchange-notices.md).",
+        "Starting Monday, Oct 19th at 4:00 PM ET, the following markets will be placed into reduce-only mode. Remaining open positions will be closed on Friday, Oct 30th at 4:00 PM ET.",
         "```",
-        "GET https://docs.vestmarkets.com/platform/deposits.md?ask=<question>&goal=<user_goal>",
-        "```",
-        "`ask` is the immediate question: it should be specific, self-contained, and written in natural language.",
-        "`goal` is what the user is ultimately trying to achieve, the reason they need the answer. Sharing it helps GitBook give you a better, more relevant answer. A goal is most helpful when it describes the outcome the user wants rather than restating the question. For example, with `ask=how do I create an API token`, a goal like `automate deployments from our CI pipeline` lets GitBook tailor the answer to that use case.",
-        "The response will contain a direct answer to the question and relevant excerpts and sources from the documentation.",
-        "Full index: https://docs.vestmarkets.com/sitemap.md",
-        "Use this to discover valid page paths or navigate the documentation structure.",
-        "Full export: https://docs.vestmarkets.com/llms-full.txt",
-        "Use this to access all content at once and perform your own parsing or retrieval. It will be more expensive.",
-        "Prefer `.md` URLs for structured content, append `.md` to URLs (e.g., `/platform/deposits.md`).",
-        "You may also use `Accept: text/markdown` header for content negotiation."
+        "CRSR-USD-PER",
+        "NOK-USD-PERP (Norwegian Krone)",
+        "SEK-USD-PERP",
+        "SIL-USD-PERP",
+        "TSEM-USD-PERP",
+        "```"
       ]
     }
   },
   "updates": [
+    {
+      "id": "6302e02ae56ec230",
+      "title": "Exchange Notices — documentation revised",
+      "category": "Execution",
+      "date": "2026-10-15T15:07:12.731Z",
+      "origin": "Detected documentation revision",
+      "source": "https://docs.vestmarkets.com/platform/exchange-notices",
+      "summary": "> For the complete documentation index, see [llms.txt](https://docs.vestmarkets.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.vestmarkets.com/platform/exchange-notices.md). Starting Monday, Oct 19th at 4:00 PM ET, the following markets will be placed into reduce-only mode.",
+      "impact": "Review the source before acting. Highlighted additions may include clarifications as well as rule changes.",
+      "details": [
+        "> For the complete documentation index, see [llms.txt](https://docs.vestmarkets.com/llms.txt). Markdown versions of documentation pages are available by appending `.md` to page URLs; this page is available as [Markdown](https://docs.vestmarkets.com/platform/exchange-notices.md).",
+        "Starting Monday, Oct 19th at 4:00 PM ET, the following markets will be placed into reduce-only mode. Remaining open positions will be closed on Friday, Oct 30th at 4:00 PM ET.",
+        "NOK-USD-PERP (Norwegian Krone)"
+      ],
+      "observed": false
+    },
+    {
+      "id": "61330c9505a8d8f4",
+      "title": "Cross Margin & Leverage — documentation revised",
+      "category": "Execution",
+      "date": "2026-10-15T15:07:12.731Z",
+      "origin": "Detected documentation revision",
+      "source": "https://docs.vestmarkets.com/trading/cross-margin-and-leverage",
+      "summary": "The source documentation was revised. Open the original page to inspect the latest rules.",
+      "impact": "Review the source before acting. Highlighted additions may include clarifications as well as rule changes.",
+      "details": [],
+      "observed": false
+    },
     {
       "id": "0f555d4aac7329c5",
       "title": "Refund Policy — documentation revised",
