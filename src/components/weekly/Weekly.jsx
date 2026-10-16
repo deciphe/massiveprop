@@ -132,7 +132,7 @@ export default function Weekly(){
    try{url=await toJpeg(capture,{...baseOptions,...(fontEmbedCSS?{fontEmbedCSS}:{})})}
    catch{url=await toJpeg(capture,{...baseOptions,skipFonts:true})}
    if(!url?.startsWith('data:image/jpeg'))throw Error('JPG render failed');
-   const a=document.createElement('a');a.href=url;a.download=route.card==='yush-overall'?'massiveprop-yush-overall-rank-03.jpg':view==='weekly'?`massiveprop-week-${selectedWeekKey}-${firm}-${poster?.address?'rank-'+poster.rank:'top-3'}.jpg`:`massiveprop-season-${week}${poster?.address?'-rank-'+poster.rank:'-top'+limit}.jpg`;document.body.append(a);a.click();a.remove();
+   const a=document.createElement('a');a.href=url;a.download=route.card==='yush-overall'?'massiveprop-yush-overall-rank-03.jpg':view==='weekly'?`massiveprop-week-${selectedWeekKey}-${firm}-${poster?.address?'rank-'+poster.rank:'top-3'}.jpg`:`massiveprop-season-${week}${poster?.address?'-rank-'+poster.rank:'-top20'}.jpg`;document.body.append(a);a.click();a.remove();
   }catch(err){
    console.error('Rank card export failed',err);
    setError('Image download failed. Reload once and try again.');
