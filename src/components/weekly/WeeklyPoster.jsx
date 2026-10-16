@@ -61,7 +61,7 @@ export function RankArtwork({person,profiles,weeklyBoard,weeklyTrack=[]}){
 }
 export default function WeeklyPoster({board,rows,profiles,firm,person}){
  if(person)return <RankArtwork person={person} profiles={profiles}/>;
- const list=rows.slice(0,firm==='vest'?100:15),h=300+list.length*76;
+ const list=rows.slice(0,20),h=300+list.length*76;
  return <svg xmlns="http://www.w3.org/2000/svg" width="1200" height={h} viewBox={`0 0 1200 ${h}`} role="img" aria-label="MASSIVE payout standings" style={{display:'block',width:'100%',height:'auto',fontFamily:'Manrope,sans-serif'}}>
  <rect width="1200" height={h} fill="#080809"/>
  <text x="65" y="82" fontSize="36" fontWeight="800" letterSpacing="-2" fill="#e8e5dc">MASSIVE.</text>
