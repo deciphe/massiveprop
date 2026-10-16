@@ -160,5 +160,14 @@
     "tag": "evtrades.com",
     "displayLabel": "Ev Trades",
     "tagUrl": "https://evtrades.com"
+  },
+  {
+    "wallet": "0xeb7317ebacdb0bf335873b1c941afaf21bae2f39",
+    "twitter": "rohrzNQ",
+    "name": "rohrz",
+    "image": "rohrz.jpg",
+    "tag": "@rohrzNQ",
+    "displayLabel": "rohrz",
+    "tagUrl": "https://x.com/rohrzNQ"
   }
 ]
