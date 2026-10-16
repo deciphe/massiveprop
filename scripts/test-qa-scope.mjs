@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {scopeFor,includesRoute} from './qa-scope.mjs';
+assert.deepEqual(scopeFor(['src/data/traders.json','public/traders/rohrz.jpg']),['#leaderboard']);
+assert.deepEqual(scopeFor(['src/components/weekly/Weekly.jsx','src/components/discipline/Discipline.jsx']),['#leaderboard','#discipline']);
+assert.equal(scopeFor(['src/data/traders.json','src/App.jsx']),null);
+assert.equal(scopeFor(['src/components/design/FlatPodium.jsx']),null);
+assert.equal(scopeFor(['scripts/audit-design.mjs']),null);
+assert.equal(scopeFor([]),null);
+assert.equal(scopeFor(['src/components/vestflow/Vestflow.jsx']).length,5);
+process.env.QA_ROUTES='["#leaderboard"]';
+assert.ok(includesRoute('#leaderboard?view=weekly'));
+assert.ok(!includesRoute('#perpcopier'));
+delete process.env.QA_ROUTES;
+assert.ok(includesRoute(''));
+console.log('QA scope: profile, page, shared changes and interaction filtering passed.');

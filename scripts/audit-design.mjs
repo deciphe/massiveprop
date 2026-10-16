@@ -6,6 +6,7 @@
  * Every inspected route gets mobile and desktop reference screenshots.
  */
 import {chromium} from 'playwright';
+import {includesRoute} from './qa-scope.mjs';
 import fs from 'node:fs/promises';
 
 const base = process.env.QA_ORIGIN || 'http://127.0.0.1:4173/';
@@ -16,7 +17,7 @@ const routes = [
   {hash:'#vestflow', root:'.vf', label:'vestflow'},
   {hash:'#perpcopier', root:'.pc-page', label:'perpcopier'},
   {hash:'#affiliated', root:'.af-page, .affiliated-page, main', label:'affiliated'}
-];
+].filter(route=>includesRoute(route.hash));
 const viewports = [{name:'mobile',width:390,height:844},{name:'desktop',width:1440,height:900}];
 const dest='artifacts/design';
 await fs.mkdir(dest,{recursive:true});
@@ -116,7 +117,7 @@ try{
  }
  // Navigation and controls: exercise actual user actions, not just initial renders.
  const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
- try{
+ if(includesRoute('#perpcopier'))try{
   await page.goto(base+'#perpcopier',{waitUntil:'domcontentloaded'});
   await page.locator('.pc-controls').waitFor({state:'visible',timeout:12000});
   const pause=page.getByRole('button',{name:/^pause$/i});
@@ -133,6 +134,7 @@ try{
   await page.getByRole('button',{name:'Reset demo'}).click();
   if(!await page.getByText('Demo copying').count())add('perpcopier','interaction','Reset did not restore state');
  }catch(e){add('perpcopier','interaction',String(e));}
+ if(includesRoute('#leaderboard')){
  await page.goto(base+'#leaderboard',{waitUntil:'domcontentloaded'});
  try{
   await page.locator('.wk-view-switch').waitFor({state:'visible',timeout:12000});
@@ -152,6 +154,7 @@ try{
   await tabs.getByRole('button',{name:/season/i}).click();
   if(!await tabs.getByRole('button',{name:/season/i}).evaluate(e=>e.classList.contains('active')))add('leaderboard','interaction','Season tab failed to activate');
  }catch(e){add('leaderboard','interaction',String(e));}
+ }
  await page.close();
 }finally{await browser.close();}
 await fs.writeFile(`${dest}/report.json`,JSON.stringify({routes:routes.length,viewports:viewports.map(x=>x.width),findings},null,2));
